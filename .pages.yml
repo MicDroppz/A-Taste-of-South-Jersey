@@ -1,24 +1,24 @@
-# 1. MENU ITEMS & CATEGORIES (SINGLETON)
-- name: menu
-  label: Menu & Pricing
-  type: file
-  path: content/menu/menu.json
-  format: json
-  fields:
-    - name: categories
-      label: Menu Categories
-      type: list
-      fields:
-        - { name: title, label: Category Title, type: string }
-        - { name: subtitle, label: Category Subtitle (Optional), type: string }
-        - { name: icon, label: Category Icon (Emoji), type: string }
-        - { name: badge_color, label: Category Badge Color, type: select, options: ["brandPurple", "brandOrange", "brandGreen", "brandPink"] }
-        - name: items
-          label: Food Items
-          type: list
-          fields:
-            - { name: name, label: Item Name, type: string }
-            - { name: price, label: Price ($), type: number }
-            - { name: badge, label: Badge Text (Optional), type: string }
-            - { name: description, label: Description, type: string }
-            - { name: image, label: Image URL, type: string }
+content:
+  - name: menu
+    label: Menu & Pricing
+    type: file
+    path: content/menu/menu.json
+    format: json
+    fields:
+      - name: categories
+        label: Menu Categories
+        type: list
+        fields:
+          - { name: title, label: Category Title, type: string }
+          - { name: subtitle, label: Category Subtitle (Optional), type: string }
+          - { name: icon, label: Category Icon (Emoji), type: string }
+          - { name: badge_color, label: Category Badge Color, type: select, options: ["brandPurple", "brandOrange", "brandGreen", "brandPink"] }
+          - name: items
+            label: Food Items
+            type: list
+            fields:
+              - { name: name, label: Item Name, type: string }
+              - { name: price, label: Price ($), type: number }
+              - { name: badge, label: Badge Text (Optional), type: string }
+              - { name: description, label: Description, type: string }
+              - { name: image, label: Image URL, type: string }
