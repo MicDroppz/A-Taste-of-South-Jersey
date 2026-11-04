@@ -27,11 +27,11 @@
       "title": "SIGNATURE PANZAROTTIS",
       "subtitle": "Deep-Fried Pastry Turnovers Filled with Tomato Sauce & Mozzarella",
       "icon": "🥟",
-      "badge_color": "brandPurple",
+      "badge_color": "bg-brandPurple",
       "items": [
         {
           "name": "Cheese Panzarotti",
-          "price": 100,
+          "price": 10.00,
           "badge": "CLASSIC ORIGINAL",
           "description": "Deep-fried golden pastry dough pocket packed with rich tomato sauce and oozing melted mozzarella cheese.",
           "image": "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_center,w_730,h_913/k/Photo/Recipes/2021-12-panzerotti%20/211208_ApartmentTherapy_Panzerotti_0345"
@@ -77,7 +77,7 @@
       "id": "cheesesteaks",
       "title": "CHEESESTEAKS & MINI PLATTERS",
       "icon": "🥩",
-      "badge_color": "brandOrange",
+      "badge_color": "bg-brandOrange",
       "items": [
         {
           "name": "Philly Cheesesteak",
@@ -113,7 +113,7 @@
       "id": "sides",
       "title": "SIDES & REFRESHING DRINKS",
       "icon": "🍟",
-      "badge_color": "brandGreen",
+      "badge_color": "bg-brandGreen",
       "items": [
         {
           "name": "Crispy French Fries",
