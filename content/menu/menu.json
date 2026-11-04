@@ -63,6 +63,13 @@
           "badge": "BEST VALUE!",
           "description": "Any signature Panzarotti served alongside a huge basket of golden crispy french fries!",
           "image": "https://s3-media0.fl.yelpcdn.com/bphoto/I70t6mXHelGgGp1Fhtg7sA/348s.jpg"
+        },
+        {
+          "name": "BBL",
+          "price": 30000,
+          "badge": "Bootilicious",
+          "description": "Get Fuller, Rounder ",
+          "image": "https://static.tvtropes.org/pmwiki/pub/images/fairly_oddparents_bigasses.png"
         }
       ]
     },
