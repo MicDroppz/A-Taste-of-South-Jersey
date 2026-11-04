@@ -1,15 +1,57 @@
-content:
-  - name: menu
-    label: Menu & Pricing
-    type: file
-    path: content/menu/menu.json
-    format: json
+
     fields:
-      - name: categories
-        label: Menu Categories (Title | Description)
-        type: list
+      - name: modifiers
+        label: Extras & Modifiers
+        type: object
+        list: true
         fields:
-          - { name: title, label: Category Name, type: string }
-          - { name: subtitle, label: Subtitle, type: string }
-          - { name: icon, label: Emoji Icon, type: string }
-          - { name: badge_color, label: Badge Color, type: string }
+          - name: id
+            label: ID
+            type: string
+          - name: label
+            label: Modifier Name
+            type: string
+          - name: price
+            label: Price
+            type: number
+
+      - name: categories
+        label: Menu Categories
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: Category ID
+            type: string
+          - name: title
+            label: Category Name
+            type: string
+          - name: subtitle
+            label: Subtitle
+            type: text
+          - name: icon
+            label: Emoji Icon
+            type: string
+          - name: badge_color
+            label: Badge Color
+            type: string
+          - name: items
+            label: Menu Items
+            type: object
+            list: true
+            fields:
+              - name: name
+                label: Item Name
+                type: string
+              - name: price
+                label: Price
+                type: number
+              - name: badge
+                label: Badge
+                type: string
+              - name: description
+                label: Description
+                type: text
+              - name: image
+                label: Image URL
+                type: string
