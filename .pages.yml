@@ -1,24 +1,62 @@
-# 1. MENU ITEMS & CATEGORIES (SINGLETON)
+content:
   - name: menu
     label: Menu & Pricing
     type: file
-    path: content/menu.json
+    path: content/menu/menu.json
     format: json
     fields:
+      - name: modifiers
+        label: Extras & Modifiers
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: ID
+            type: string
+          - name: label
+            label: Modifier Name
+            type: string
+          - name: price
+            label: Price
+            type: number
+
       - name: categories
         label: Menu Categories
-        type: list
+        type: object
+        list: true
         fields:
-          - { name: title, label: Category Title, type: string }
-          - { name: subtitle, label: Category Subtitle (Optional), type: string }
-          - { name: icon, label: Category Icon (Emoji), type: string }
-          - { name: badge_color, label: Category Badge Color, type: select, options: ["brandPurple", "brandOrange", "brandGreen", "brandPink"] }
+          - name: id
+            label: Category ID
+            type: string
+          - name: title
+            label: Category Name
+            type: string
+          - name: subtitle
+            label: Subtitle
+            type: text
+          - name: icon
+            label: Emoji Icon
+            type: string
+          - name: badge_color
+            label: Badge Color
+            type: string
           - name: items
-            label: Food Items
-            type: list
+            label: Menu Items
+            type: object
+            list: true
             fields:
-              - { name: name, label: Item Name, type: string }
-              - { name: price, label: Price ($), type: number }
-              - { name: badge, label: Badge Text (Optional), type: string }
-              - { name: description, label: Description, type: string }
-              - { name: image, label: Image URL, type: string }
+              - name: name
+                label: Item Name
+                type: string
+              - name: price
+                label: Price
+                type: number
+              - name: badge
+                label: Badge
+                type: string
+              - name: description
+                label: Description
+                type: text
+              - name: image
+                label: Image URL
+                type: string
