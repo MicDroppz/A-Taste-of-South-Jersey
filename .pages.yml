@@ -2,7 +2,7 @@
 - name: menu
   label: Menu & Pricing
   type: file
-  path: path: content/menu/menu.json
+  path: content/menu/menu.json
   format: json
   fields:
     - name: categories
