@@ -6,21 +6,10 @@ content:
     format: json
     fields:
       - name: categories
-        label: Menu Categories
+        label: Menu Categories (Title | Description)
         type: list
-        preview: title
         fields:
-          - { name: title, label: Category Title, type: string }
-          - { name: subtitle, label: Category Subtitle (Optional), type: string }
-          - { name: icon, label: Category Icon (Emoji), type: string }
-          - { name: badge_color, label: Category Badge Color, type: select, options: ["brandPurple", "brandOrange", "brandGreen", "brandPink"] }
-          - name: items
-            label: Food Items
-            type: list
-            preview: name
-            fields:
-              - { name: name, label: Item Name, type: string }
-              - { name: price, label: Price ($), type: number }
-              - { name: badge, label: Badge Text (Optional), type: string }
-              - { name: description, label: Description, type: string }
-              - { name: image, label: Image URL, type: string }
+          - { name: title, label: Category Name, type: string }
+          - { name: subtitle, label: Subtitle, type: string }
+          - { name: icon, label: Emoji Icon, type: string }
+          - { name: badge_color, label: Badge Color, type: string }
