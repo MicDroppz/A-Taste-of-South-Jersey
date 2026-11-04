@@ -1,0 +1,31 @@
+{
+  "announcement_bar": "🔥 SPECIAL: Free Garlic Dip with any Panzarotti Combo today!",
+  "primary_address": "1398 E Vine St, Kissimmee, FL 34744",
+  "status_override": "AUTO",
+  "weekly_schedule": [
+    {
+      "days": "TUES - THURS",
+      "location": "Kissimmee Hub",
+      "hours": "11:00 AM - 8:00 PM",
+      "card_color": "yellow"
+    },
+    {
+      "days": "FRIDAY RALLY",
+      "location": "Downtown Food Truck Park",
+      "hours": "4:00 PM - 10:00 PM",
+      "card_color": "teal"
+    },
+    {
+      "days": "SATURDAY",
+      "location": "Celebration Farmers Market",
+      "hours": "10:00 AM - 6:00 PM",
+      "card_color": "pink"
+    },
+    {
+      "days": "SUNDAY DROPS",
+      "location": "Neighborhood Delivery Route",
+      "hours": "12:00 PM - 5:00 PM",
+      "card_color": "purple"
+    }
+  ]
+}

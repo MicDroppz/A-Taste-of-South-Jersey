@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Touch of South Jersey 🥟 Philly Comfort & Panzarottis</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Fredoka:wght@400;600;700&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandYellow: '#FFDE59',
+                        brandTeal: '#00C2CB',
+                        brandPink: '#FF66C4',
+                        brandGreen: '#7ED957',
+                        brandOrange: '#FF914D',
+                        brandPurple: '#8C52FF',
+                        brandRed: '#FF3333',
+                    },
+                    fontFamily: {
+                        bangers: ['Bangers', 'cursive'],
+                        fredoka: ['Fredoka', 'sans-serif'],
+                        sans: ['Quicksand', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        comic: '4px 4px 0px 0px #000',
+                        'comic-lg': '8px 8px 0px 0px #000',
+                        'comic-sm': '2px 2px 0px 0px #000',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .comic-border {
+            border: 3.5px solid #000;
+        }
+        .speech-bubble {
+            position: relative;
+            background: #ffffff;
+            border-radius: 1.5rem;
+            border: 3.5px solid #000;
+        }
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 30px;
+            border-width: 15px 15px 0;
+            border-style: solid;
+            border-color: #fff transparent;
+            display: block;
+            width: 0;
+        }
+        .speech-bubble:before {
+            content: '';
+            position: absolute;
+            bottom: -19px;
+            left: 28px;
+            border-width: 17px 17px 0;
+            border-style: solid;
+            border-color: #000 transparent;
+            display: block;
+            width: 0;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-1deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-brandYellow text-slate-900 font-sans min-h-screen flex flex-col selection:bg-brandPink selection:text-white">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-brandRed comic-border border-t-0 border-x-0 py-2 px-4 text-center text-white font-fredoka font-bold text-sm md:text-base tracking-wider z-50">
+        <p id="announcement-bar">🔥 SERVING AUTHENTIC SOUTH JERSEY PANZAROTTIS & PHILLY CHEESESTEAKS IN KISSIMMEE, FL! 🥟✨</p>
+    </div>
+
+    <!-- Sticky Navigation Bar -->
+    <nav id="main-nav" class="bg-white comic-border sticky top-0 z-40 shadow-comic mx-2 md:mx-6 my-2 rounded-2xl px-4 py-3 flex flex-wrap justify-between items-center bg-yellow-50">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="scrollToSection('hero')">
+            <img src="https://scontent.cdninstagram.com/v/t51.2885-19/419541794_341905135274525_7938065282477996207_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=107&ig_cache_key=GCKzARkdiiL_9TYBAK849hVRrClubkULAAAB1501500j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=9Y3ceDUKVeEQ7kNvwG9hTXZ&_nc_oc=AdoUrfvMRYsxG2OeEEYH-4wDS9c2wuLAvdqrMWMzJHPvSgk3KWZXXMVWLYayFvl9N8oOaP9uUx377Fzp7Tka8JU1&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_ss=7b689&oh=00_AQTBAVF-pwCIiOjhWyuSw2RQX00vvJWlaCtwAOalE5xN_w&oe=6AEFDD7E" alt="A Touch of South Jersey Logo" class="w-10 h-10 rounded-full comic-border shadow-comic-sm object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF66C4/000000?text=🥟';">
+            <div>
+                <span class="font-bangers text-2xl md:text-3xl tracking-wider text-brandPurple drop-shadow-[1px_1px_0px_#000] block leading-none">
+                    A TOUCH OF SOUTH JERSEY
+                </span>
+                <span class="font-fredoka text-xs font-bold text-slate-600">EST. 2023 • KISSIMMEE, FL</span>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-0 flex-wrap">
+            <button onclick="scrollToSection('menu')" class="bg-brandTeal hover:bg-teal-300 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
+                😋 Menu
+            </button>
+            <button onclick="scrollToSection('funzone')" class="bg-brandGreen hover:bg-green-300 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
+                🤪 Fun Zone
+            </button>
+            <button onclick="scrollToSection('radar')" class="bg-brandOrange hover:bg-orange-300 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
+                🚚 Truck Radar
+            </button>
+            <button onclick="scrollToSection('delivery-drop')" class="bg-brandRed text-white hover:bg-red-600 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
+                📦 Delivery Days
+            </button>
+            <button onclick="openCateringModal()" class="bg-brandPurple text-white hover:bg-purple-600 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
+                🎪 Catering
+            </button>
+            <button onclick="toggleCartModal()" class="bg-brandPink hover:bg-pink-400 text-white font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm flex items-center gap-2 transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
+                🛒 <span id="cart-count-badge" class="bg-white text-brandPink font-bold px-2 py-0.5 rounded-full text-xs">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow space-y-12 pb-12">
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="relative px-4 pt-6 pb-6 max-w-6xl mx-auto text-center scroll-mt-28">
+            <div class="bg-white comic-border shadow-comic-lg rounded-3xl p-6 md:p-10 relative overflow-hidden bg-gradient-to-b from-white to-yellow-100">
+                
+                <div class="hidden md:block absolute top-6 left-6 bg-brandPink text-white font-bangers text-xl px-4 py-1 rounded-full comic-border transform -rotate-12 shadow-comic-sm">
+                    AUTHENTIC JERSEY FAVORITES!
+                </div>
+
+                <!-- Live Open/Closed Status Badge -->
+                <div class="hidden md:block absolute top-8 right-8 shadow-comic-sm">
+                    <span id="live-open-badge" class="font-bangers text-xl px-4 py-1 rounded-full comic-border transform rotate-6 inline-block">
+                        CHECKING STATUS...
+                    </span>
+                </div>
+
+                <!-- Brand Avatar with Green Ring -->
+                <div class="w-36 h-36 md:w-48 md:h-48 mx-auto mb-4 animate-float">
+                    <div class="w-full h-full bg-brandGreen comic-border rounded-full flex items-center justify-center p-2 shadow-comic overflow-hidden">
+                        <img src="https://scontent.cdninstagram.com/v/t51.2885-19/419541794_341905135274525_7938065282477996207_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=107&ig_cache_key=GCKzARkdiiL_9TYBAK849hVRrClubkULAAAB1501500j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=9Y3ceDUKVeEQ7kNvwG9hTXZ&_nc_oc=AdoUrfvMRYsxG2OeEEYH-4wDS9c2wuLAvdqrMWMzJHPvSgk3KWZXXMVWLYayFvl9N8oOaP9uUx377Fzp7Tka8JU1&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_ss=7b689&oh=00_AQTBAVF-pwCIiOjhWyuSw2RQX00vvJWlaCtwAOalE5xN_w&oe=6AEFDD7E" alt="A Touch of South Jersey Logo" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/200x200/7ED957/000000?text=🥟';">
+                    </div>
+                </div>
+
+                <h1 class="font-bangers text-5xl md:text-7xl lg:text-8xl text-brandPurple tracking-wide drop-shadow-[3px_3px_0px_#000] mb-2">
+                    A TOUCH OF SOUTH JERSEY
+                </h1>
+                
+                <p class="font-fredoka font-bold text-lg md:text-2xl text-slate-800 max-w-2xl mx-auto mb-6 leading-relaxed">
+                    Deep-Fried Golden Panzarottis, Authentic Philly Cheesesteaks & Crispy Fries Served Fresh on Wheels! 🚚🔥
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button onclick="scrollToSection('menu')" class="bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-2xl px-8 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
+                        🥟 SEE FULL MENU
+                    </button>
+                    <button onclick="scrollToSection('radar')" class="bg-brandOrange hover:bg-orange-400 text-slate-900 font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
+                        🚚 TRUCK RADAR
+                    </button>
+                    <button onclick="scrollToSection('delivery-drop')" class="bg-brandRed text-white hover:bg-red-600 font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
+                        📦 DELIVERY DAYS
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MENU SECTION -->
+        <section id="menu" class="px-4 max-w-6xl mx-auto scroll-mt-28">
+            <div class="text-center mb-8">
+                <span class="bg-brandPink text-white font-bangers text-xl px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2">
+                    AUTHENTIC MENU
+                </span>
+                <h2 class="font-bangers text-4xl md:text-6xl text-slate-900 drop-shadow-[2px_2px_0px_#FFF]">
+                    SOUTH JERSEY FAVORITES & PRICING 🥟
+                </h2>
+                <p class="font-fredoka text-slate-700 text-lg">Crispy deep-fried dough stuffed with cheesy perfection!</p>
+            </div>
+
+            <!-- CATEGORY 1: PANZAROTTIS -->
+            <div class="mb-10">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="bg-brandPurple text-white font-bangers text-2xl px-4 py-1 rounded-2xl comic-border shadow-comic-sm">
+                        🥟 SIGNATURE PANZAROTTIS
+                    </span>
+                    <span class="font-fredoka text-xs font-bold text-slate-700 bg-white px-3 py-1 rounded-full comic-border hidden sm:inline-block">
+                        Deep-Fried Pastry Turnovers Filled with Tomato Sauce & Mozzarella
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                    <!-- Cheese Panzarotti -->
+                    <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between hover:rotate-1 transition-transform">
+                        <div>
+                            <div class="h-48 bg-brandYellow rounded-2xl comic-border mb-4 overflow-hidden relative flex items-center justify-center p-2">
+                                <img src="https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_center,w_730,h_913/k/Photo/Recipes/2021-12-panzerotti%20/211208_ApartmentTherapy_Panzerotti_0345" alt="Cheese Panzarotti" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/FFDE59/000000?text=Cheese+Panzarotti';">
+                                <span class="absolute top-2 right-2 bg-brandPink text-white font-bangers text-sm px-2 py-0.5 rounded-lg comic-border">CLASSIC ORIGINAL</span>
+                            </div>
+                            <h4 class="font-bangers text-2xl text-brandPurple mb-1 tracking-wide">Cheese Panzarotti</h4>
+                            <p class="font-sans text-sm text-slate-600 mb-4 font-bold">
+                                Deep-fried golden pastry dough pocket packed with rich tomato sauce and oozing melted mozzarella cheese.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
+                            <span class="font-fredoka text-2xl text-slate-900">$10.00</span>
+                            <button onclick="openModifierModal('Cheese Panzarotti', 10.00)" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">
+                                + Add to Order
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pepperoni Panzarotti -->
+                    <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between hover:-rotate-1 transition-transform">
+                        <div>
+                            <div class="h-48 bg-brandTeal rounded-2xl comic-border mb-4 overflow-hidden relative flex items-center justify-center p-2">
+                                <img src="https://thedigestonline.com/wp-content/uploads/2026/04/Tarantinis-Panzarotti.png" alt="Pepperoni Panzarotti" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/00C2CB/000000?text=Pepperoni+Panzarotti';">
+                                <span class="absolute top-2 right-2 bg-brandPurple text-white font-bangers text-sm px-2 py-0.5 rounded-lg comic-border">FAN FAVORITE</span>
+                            </div>
+                            <h4 class="font-bangers text-2xl text-brandPurple mb-1 tracking-wide">Pepperoni Panzarotti</h4>
+                            <p class="font-sans text-sm text-slate-600 mb-4 font-bold">
+                                Stuffed with savory cut pepperoni slices, melted mozzarella, and signature tomato sauce inside a crispy shell.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
+                            <span class="font-fredoka text-2xl text-slate-900">$11.50</span>
+                            <button onclick="openModifierModal('Pepperoni Panzarotti', 11.50)" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">
+                                + Add to Order
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sausage Panzarotti -->
+                    <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between hover:rotate-1 transition-transform">
+                        <div>
+                            <div class="h-48 bg-brandPink rounded-2xl comic-border mb-4 overflow-hidden relative flex items-center justify-center p-2">
+                                <img src="https://www.tysonfoodservice.com/adobe/dynamicmedia/deliver/dm-aid--96055f89-efb1-4ee1-b247-486759f4c6c0/Italian-Sausage-and-Peppers-Panzerotti.png.webp?preferwebp=true" alt="Sausage Panzarotti" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/FF66C4/000000?text=Sausage+Panzarotti';">
+                                <span class="absolute top-2 right-2 bg-brandYellow text-slate-900 font-bangers text-sm px-2 py-0.5 rounded-lg comic-border">SAVORY!</span>
+                            </div>
+                            <h4 class="font-bangers text-2xl text-brandPurple mb-1 tracking-wide">Sausage Panzarotti</h4>
+                            <p class="font-sans text-sm text-slate-600 mb-4 font-bold">
+                                Seasoned Italian sausage crumbles blended with gooey cheese and rich marinara in a deep-fried dough pocket.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
+                            <span class="font-fredoka text-2xl text-slate-900">$11.50</span>
+                            <button onclick="openModifierModal('Sausage Panzarotti', 11.50)" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">
+                                + Add to Order
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Philly Cheesesteak Panzarotti -->
+                    <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between hover:-rotate-1 transition-transform">
+                        <div>
+                            <div class="h-48 bg-brandOrange rounded-2xl comic-border mb-4 overflow-hidden relative flex items-center justify-center p-2">
+                                <img src="https://easyamericanrecipes.com/wp-content/uploads/2025/05/Image_3-74.png" alt="Philly Cheesesteak Panzarotti" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/FF914D/000000?text=Cheesesteak+Panzarotti';">
+                                <span class="absolute top-2 right-2 bg-brandRed text-white font-bangers text-sm px-2 py-0.5 rounded-lg comic-border">HOUSE SPECIAL</span>
+                            </div>
+                            <h4 class="font-bangers text-2xl text-brandPurple mb-1 tracking-wide">Philly Cheesesteak Panzarotti</h4>
+                            <p class="font-sans text-sm text-slate-600 mb-4 font-bold">
+                                Tender sliced steak and melted cheese folded right inside our famous deep-fried Panzarotti crust!
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
+                            <span class="font-fredoka text-2xl text-slate-900">$15.00</span>
+                            <button onclick="openModifierModal('Philly Cheesesteak Panzarotti', 15.00)" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">
+                                + Add to Order
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Philly / Fries Combo -->
+                    <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between hover:rotate-1 transition-transform">
+                        <div>
+                            <div class="h-48 bg-brandGreen rounded-2xl comic-border mb-4 overflow-hidden relative flex items-center justify-center p-2">
+                                <img src="https://s3-media0.fl.yelpcdn.com/bphoto/I70t6mXHelGgGp1Fhtg7sA/348s.jpg" alt="Panzarotti + Fries Combo" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/7ED957/000000?text=Panzarotti+Fries+Combo';">
+                                <span class="absolute top-2 right-2 bg-brandTeal text-slate-900 font-bangers text-sm px-2 py-0.5 rounded-lg comic-border">BEST VALUE!</span>
+                            </div>
+                            <h4 class="font-bangers text-2xl text-brandPurple mb-1 tracking-wide">Philly Panzarotti & Fries Combo</h4>
+                            <p class="font-sans text-sm text-slate-600 mb-4 font-bold">
+                                Any signature Panzarotti served alongside a huge basket of golden crispy french fries!
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
+                            <span class="font-fredoka text-2xl text-slate-900">$18.00</span>
+                            <button onclick="openModifierModal('Philly Panzarotti & Fries Combo', 18.00)" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">
+                                + Add to Order
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CATEGORY 2: CHEESESTEAKS & PLATTERS -->
+            <div class="mb-10">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="bg-brandOrange text-white font-bangers text-2xl px-4 py-1 rounded-2xl comic-border shadow-comic-sm">
+                        🥩 CHEESESTEAKS & MINI PLATTERS
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <!-- Philly Cheesesteak -->
+                    <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between hover:-rotate-1 transition-transform">
+                        <div>
+                            <div class="h-48 bg-brandPurple rounded-2xl comic-border mb-4 overflow-hidden relative flex items-center justify-center p-2">
+                                <img src="https://thumbs.dreamstime.com/b/photo-can-see-enchanting-philly-cheesesteak-plump-golden-slices-fresh-ground-beef-layered-top-soft-275968019.jpg" alt="Philly Cheesesteak" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/8C52FF/FFFFFF?text=Philly+Cheesesteak';">
+                                <span class="absolute top-2 right-2 bg-brandYellow text-slate-900 font-bangers text-sm px-2 py-0.5 rounded-lg comic-border">AUTHENTIC PHILLY</span>
+                            </div>
+                            <h4 class="font-bangers text-2xl text-brandPurple mb-1 tracking-wide">Philly Cheesesteak</h4>
+                            <p class="font-sans text-sm text-slate-600 mb-4 font-bold">
+                                Sliced sirloin steak grilled to perfection with melted cheese on an authentic soft Italian roll.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
+                            <span class="font-fredoka text-2xl text-slate-900">$14.50</span>
+                            <button onclick="openModifierModal('Philly Cheesesteak', 14.50)" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">
+                                + Add to Order
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Philly / Fries Combo -->
+                    <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between hover:rotate-1 transition-transform">
+                        <div>
+                            <div class="h-48 bg-brandYellow rounded-2xl comic-border mb-4 overflow-hidden relative flex items-center justify-center p-2">
+                                <img src="https://thumbs.dreamstime.com/z/authentic-philly-cheesesteak-sandwich-french-fries-beer-authentic-philly-cheesesteak-sandwich-french-fries-307329290.jpg?w=576" alt="Philly Cheesesteak + Fries Combo" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/FFDE59/000000?text=Cheesesteak+Combo';">
+                                <span class="absolute top-2 right-2 bg-brandGreen text-slate-900 font-bangers text-sm px-2 py-0.5 rounded-lg comic-border">COMBO DEAL</span>
+                            </div>
+                            <h4 class="font-bangers text-2xl text-brandPurple mb-1 tracking-wide">Philly Cheesesteak & Fries Combo</h4>
+                            <p class="font-sans text-sm text-slate-600 mb-4 font-bold">
+                                Classic Philly Cheesesteak sandwich paired with a hot side basket of seasoned french fries.
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
+                            <span class="font-fredoka text-2xl text-slate-900">$18.00</span>
+                            <button onclick="openModifierModal('Philly Cheesesteak & Fries Combo', 18.00)" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">
+                                + Add to Order
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Dozen Mini Panzarottini -->
+                    <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between hover:-rotate-1 transition-transform">
+                        <div>
+                            <div class="h-48 bg-brandTeal rounded-2xl comic-border mb-4 overflow-hidden relative flex items-center justify-center p-2">
+                                <img src="https://blog.giallozafferano.it/streedefingerfodd/wp-content/uploads/2025/10/Gemini_Generated_Image_q2xdc7q2xdc7q2xd.png" alt="Dozen Mini Panzarottini" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/00C2CB/000000?text=Mini+Panzarottini';">
+                                <span class="absolute top-2 right-2 bg-brandPink text-white font-bangers text-sm px-2 py-0.5 rounded-lg comic-border">GREAT FOR SHARING</span>
+                            </div>
+                            <h4 class="font-bangers text-2xl text-brandPurple mb-1 tracking-wide">Dozen Mini Panzarottini</h4>
+                            <p class="font-sans text-sm text-slate-600 mb-4 font-bold">
+                                12 bite-sized mini Panzarottis deep-fried until golden brown, stuffed with cheese & sauce!
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
+                            <span class="font-fredoka text-2xl text-slate-900">$24.99</span>
+                            <button onclick="openModifierModal('Dozen Mini Panzarottini', 24.99)" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">
+                                + Add to Order
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- CATEGORY 3: SIDES & DRINKS -->
+            <div>
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="bg-brandGreen text-slate-900 font-bangers text-2xl px-4 py-1 rounded-2xl comic-border shadow-comic-sm">
+                        🍟 SIDES & REFRESHING DRINKS
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    <!-- Fries -->
+                    <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between hover:rotate-1 transition-transform">
+                        <div>
+                            <div class="h-36 bg-brandPink rounded-2xl comic-border mb-3 overflow-hidden relative flex items-center justify-center p-2">
+                                <img src="https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=500&q=80" alt="Fries" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/FF66C4/000000?text=Crispy+Fries';">
+                            </div>
+                            <h4 class="font-bangers text-xl text-brandPurple mb-1">Crispy French Fries</h4>
+                            <p class="font-sans text-xs text-slate-600 mb-3 font-bold">Hot, golden, lightly salted potato fries.</p>
+                        </div>
+                        <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-2">
+                            <span class="font-fredoka text-xl text-slate-900">$4.00</span>
+                            <button onclick="addToCart('Crispy French Fries', 4.00)" class="bg-brandGreen hover:bg-green-400 font-fredoka px-3 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs font-bold">
+                                + Add Yum
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cheese Fries -->
+                    <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between hover:-rotate-1 transition-transform">
+                        <div>
+                            <div class="h-36 bg-brandOrange rounded-2xl comic-border mb-3 overflow-hidden relative flex items-center justify-center p-2">
+                                <img src="https://foodilory.com/wp-content/uploads/2025/11/r8rgebgjbauhdt7lyi4w.webp" alt="Cheese Fries" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/FF914D/000000?text=Cheese+Fries';">
+                            </div>
+                            <h4 class="font-bangers text-xl text-brandPurple mb-1">Gooey Cheese Fries</h4>
+                            <p class="font-sans text-xs text-slate-600 mb-3 font-bold">Golden fries smothered in warm cheese sauce.</p>
+                        </div>
+                        <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-2">
+                            <span class="font-fredoka text-xl text-slate-900">$6.00</span>
+                            <button onclick="addToCart('Gooey Cheese Fries', 6.00)" class="bg-brandGreen hover:bg-green-400 font-fredoka px-3 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs font-bold">
+                                + Add Yum
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Soda -->
+                    <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between hover:rotate-1 transition-transform">
+                        <div>
+                            <div class="h-36 bg-brandGreen rounded-2xl comic-border mb-3 overflow-hidden relative flex items-center justify-center p-2">
+                                <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=500&q=80" alt="Soda" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/7ED957/000000?text=Cold+Soda';">
+                            </div>
+                            <h4 class="font-bangers text-xl text-brandPurple mb-1">Ice Cold Soda</h4>
+                            <p class="font-sans text-xs text-slate-600 mb-3 font-bold">Assorted canned sodas to quench your thirst.</p>
+                        </div>
+                        <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-2">
+                            <span class="font-fredoka text-xl text-slate-900">$2.00</span>
+                            <button onclick="addToCart('Ice Cold Soda', 2.00)" class="bg-brandGreen hover:bg-green-400 font-fredoka px-3 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs font-bold">
+                                + Add Yum
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Water -->
+                    <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between hover:-rotate-1 transition-transform">
+                        <div>
+                            <div class="h-36 bg-brandPurple rounded-2xl comic-border mb-3 overflow-hidden relative flex items-center justify-center p-2">
+                                <img src="https://media.istockphoto.com/id/172715253/photo/bottle-of-water.jpg?s=612x612&w=0&k=20&c=hyKU4mWql3ei8UGICIRl8ys6L-iAfzo4BlNd_gnisVw=" alt="Bottled Water" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/8C52FF/FFFFFF?text=Bottled+Water';">
+                            </div>
+                            <h4 class="font-bangers text-xl text-brandPurple mb-1">Bottled Water</h4>
+                            <p class="font-sans text-xs text-slate-600 mb-3 font-bold">Pure purified drinking water bottle.</p>
+                        </div>
+                        <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-2">
+                            <span class="font-fredoka text-xl text-slate-900">$1.50</span>
+                            <button onclick="addToCart('Bottled Water', 1.50)" class="bg-brandGreen hover:bg-green-400 font-fredoka px-3 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs font-bold">
+                                + Add Yum
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- JERSEY FUN ZONE & AUDIO SYNTHESIZER SECTION -->
+        <section id="funzone" class="px-4 max-w-6xl mx-auto scroll-mt-28">
+            <div class="bg-brandTeal comic-border shadow-comic-lg rounded-3xl p-6 md:p-8 text-white relative">
+                
+                <div class="text-center mb-6">
+                    <span class="bg-brandYellow text-slate-900 font-bangers text-xl px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2">
+                        INTERACTIVE FUN
+                    </span>
+                    <h2 class="font-bangers text-4xl md:text-6xl text-white drop-shadow-[3px_3px_0px_#000]">
+                        SOUTH JERSEY SOUNDBOARD & JOKES 🤪
+                    </h2>
+                    <p class="font-fredoka text-slate-900 text-lg">Push buttons for real-time Web Audio FX and food jokes!</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+                    
+                    <div class="bg-white text-slate-900 comic-border rounded-2xl p-5 shadow-comic flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bangers text-2xl text-brandPurple mb-3 flex items-center gap-2">
+                                🔊 Silly Audio Synthesizer
+                            </h3>
+                            <p class="font-sans text-sm font-bold text-slate-600 mb-4">Click to trigger synth sound FX generated in real-time!</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="playSound('boing')" class="bg-brandYellow hover:bg-yellow-300 font-bangers text-lg py-3 rounded-xl comic-border shadow-comic-sm active:translate-y-0.5">
+                                🌀 BOING!
+                            </button>
+                            <button onclick="playSound('crunch')" class="bg-brandOrange hover:bg-orange-400 font-bangers text-lg py-3 text-white rounded-xl comic-border shadow-comic-sm active:translate-y-0.5">
+                                🥟 CRUNCH!
+                            </button>
+                            <button onclick="playSound('honk')" class="bg-brandPink hover:bg-pink-400 font-bangers text-lg py-3 text-white rounded-xl comic-border shadow-comic-sm active:translate-y-0.5">
+                                🎺 TRUCK HONK!
+                            </button>
+                            <button onclick="playSound('laser')" class="bg-brandGreen hover:bg-green-400 font-bangers text-lg py-3 rounded-xl comic-border shadow-comic-sm active:translate-y-0.5">
+                                ⚡ CHEESE ZAP!
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white text-slate-900 comic-border rounded-2xl p-5 shadow-comic flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bangers text-2xl text-brandPink mb-3 flex items-center gap-2">
+                                💬 Silly Food Joke Box
+                            </h3>
+                            <div class="speech-bubble p-4 mb-4 min-h-[90px] flex items-center justify-center text-center">
+                                <p id="joke-display" class="font-fredoka text-base md:text-lg text-slate-800">
+                                    "Why did the Panzarotti go to Central Florida? ... Because it wanted to get a little extra sunshine on its golden crust!" ☀️🥟
+                                </p>
+                            </div>
+                        </div>
+                        <button onclick="generateJoke()" class="w-full bg-brandPurple hover:bg-purple-600 text-white font-bangers text-xl py-3 rounded-xl comic-border shadow-comic-sm transition active:translate-y-0.5">
+                            ✨ TELL ME ANOTHER JOKE!
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- LIVE TRUCK RADAR SECTION -->
+        <section id="radar" class="px-4 max-w-4xl mx-auto scroll-mt-28">
+            <div class="bg-white comic-border shadow-comic-lg rounded-3xl p-6 md:p-8">
+                <div class="text-center mb-6">
+                    <span class="bg-brandRed text-white font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2 animate-pulse">
+                        🔴 LIVE TRUCK STATUS RADAR
+                    </span>
+                    <h2 class="font-bangers text-4xl md:text-5xl text-brandPurple">
+                        WHERE'S THE PANZAROTTI TRUCK TODAY? 🚚📍
+                    </h2>
+                    <p class="font-fredoka text-slate-700 text-base">Catch us serving hot, deep-fried goodness around Kissimmee!</p>
+                </div>
+
+                <div class="bg-brandYellow comic-border p-5 rounded-2xl shadow-comic text-center max-w-md mx-auto mb-6">
+                    <span class="font-bangers text-2xl text-brandPurple block">PRIMARY FOOD TRUCK SPOT</span>
+                    <p id="truck-address" class="font-fredoka text-xl font-bold text-slate-900 mt-1">1398 E Vine St</p>
+                    <p class="font-fredoka text-sm text-slate-700">Kissimmee, FL 34744</p>
+                    <span id="radar-live-pill" class="inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm">
+                        CHECKING FRYER STATUS...
+                    </span>
+                </div>
+
+                <!-- Dynamic Schedule Container for CMS -->
+                <div id="schedule-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div class="bg-yellow-100 comic-border rounded-xl p-3 text-center shadow-comic-sm">
+                        <span class="font-bangers text-xl text-brandOrange block">TUES - THURS</span>
+                        <div class="font-fredoka text-xs text-slate-900 font-bold my-1">📍 1398 E Vine St</div>
+                        <span class="text-[10px] font-bold bg-white px-2 py-0.5 rounded-md comic-border inline-block">11 AM - 8 PM</span>
+                    </div>
+
+                    <div class="bg-teal-100 comic-border rounded-xl p-3 text-center shadow-comic-sm">
+                        <span class="font-bangers text-xl text-brandTeal block">FRIDAY NIGHT</span>
+                        <div class="font-fredoka text-xs text-slate-900 font-bold my-1">🎪 Truck Rally</div>
+                        <span class="text-[10px] font-bold bg-white px-2 py-0.5 rounded-md comic-border inline-block">4 PM - 9 PM</span>
+                    </div>
+
+                    <div class="bg-pink-100 comic-border rounded-xl p-3 text-center shadow-comic-sm">
+                        <span class="font-bangers text-xl text-brandPink block">SATURDAY</span>
+                        <div class="font-fredoka text-xs text-slate-900 font-bold my-1">📍 1398 E Vine St</div>
+                        <span class="text-[10px] font-bold bg-white px-2 py-0.5 rounded-md comic-border inline-block">11 AM - 9 PM</span>
+                    </div>
+
+                    <div class="bg-purple-100 comic-border rounded-xl p-3 text-center shadow-comic-sm">
+                        <span class="font-bangers text-xl text-brandPurple block">SUNDAY</span>
+                        <div class="font-fredoka text-xs text-slate-900 font-bold my-1">📦 Delivery Drops</div>
+                        <span class="text-[10px] font-bold bg-white px-2 py-0.5 rounded-md comic-border inline-block">10 AM - 6 PM</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AUTOMATED SUNDAY DELIVERY DROP SECTION -->
+        <section id="delivery-drop" class="px-4 max-w-6xl mx-auto scroll-mt-28">
+            <div id="drop-container" class="bg-brandYellow comic-border shadow-comic-lg rounded-3xl p-6 md:p-8 relative overflow-hidden transition-all duration-300">
+                
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b-4 border-slate-900 pb-4 mb-6">
+                    <div>
+                        <span id="drop-status-badge" class="bg-brandRed text-white font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2">
+                            🔴 DELIVERY DROP PRE-ORDERS
+                        </span>
+                        <h2 class="font-bangers text-4xl md:text-5xl text-brandPurple">
+                            SUNDAY DELIVERY DROP CALCULATOR 📦
+                        </h2>
+                        <p id="drop-schedule-subtitle" class="font-fredoka text-slate-900 font-bold text-base">
+                            Delivery Only • Drop Window: Sundays 10:00 AM – 6:00 PM EST (Or Until Sold Out)
+                        </p>
+                    </div>
+                    
+                    <div id="drop-slot-box" class="bg-white comic-border p-4 rounded-2xl shadow-comic text-center min-w-[260px]">
+                        <span id="drop-slot-label" class="font-bangers text-lg text-slate-900 block">DELIVERY SLOT STATUS</span>
+                        <div class="w-full bg-slate-200 rounded-full h-4 comic-border my-2 overflow-hidden">
+                            <div id="drop-slot-bar" class="bg-brandPink h-full rounded-full transition-all duration-500" style="width: 70%;"></div>
+                        </div>
+                        <span id="drop-slot-text" class="font-fredoka text-xs font-bold text-brandRed">⚡ LIMITED SLOTS REMAINING!</span>
+                    </div>
+                </div>
+
+                <div id="drop-closed-notice" class="hidden bg-slate-900 text-white comic-border p-6 rounded-2xl mb-8 shadow-comic text-center">
+                    <span class="text-4xl mb-2 block">🔒</span>
+                    <h3 class="font-bangers text-3xl text-brandYellow mb-2">DELIVERY DROPS ARE CURRENTLY CLOSED!</h3>
+                    <p class="font-fredoka text-slate-300 text-base max-w-xl mx-auto mb-4">
+                        Our Sunday Delivery Drop ordering window opens automatically every <strong>Sunday between 10:00 AM and 6:00 PM EST</strong>!
+                    </p>
+                    <div class="inline-block bg-brandPurple text-white font-fredoka font-bold text-sm px-4 py-2 rounded-xl comic-border">
+                        📅 Next Drop Window: Sunday at 10:00 AM EST
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white comic-border rounded-2xl p-5 shadow-comic flex items-start gap-3">
+                        <span class="text-3xl">🚗</span>
+                        <div>
+                            <h4 class="font-bangers text-xl text-brandPurple">DELIVERY ONLY</h4>
+                            <p class="font-fredoka text-xs text-slate-700 font-bold">
+                                On Drop Days, we bring fresh hot Panzarottis straight to your door in Central Florida!
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white comic-border rounded-2xl p-5 shadow-comic flex items-start gap-3">
+                        <span class="text-3xl">🏷️</span>
+                        <div>
+                            <h4 class="font-bangers text-xl text-brandPurple">ORDER MINIMUM: <span id="drop-min-amount">$30.00</span></h4>
+                            <p class="font-fredoka text-xs text-slate-700 font-bold">
+                                Works for small or large orders! Total food spend must reach minimum to lock in delivery.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white comic-border rounded-2xl p-5 shadow-comic flex items-start gap-3">
+                        <span class="text-3xl">💳</span>
+                        <div>
+                            <h4 class="font-bangers text-xl text-brandPurple">50% DEPOSIT TO LOCK IN</h4>
+                            <p class="font-fredoka text-xs text-slate-700 font-bold">
+                                Pay 50% upfront to hold your spot, and pay the remaining 50% upon delivery arrival!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white comic-border rounded-3xl p-6 shadow-comic max-w-3xl mx-auto">
+                    <h3 class="font-bangers text-3xl text-slate-900 mb-4 text-center">
+                        📋 ORDER CALCULATOR & CHECKOUT
+                    </h3>
+
+                    <div class="bg-yellow-50 comic-border p-4 rounded-2xl mb-6">
+                        <div class="flex justify-between font-fredoka font-bold text-sm mb-1">
+                            <span>Your Cart Subtotal: <strong id="drop-subtotal-text" class="text-brandPurple">$0.00</strong></span>
+                            <span>Min Required: <strong id="drop-min-label-val" class="text-slate-900">$30.00</strong></span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-4 comic-border overflow-hidden">
+                            <div id="drop-min-progress-bar" class="bg-brandGreen h-full transition-all duration-300" style="width: 0%;"></div>
+                        </div>
+                        <p id="drop-min-status-msg" class="font-fredoka text-xs font-bold text-brandRed mt-2 text-center">
+                            ⚠️ Add items from the menu above to reach the minimum!
+                        </p>
+                    </div>
+
+                    <form id="drop-form" onsubmit="handleDeliveryDropSubmit(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">DELIVERY ADDRESS *</label>
+                                <input type="text" id="drop-address" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="123 Main St, Kissimmee, FL">
+                            </div>
+
+                            <div>
+                                <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">DISTANCE FROM VINE ST *</label>
+                                <select id="drop-distance" onchange="recalculateDropTotals()" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple">
+                                    <option value="5">Under 5 Miles (+$5.00 Delivery)</option>
+                                    <option value="10">5 – 10 Miles (+$10.00 Delivery)</option>
+                                    <option value="15">10 – 15 Miles (+$15.00 Delivery)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="bg-purple-50 comic-border p-4 rounded-2xl space-y-2 font-fredoka">
+                            <div class="flex justify-between text-sm">
+                                <span>Food Subtotal:</span>
+                                <span id="math-food-subtotal" class="font-bold">$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Delivery Fee:</span>
+                                <span id="math-delivery-fee" class="font-bold">$5.00</span>
+                            </div>
+                            <div class="flex justify-between text-lg font-bangers text-slate-900 border-t border-slate-300 pt-2">
+                                <span>Total Order Amount:</span>
+                                <span id="math-total-order">$5.00</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 pt-2 text-center">
+                                <div class="bg-brandGreen text-slate-900 p-2 rounded-xl comic-border">
+                                    <span class="block text-xs font-bold">50% DEPOSIT DUE TODAY</span>
+                                    <span id="math-deposit-due" class="font-bangers text-xl">$2.50</span>
+                                </div>
+                                <div class="bg-brandYellow text-slate-900 p-2 rounded-xl comic-border">
+                                    <span class="block text-xs font-bold">REMAINING AT DELIVERY</span>
+                                    <span id="math-remaining-due" class="font-bangers text-xl">$2.50</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="drop-submit-btn" disabled class="w-full bg-slate-300 text-slate-500 font-bangers text-2xl py-3 rounded-xl comic-border cursor-not-allowed transition">
+                            🔒 MINIMUM ORDER NOT MET
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FRYER ALERT VIP SIGNUP BANNER -->
+        <section class="px-4 max-w-6xl mx-auto">
+            <div class="bg-brandYellow comic-border shadow-comic-lg rounded-3xl p-6 md:p-8 text-center relative overflow-hidden">
+                <span class="bg-brandPink text-white font-bangers text-xl px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2">
+                    NEVER MISS A HOT PANZAROTTI
+                </span>
+                <h2 class="font-bangers text-4xl md:text-5xl text-brandPurple mb-2">
+                    SIGN UP FOR "FRYER ALERT" VIP NOTIFICATIONS! 🚨
+                </h2>
+                <p class="font-fredoka text-slate-800 text-base md:text-lg max-w-2xl mx-auto mb-6">
+                    Get instant text or email updates whenever our food truck opens up in Kissimmee or drops secret discount codes!
+                </p>
+
+                <form onsubmit="handleVipSignup(event)" class="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="vip-contact" placeholder="Enter phone # or email..." required class="flex-1 font-fredoka px-4 py-3 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-4 focus:ring-brandPink">
+                    <button type="submit" class="bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-xl px-6 py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5">
+                        🔔 JOIN VIP RADAR
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    <!-- LOCATION & HOURS SECTION -->
+        <section id="location" class="px-4 max-w-6xl mx-auto scroll-mt-28">
+            <div class="bg-white comic-border shadow-comic-lg rounded-3xl p-6 md:p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <span class="bg-brandGreen text-slate-900 font-bangers text-xl px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2">
+                            KISSIMMEE & CENTRAL FLORIDA
+                        </span>
+                        <h2 class="font-bangers text-4xl md:text-5xl text-brandPurple mb-3">
+                            ALWAYS MOVING TO SERVE YOU! 🚚
+                        </h2>
+                        <div class="space-y-3 font-fredoka text-slate-800 text-base">
+                            <p class="flex items-start gap-2">
+                                <span class="text-2xl">📍</span>
+                                <span><strong>Weekly Stops:</strong> We pop up at food truck hubs, rallies, and markets across Central Florida. Check our <strong>Truck Radar above</strong> for this week's exact locations!</span>
+                            </p>
+                            <p class="flex items-start gap-2">
+                                <span class="text-2xl">📦</span>
+                                <span><strong>Sunday Delivery Days:</strong> On Sunday Drop days, there is no physical truck address to visit—we deliver fresh, hot Panzarottis straight to your door!</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-brandTeal comic-border rounded-3xl p-6 text-white text-center shadow-comic">
+                        <span class="text-6xl mb-3 block">🗺️</span>
+                        <h3 class="font-bangers text-3xl text-yellow-300 mb-2">TRACK THE TRUCK</h3>
+                        <p class="font-fredoka text-lg text-slate-900 font-bold mb-4">Check our live schedule above for this week's spots & hours!</p>
+                        <button onclick="scrollToSection('radar')" class="inline-block bg-brandPink hover:bg-pink-600 text-white font-bangers text-xl px-6 py-2.5 rounded-xl comic-border shadow-comic-sm transition active:translate-y-0.5 cursor-pointer">
+                            👇 VIEW TRUCK RADAR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>    
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-white comic-border border-b-0 border-x-0 py-8 px-4 text-center mt-auto">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <img src="https://scontent.cdninstagram.com/v/t51.2885-19/419541794_341905135274525_7938065282477996207_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=107&ig_cache_key=GCKzARkdiiL_9TYBAK849hVRrClubkULAAAB1501500j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=9Y3ceDUKVeEQ7kNvwG9hTXZ&_nc_oc=AdoUrfvMRYsxG2OeEEYH-4wDS9c2wuLAvdqrMWMzJHPvSgk3KWZXXMVWLYayFvl9N8oOaP9uUx377Fzp7Tka8JU1&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_ss=7b689&oh=00_AQTBAVF-pwCIiOjhWyuSw2RQX00vvJWlaCtwAOalE5xN_w&oe=6AEFDD7E" alt="A Touch of South Jersey Logo" class="w-8 h-8 rounded-full border border-white object-cover">
+                <span class="font-bangers text-2xl text-brandYellow">A TOUCH OF SOUTH JERSEY</span>
+            </div>
+            <p class="font-fredoka text-sm text-slate-400">
+                © 2026 A Touch of South Jersey (Est. 2023). Bringing South Jersey Comfort to Kissimmee, FL!
+            </p>
+            <div class="flex gap-3">
+                <span class="text-2xl cursor-pointer hover:scale-125 transition">🧀</span>
+                <span class="text-2xl cursor-pointer hover:scale-125 transition">🥩</span>
+                <span class="text-2xl cursor-pointer hover:scale-125 transition">🍟</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ITEM MODIFIER & SPECIAL REQUEST MODAL -->
+    <div id="modifier-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white w-full max-w-lg comic-border rounded-3xl p-6 shadow-comic-lg relative max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b-4 border-slate-900 pb-3 mb-4">
+                <h3 id="modifier-item-title" class="font-bangers text-3xl text-brandPurple">Add Item to Order</h3>
+                <button onclick="closeModifierModal()" class="bg-brandPink text-white font-bangers text-lg px-3 py-1 rounded-xl comic-border shadow-comic-sm hover:bg-pink-600">
+                    ✖ CLOSE
+                </button>
+            </div>
+
+            <p class="font-fredoka text-slate-600 text-sm mb-4">Add optional extra dipping sauces, toppings, or special instructions below!</p>
+
+            <div class="space-y-3 mb-4">
+                <label class="flex items-center justify-between bg-yellow-50 p-3 rounded-xl comic-border cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="mod-marinara" class="w-5 h-5 text-brandPink rounded focus:ring-0">
+                        <span class="font-fredoka font-bold text-slate-900">Side of Warm Marinara Sauce</span>
+                    </div>
+                    <span class="font-fredoka font-bold text-brandPurple">+$1.00</span>
+                </label>
+
+                <label class="flex items-center justify-between bg-yellow-50 p-3 rounded-xl comic-border cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="mod-garlic" class="w-5 h-5 text-brandPink rounded focus:ring-0">
+                        <span class="font-fredoka font-bold text-slate-900">Garlic Herb Dip</span>
+                    </div>
+                    <span class="font-fredoka font-bold text-brandPurple">+$1.00</span>
+                </label>
+
+                <label class="flex items-center justify-between bg-yellow-50 p-3 rounded-xl comic-border cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="mod-cheese" class="w-5 h-5 text-brandPink rounded focus:ring-0">
+                        <span class="font-fredoka font-bold text-slate-900">Extra Mozzarella Cheese Stuffed</span>
+                    </div>
+                    <span class="font-fredoka font-bold text-brandPurple">+$1.50</span>
+                </label>
+            </div>
+
+            <!-- Special Requests Text Area -->
+            <div class="mb-6">
+                <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">SPECIAL REQUESTS / INSTRUCTIONS (OPTIONAL)</label>
+                <input type="text" id="mod-special-notes" placeholder="e.g. No cheese, extra crispy, sauce on side..." class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple text-sm">
+            </div>
+
+            <div class="flex justify-between items-center border-t-2 border-dashed border-slate-300 pt-4">
+                <div>
+                    <span class="block text-xs font-bold text-slate-500">ITEM TOTAL:</span>
+                    <span id="modifier-total-price" class="font-bangers text-3xl text-slate-900">$0.00</span>
+                </div>
+                <button onclick="confirmModifierAdd()" class="bg-brandGreen hover:bg-green-400 font-fredoka px-6 py-3 rounded-xl comic-border shadow-comic text-slate-900 font-bold text-base transition active:translate-y-0.5">
+                    + Add to Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATERING REQUEST MODAL -->
+    <div id="catering-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white w-full max-w-2xl comic-border rounded-3xl p-6 shadow-comic-lg relative max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b-4 border-slate-900 pb-3 mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-3xl">🎪</span>
+                    <h3 class="font-bangers text-3xl text-brandPurple">Book The Panzarotti Food Truck!</h3>
+                </div>
+                <button onclick="closeCateringModal()" class="bg-brandPink text-white font-bangers text-lg px-3 py-1 rounded-xl comic-border shadow-comic-sm hover:bg-pink-600">
+                    ✖ CLOSE
+                </button>
+            </div>
+
+            <div class="bg-brandYellow comic-border p-4 rounded-2xl mb-4 shadow-comic-sm flex items-start gap-3">
+                <span class="text-2xl">⚠️</span>
+                <div>
+                    <h4 class="font-bangers text-lg text-slate-900">CATERING POLICY & TERMS</h4>
+                    <p class="font-fredoka text-xs text-slate-800 leading-snug">
+                        Large catering orders require a <strong id="catering-deposit-label">50% deposit upfront</strong> to secure your date, with the remaining balance due upon delivery.
+                    </p>
+                </div>
+            </div>
+
+            <form onsubmit="handleCateringSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">YOUR NAME *</label>
+                        <input type="text" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="John Doe">
+                    </div>
+                    <div>
+                        <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">PHONE OR EMAIL *</label>
+                        <input type="text" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="(407) 555-0199">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">EVENT DATE *</label>
+                        <input type="date" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple">
+                    </div>
+                    <div>
+                        <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">ESTIMATED GUEST COUNT *</label>
+                        <input type="number" min="10" max="500" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="50">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">EVENT LOCATION / CITY *</label>
+                    <input type="text" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="Kissimmee, Orlando, Davenport, etc.">
+                </div>
+
+                <div>
+                    <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">SPECIAL REQUESTS / MENU PREFERENCES</label>
+                    <textarea rows="3" class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="Tell us about your party details, Panzarotti requests, or Philly cheesesteak preferences!"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-2xl py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5">
+                    🚀 SUBMIT CATERING INQUIRY
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- CART MODAL / DRAWER -->
+    <div id="cart-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-end opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white w-full max-w-md h-full comic-border border-r-0 p-6 flex flex-col justify-between overflow-y-auto transform translate-x-full transition-transform duration-300 shadow-comic-lg" id="cart-drawer-content">
+            
+            <div>
+                <div class="flex justify-between items-center border-b-4 border-slate-900 pb-4 mb-4">
+                    <h2 class="font-bangers text-3xl text-brandPurple flex items-center gap-2">
+                        🛒 YOUR YUM LIST
+                    </h2>
+                    <button onclick="toggleCartModal()" class="bg-brandPink text-white font-bangers text-xl px-3 py-1 rounded-xl comic-border shadow-comic-sm hover:bg-pink-600">
+                        ✖ CLOSE
+                    </button>
+                </div>
+
+                <div id="cart-items-list" class="space-y-3 mb-4">
+                    <p class="text-center font-fredoka text-slate-400 py-8">Your order is empty! Add some delicious Panzarottis or Cheesesteaks! 🥟</p>
+                </div>
+            </div>
+
+            <div class="border-t-4 border-slate-900 pt-4 bg-yellow-50 p-4 rounded-2xl comic-border">
+                <div class="flex justify-between font-fredoka text-xl mb-2">
+                    <span>Total Price:</span>
+                    <span id="cart-total" class="font-bangers text-2xl text-brandPurple">$0.00</span>
+                </div>
+                <div id="cart-badge-container" class="mb-4"></div>
+                <button onclick="checkoutCart()" class="w-full bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-2xl py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5">
+                    🎉 PLACE ORDER!
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Notification Toast Box -->
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-brandPurple text-white font-fredoka px-6 py-3 rounded-2xl comic-border shadow-comic opacity-0 pointer-events-none transition-all duration-300 z-50 text-center">
+        Notification message
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Shopping Cart State
+        const cart = [];
+
+        // Global CMS Configuration State
+        const DROP_CONFIG = {
+            minOrderAmount: 30.00,
+            depositPct: 50,         // Dynamic deposit percentage from drop-settings.json
+            forceOpen: false,
+            manualSoldOut: false,
+            dropDay: 0,
+            startHour: 10,
+            endHour: 18
+        };
+
+        // Active Modifier Item State
+        let activeModItem = { name: '', basePrice: 0 };
+
+        // Silly Regional Jokes
+        const jokes = [
+            "Why did the Panzarotti go to Central Florida? ... Because it wanted to get a little extra sunshine on its golden crust! ☀️🥟",
+            "What did the Philly Cheesesteak say to the French Fries? ... 'You complete me, man!' 🥩🍟",
+            "Why don't Panzarottis ever share secrets? ... Because they might burst and spill all the cheese! 🧀",
+            "What's a South Jersey foodie's favorite song? ... 'Don't Go Breaking My Crust!' 🎶",
+            "How do you know you're eating authentic South Jersey comfort food? ... When every bite takes you straight to Vine Street! 📍",
+            "Why did the Mini Panzarottini win the championship? ... Because it was a dozen times better than the competition! 🏆"
+        ];
+
+        // CMS Settings Fetcher
+        async function loadSiteSettings() {
+            try {
+                const response = await fetch('./content/settings.json');
+                if (!response.ok) return;
+                const data = await response.json();
+
+                // 1. Update Top Announcement
+                const announcementEl = document.getElementById('announcement-bar');
+                if (announcementEl && data.announcement_bar) {
+                    announcementEl.textContent = data.announcement_bar;
+                }
+
+                // 2. Update Truck Address
+                const addressEl = document.getElementById('truck-address');
+                if (addressEl && data.primary_address) {
+                    addressEl.textContent = data.primary_address;
+                }
+                const addressEls = document.querySelectorAll('.truck-address-text');
+                addressEls.forEach(el => {
+                    if (data.primary_address) el.textContent = data.primary_address;
+                });
+
+                // 3. Render Weekly Schedule Cards
+                if (data.weekly_schedule && Array.isArray(data.weekly_schedule)) {
+                    renderWeeklySchedule(data.weekly_schedule);
+                }
+
+                // 4. Handle Status Override if provided
+                if (data.status_override && data.status_override !== "AUTO") {
+                    applyStatusOverride(data.status_override);
+                } else {
+                    checkTruckOpenStatus();
+                }
+            } catch (err) {
+                console.log("Using default static HTML settings:", err);
+                checkTruckOpenStatus();
+            }
+        }
+
+        function renderWeeklySchedule(scheduleList) {
+            const container = document.getElementById('schedule-container');
+            if (!container) return;
+
+            const colorMap = {
+                yellow: 'bg-yellow-100',
+                teal: 'bg-teal-100',
+                pink: 'bg-pink-100',
+                purple: 'bg-purple-100'
+            };
+
+            const headerColorMap = {
+                yellow: 'text-brandOrange',
+                teal: 'text-brandTeal',
+                pink: 'text-brandPink',
+                purple: 'text-brandPurple'
+            };
+
+            container.innerHTML = scheduleList.map(item => `
+                <div class="${colorMap[item.card_color] || 'bg-yellow-100'} comic-border rounded-xl p-3 text-center shadow-comic-sm">
+                    <span class="font-bangers text-xl ${headerColorMap[item.card_color] || 'text-brandOrange'} block">${item.days}</span>
+                    <div class="font-fredoka text-xs text-slate-900 font-bold my-1">📍 ${item.location}</div>
+                    <span class="text-[10px] font-bold bg-white px-2 py-0.5 rounded-md comic-border inline-block">${item.hours}</span>
+                </div>
+            `).join('');
+        }
+
+        async function loadDropSettings() {
+            try {
+                const response = await fetch('./content/drop-settings.json');
+                if (!response.ok) return;
+                const data = await response.json();
+
+                if (data.drop_min_amount) {
+                    DROP_CONFIG.minOrderAmount = parseFloat(data.drop_min_amount);
+                    const minAmountEl = document.getElementById('drop-min-amount');
+                    const minLabelEl = document.getElementById('drop-min-label-val');
+                    if (minAmountEl) minAmountEl.textContent = `$${DROP_CONFIG.minOrderAmount.toFixed(2)}`;
+                    if (minLabelEl) minLabelEl.textContent = `$${DROP_CONFIG.minOrderAmount.toFixed(2)}`;
+                }
+
+                if (data.drop_capacity_text) {
+                    const slotTextEl = document.getElementById('drop-slot-text');
+                    if (slotTextEl) slotTextEl.textContent = data.drop_capacity_text;
+                }
+
+                if (data.catering_deposit_pct) {
+                    DROP_CONFIG.depositPct = parseFloat(data.catering_deposit_pct);
+                    const depositLabel = document.getElementById('catering-deposit-label');
+                    if (depositLabel) depositLabel.textContent = `${DROP_CONFIG.depositPct}% deposit upfront`;
+                }
+            } catch (err) {
+                console.log("Using default drop settings:", err);
+            }
+        }
+
+        // Apply Manual Status Override
+        function applyStatusOverride(overrideState) {
+            const badge = document.getElementById('live-open-badge');
+            const radarPill = document.getElementById('radar-live-pill');
+
+            if (overrideState === "MANUAL_OPEN" || overrideState === "OPEN") {
+                if (badge) {
+                    badge.className = "font-bangers text-xl px-4 py-1 rounded-full comic-border transform rotate-6 inline-block bg-brandGreen text-slate-900 animate-pulse";
+                    badge.innerText = "🟢 OPEN NOW";
+                }
+                if (radarPill) {
+                    radarPill.className = "inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm bg-brandGreen text-slate-900";
+                    radarPill.innerText = "🔥 FRYER IS HOT & SERVING NOW!";
+                }
+            } else {
+                if (badge) {
+                    badge.className = "font-bangers text-xl px-4 py-1 rounded-full comic-border transform rotate-6 inline-block bg-brandRed text-white";
+                    badge.innerText = "🔴 CLOSED NOW";
+                }
+                if (radarPill) {
+                    radarPill.className = "inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm bg-slate-800 text-white";
+                    radarPill.innerText = "🔒 TRUCK CLOSED";
+                }
+            }
+        }
+
+        // Check Truck Operational Status (Tuesday–Sunday)
+        function checkTruckOpenStatus() {
+            const now = new Date();
+            const day = now.getDay();
+            const hour = now.getHours();
+
+            const isTruckDay = (day >= 2 && day <= 6); // Tues (2) to Sat (6)
+            const isOpenHour = (hour >= 11 && hour < 20); // 11 AM to 8 PM
+
+            const badge = document.getElementById('live-open-badge');
+            const radarPill = document.getElementById('radar-live-pill');
+
+            if (isTruckDay && isOpenHour) {
+                if (badge) {
+                    badge.className = "font-bangers text-xl px-4 py-1 rounded-full comic-border transform rotate-6 inline-block bg-brandGreen text-slate-900 animate-pulse";
+                    badge.innerText = "🟢 OPEN NOW";
+                }
+                if (radarPill) {
+                    radarPill.className = "inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm bg-brandGreen text-slate-900";
+                    radarPill.innerText = "🔥 FRYER IS HOT & SERVING NOW!";
+                }
+            } else {
+                if (badge) {
+                    badge.className = "font-bangers text-xl px-4 py-1 rounded-full comic-border transform rotate-6 inline-block bg-brandRed text-white";
+                    badge.innerText = "🔴 CLOSED NOW";
+                }
+                if (radarPill) {
+                    radarPill.className = "inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm bg-slate-800 text-white";
+                    radarPill.innerText = "🔒 TRUCK CLOSED • OPENS 11:00 AM";
+                }
+            }
+        }
+
+        // Check if current system clock falls within active Sunday Drop hours
+        function isDropWindowActive() {
+            if (DROP_CONFIG.forceOpen) return true;
+            if (DROP_CONFIG.manualSoldOut) return false;
+
+            const now = new Date();
+            const currentDay = now.getDay();
+            const currentHour = now.getHours();
+
+            return (currentDay === DROP_CONFIG.dropDay && currentHour >= DROP_CONFIG.startHour && currentHour < DROP_CONFIG.endHour);
+        }
+
+        // Initialize and Update Drop Window UI
+        function checkDropWindowSchedule() {
+            const isActive = isDropWindowActive();
+            const statusBadge = document.getElementById('drop-status-badge');
+            const closedNotice = document.getElementById('drop-closed-notice');
+            const form = document.getElementById('drop-form');
+            const slotBar = document.getElementById('drop-slot-bar');
+            const slotText = document.getElementById('drop-slot-text');
+
+            if (isActive) {
+                if (statusBadge) {
+                    statusBadge.className = "bg-brandGreen text-slate-900 font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2 animate-pulse";
+                    statusBadge.innerText = "🟢 SUNDAY DROP PRE-ORDERS LIVE NOW!";
+                }
+                if (closedNotice) closedNotice.classList.add('hidden');
+                if (form) {
+                    const inputs = form.querySelectorAll('input, select');
+                    inputs.forEach(input => input.disabled = false);
+                }
+                if (slotBar) slotBar.style.width = '70%';
+            } else {
+                if (statusBadge) {
+                    statusBadge.className = "bg-slate-700 text-white font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2";
+                    statusBadge.innerText = "🔴 PRE-ORDERS CURRENTLY CLOSED";
+                }
+                if (closedNotice) closedNotice.classList.remove('hidden');
+                if (form) {
+                    const inputs = form.querySelectorAll('input, select');
+                    inputs.forEach(input => input.disabled = true);
+                }
+                if (slotBar) slotBar.style.width = '0%';
+            }
+
+            recalculateDropTotals();
+        }
+
+        // Delivery Drop Math Calculation
+        function recalculateDropTotals() {
+            const foodSubtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const distanceSelect = document.getElementById('drop-distance');
+            const deliveryFee = parseFloat(distanceSelect ? distanceSelect.value : 5);
+
+            const totalOrder = foodSubtotal + deliveryFee;
+            const depositMultiplier = DROP_CONFIG.depositPct / 100;
+            const depositDue = totalOrder * depositMultiplier;
+            const remainingDue = totalOrder - depositDue;
+
+            document.getElementById('math-food-subtotal').innerText = `$${foodSubtotal.toFixed(2)}`;
+            document.getElementById('math-delivery-fee').innerText = `$${deliveryFee.toFixed(2)}`;
+            document.getElementById('math-total-order').innerText = `$${totalOrder.toFixed(2)}`;
+            document.getElementById('math-deposit-due').innerText = `$${depositDue.toFixed(2)}`;
+            document.getElementById('math-remaining-due').innerText = `$${remainingDue.toFixed(2)}`;
+
+            const subtotalText = document.getElementById('drop-subtotal-text');
+            const progressFill = document.getElementById('drop-min-progress-bar');
+            const statusMsg = document.getElementById('drop-min-status-msg');
+            const submitBtn = document.getElementById('drop-submit-btn');
+
+            if (subtotalText) subtotalText.innerText = `$${foodSubtotal.toFixed(2)}`;
+
+            const pct = Math.min(100, (foodSubtotal / DROP_CONFIG.minOrderAmount) * 100);
+            if (progressFill) progressFill.style.width = `${pct}%`;
+
+            const isActive = isDropWindowActive();
+
+            if (!isActive) {
+                if (statusMsg) {
+                    statusMsg.className = "font-fredoka text-xs font-bold text-slate-500 mt-2 text-center";
+                    statusMsg.innerText = "🔒 Sunday Drop ordering is closed. Window opens Sunday at 10:00 AM EST.";
+                }
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.className = "w-full bg-slate-300 text-slate-500 font-bangers text-2xl py-3 rounded-xl comic-border cursor-not-allowed transition";
+                    submitBtn.innerText = "🔒 PRE-ORDERS CURRENTLY CLOSED";
+                }
+            } else if (foodSubtotal >= DROP_CONFIG.minOrderAmount) {
+                if (statusMsg) {
+                    statusMsg.className = "font-fredoka text-xs font-bold text-brandGreen mt-2 text-center";
+                    statusMsg.innerText = "🎉 Minimum order threshold reached! Ready to lock in your Sunday Drop slot!";
+                }
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.className = "w-full bg-brandRed hover:bg-red-600 text-white font-bangers text-2xl py-3 rounded-xl comic-border shadow-comic transition cursor-pointer active:translate-y-0.5";
+                    submitBtn.innerText = `🚀 RESERVE SUNDAY DROP SLOT (${DROP_CONFIG.depositPct}% DEPOSIT)`;
+                }
+            } else {
+                const needed = (DROP_CONFIG.minOrderAmount - foodSubtotal).toFixed(2);
+                if (statusMsg) {
+                    statusMsg.className = "font-fredoka text-xs font-bold text-brandRed mt-2 text-center";
+                    statusMsg.innerText = `⚠️ Add $${needed} more food from the menu above to unlock Delivery Drop checkout!`;
+                }
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.className = "w-full bg-slate-300 text-slate-500 font-bangers text-2xl py-3 rounded-xl comic-border cursor-not-allowed transition";
+                    submitBtn.innerText = `🔒 MINIMUM ORDER ($${DROP_CONFIG.minOrderAmount.toFixed(2)}) NOT MET`;
+                }
+            }
+        }
+
+        function handleDeliveryDropSubmit(e) {
+            e.preventDefault();
+            if (!isDropWindowActive()) {
+                showToast("Sunday Drop pre-orders are currently closed! 🔒");
+                return;
+            }
+
+            const foodSubtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            if (foodSubtotal < DROP_CONFIG.minOrderAmount) {
+                showToast(`Minimum order of $${DROP_CONFIG.minOrderAmount.toFixed(2)} required! 🥟`);
+                return;
+            }
+            const address = document.getElementById('drop-address').value;
+            playSound('laser');
+            showToast(`📦 Sunday Drop slot locked for ${address}! ${DROP_CONFIG.depositPct}% deposit requested.`);
+        }
+
+        // Modifier & Customization Modal Logic
+        function openModifierModal(itemName, price) {
+            activeModItem = { name: itemName, basePrice: price };
+            document.getElementById('modifier-item-title').innerText = `Add ${itemName}`;
+            document.getElementById('mod-marinara').checked = false;
+            document.getElementById('mod-garlic').checked = false;
+            document.getElementById('mod-cheese').checked = false;
+            document.getElementById('mod-special-notes').value = '';
+            
+            updateModifierTotal();
+
+            document.getElementById('mod-marinara').onchange = updateModifierTotal;
+            document.getElementById('mod-garlic').onchange = updateModifierTotal;
+            document.getElementById('mod-cheese').onchange = updateModifierTotal;
+
+            const modal = document.getElementById('modifier-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function updateModifierTotal() {
+            let total = activeModItem.basePrice;
+            if (document.getElementById('mod-marinara').checked) total += 1.00;
+            if (document.getElementById('mod-garlic').checked) total += 1.00;
+            if (document.getElementById('mod-cheese').checked) total += 1.50;
+            document.getElementById('modifier-total-price').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function closeModifierModal() {
+            const modal = document.getElementById('modifier-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function confirmModifierAdd() {
+            let mods = [];
+            let price = activeModItem.basePrice;
+            
+            if (document.getElementById('mod-marinara').checked) {
+                mods.push('Marinara (+$1.00)');
+                price += 1.00;
+            }
+            if (document.getElementById('mod-garlic').checked) {
+                mods.push('Garlic Dip (+$1.00)');
+                price += 1.00;
+            }
+            if (document.getElementById('mod-cheese').checked) {
+                mods.push('Extra Cheese (+$1.50)');
+                price += 1.50;
+            }
+
+            const notes = document.getElementById('mod-special-notes').value.trim();
+            if (notes) {
+                mods.push(`Note: "${notes}"`);
+            }
+
+            const fullName = mods.length > 0 ? `${activeModItem.name} (${mods.join(', ')})` : activeModItem.name;
+            addToCart(fullName, price);
+            closeModifierModal();
+        }
+
+        // Catering Modal Logic
+        function openCateringModal() {
+            const modal = document.getElementById('catering-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            playSound('boing');
+        }
+
+        function closeCateringModal() {
+            const modal = document.getElementById('catering-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function handleCateringSubmit(e) {
+            e.preventDefault();
+            playSound('laser');
+            showToast(`🎉 Catering request received! Reminder: Large orders require a ${DROP_CONFIG.depositPct}% deposit. We'll contact you shortly!`);
+            closeCateringModal();
+        }
+
+        // VIP Sign-up Logic
+        function handleVipSignup(e) {
+            e.preventDefault();
+            const contactInput = document.getElementById('vip-contact');
+            showToast(`🚨 You're signed up for Fryer Alerts! We will alert ${contactInput.value} when the truck is hot!`);
+            contactInput.value = '';
+            playSound('honk');
+        }
+
+        // Navigation Smooth Scroll Handler with Navbar Offset Fix
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                const nav = document.getElementById('main-nav');
+                const navHeight = nav ? nav.offsetHeight + 16 : 80;
+                const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - navHeight;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Cart Actions
+        function addToCart(itemName, price) {
+            const existing = cart.find(item => item.name === itemName);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ name: itemName, price: price, qty: 1 });
+            }
+            updateCartUI();
+            showToast(`Added ${itemName} to your order! 😋`);
+            playSound('boing');
+        }
+
+        function changeQty(itemName, delta) {
+            const index = cart.findIndex(item => item.name === itemName);
+            if (index !== -1) {
+                cart[index].qty += delta;
+                if (cart[index].qty <= 0) {
+                    cart.splice(index, 1);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const listEl = document.getElementById('cart-items-list');
+            const totalEl = document.getElementById('cart-total');
+            const badgeCountEl = document.getElementById('cart-count-badge');
+            const badgeContainer = document.getElementById('cart-badge-container');
+
+            let total = 0;
+            let count = 0;
+
+            if (cart.length === 0) {
+                listEl.innerHTML = `<p class="text-center font-fredoka text-slate-400 py-8">Your order is empty! Add some delicious Panzarottis or Cheesesteaks! 🥟</p>`;
+            } else {
+                listEl.innerHTML = cart.map(item => {
+                    const itemTotal = item.price * item.qty;
+                    total += itemTotal;
+                    count += item.qty;
+                    return `
+                        <div class="flex items-center justify-between bg-yellow-100 p-3 rounded-xl comic-border">
+                            <div class="pr-2">
+                                <h4 class="font-bangers text-lg text-slate-800">${item.name}</h4>
+                                <span class="font-fredoka text-sm text-slate-600">$${item.price.toFixed(2)} each</span>
+                            </div>
+                            <div class="flex items-center gap-2 shrink-0">
+                                <button onclick="changeQty('${item.name.replace(/'/g, "\\'")}', -1)" class="bg-brandPink text-white font-bold w-7 h-7 rounded-lg comic-border flex items-center justify-center shadow-comic-sm hover:bg-pink-600">-</button>
+                                <span class="font-fredoka font-bold text-lg w-5 text-center">${item.qty}</span>
+                                <button onclick="changeQty('${item.name.replace(/'/g, "\\'")}', 1)" class="bg-brandGreen text-slate-900 font-bold w-7 h-7 rounded-lg comic-border flex items-center justify-center shadow-comic-sm hover:bg-green-400">+</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            totalEl.innerText = `$${total.toFixed(2)}`;
+            badgeCountEl.innerText = count;
+
+            recalculateDropTotals();
+
+            if (total >= 20) {
+                badgeContainer.innerHTML = `<div class="bg-brandTeal text-slate-900 font-bangers text-sm p-2 rounded-xl comic-border text-center shadow-comic-sm animate-pulse">🏆 UNLOCKED: SOUTH JERSEY FOODIE LEGEND BADGE! 🏆</div>`;
+            } else if (total > 0) {
+                badgeContainer.innerHTML = `<div class="bg-brandPink text-white font-bangers text-xs p-1.5 rounded-xl comic-border text-center">Add $${(20 - total).toFixed(2)} more for South Jersey Legend Badge!</div>`;
+            } else {
+                badgeContainer.innerHTML = '';
+            }
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cart-modal');
+            const drawer = document.getElementById('cart-drawer-content');
+            
+            if (modal.classList.contains('opacity-0')) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                drawer.classList.remove('translate-x-full');
+            } else {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                drawer.classList.add('translate-x-full');
+            }
+        }
+
+        function checkoutCart() {
+            if (cart.length === 0) {
+                showToast("Your cart is empty! 🥟");
+                return;
+            }
+            playSound('laser');
+            showToast("🎉 Order placed! Get ready for authentic South Jersey yumminess! 🥟");
+            cart.length = 0;
+            updateCartUI();
+            toggleCartModal();
+        }
+
+        // Custom Toast Notification
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // Joke Generator Logic
+        function generateJoke() {
+            const display = document.getElementById('joke-display');
+            const randomIndex = Math.floor(Math.random() * jokes.length);
+            display.innerText = jokes[randomIndex];
+            playSound('boing');
+        }
+
+        // Web Audio Synthesizer Sound Effects
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            const now = audioCtx.currentTime;
+
+            if (type === 'boing') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(600, now + 0.3);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.start(now);
+                osc.stop(now + 0.3);
+            } else if (type === 'crunch') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(80, now);
+                osc.frequency.linearRampToValueAtTime(30, now + 0.15);
+                gain.gain.setValueAtTime(0.4, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                osc.start(now);
+                osc.stop(now + 0.15);
+            } else if (type === 'honk') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(220, now);
+                gain.gain.setValueAtTime(0.4, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            } else if (type === 'laser') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.exponentialRampToValueAtTime(100, now + 0.25);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            }
+        }
+
+        // Color palette sequence for background containers & badges
+        const COLOR_PALETTE = [
+            { bg: 'bg-brandYellow', badgeBg: 'bg-brandPink', text: 'text-white' },
+            { bg: 'bg-brandTeal', badgeBg: 'bg-brandPurple', text: 'text-white' },
+            { bg: 'bg-brandPink', badgeBg: 'bg-brandYellow', text: 'text-slate-900' },
+            { bg: 'bg-brandOrange', badgeBg: 'bg-brandRed', text: 'text-white' },
+            { bg: 'bg-brandGreen', badgeBg: 'bg-brandTeal', text: 'text-slate-900' },
+            { bg: 'bg-brandPurple', badgeBg: 'bg-brandYellow', text: 'text-slate-900' }
+        ];
+
+        async function loadMenuSettings() {
+            try {
+                const response = await fetch('./content/menu.json');
+                if (!response.ok) return;
+                const data = await response.json();
+
+                // 1. Render Dynamic Modifiers inside Modal
+                if (data.modifiers && Array.isArray(data.modifiers)) {
+                    renderDynamicModifiers(data.modifiers);
+                }
+
+                // 2. Render Dynamic Categories and Menu Items
+                if (data.categories && Array.isArray(data.categories)) {
+                    renderDynamicMenu(data.categories);
+                }
+            } catch (err) {
+                console.log("Using static HTML menu as fallback:", err);
+            }
+        }
+
+        // Renders the entire menu dynamically with automatic color sequencing
+        function renderDynamicMenu(categories) {
+            const menuContainer = document.getElementById('menu');
+            if (!menuContainer) return;
+
+            let globalItemIndex = 0;
+
+            let html = `
+                <div class="text-center mb-8">
+                    <span class="bg-brandPink text-white font-bangers text-xl px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2">
+                        AUTHENTIC MENU
+                    </span>
+                    <h2 class="font-bangers text-4xl md:text-6xl text-slate-900 drop-shadow-[2px_2px_0px_#FFF]">
+                        SOUTH JERSEY FAVORITES & PRICING 🥟
+                    </h2>
+                    <p class="font-fredoka text-slate-700 text-lg">Crispy deep-fried dough stuffed with cheesy perfection!</p>
+                </div>
+            `;
+
+            categories.forEach(cat => {
+                html += `
+                    <div class="mb-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="${cat.badge_color || 'bg-brandPurple'} text-white font-bangers text-2xl px-4 py-1 rounded-2xl comic-border shadow-comic-sm">
+                                ${cat.icon || '🥟'} ${cat.title}
+                            </span>
+                            ${cat.subtitle ? `<span class="font-fredoka text-xs font-bold text-slate-700 bg-white px-3 py-1 rounded-full comic-border hidden sm:inline-block">${cat.subtitle}</span>` : ''}
+                        </div>
+
+                        <div class="grid grid-cols-1 ${cat.items.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-3'} gap-6">
+                `;
+
+                cat.items.forEach(item => {
+                    const colorTheme = COLOR_PALETTE[globalItemIndex % COLOR_PALETTE.length];
+                    const rotationClass = (globalItemIndex % 2 === 0) ? 'hover:rotate-1' : 'hover:-rotate-1';
+                    globalItemIndex++;
+
+                    const badgeMarkup = item.badge 
+                        ? `<span class="absolute top-2 right-2 ${colorTheme.badgeBg} ${colorTheme.text} font-bangers text-sm px-2 py-0.5 rounded-lg comic-border">${item.badge}</span>`
+                        : '';
+
+                    const isSimpleAdd = cat.id === 'sides';
+
+                    html += `
+                        <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between ${rotationClass} transition-transform">
+                            <div>
+                                <div class="h-48 ${colorTheme.bg} rounded-2xl comic-border mb-4 overflow-hidden relative flex items-center justify-center p-2">
+                                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/FFDE59/000000?text=${encodeURIComponent(item.name)}';">
+                                    ${badgeMarkup}
+                                </div>
+                                <h4 class="font-bangers text-2xl text-brandPurple mb-1 tracking-wide">${item.name}</h4>
+                                <p class="font-sans text-sm text-slate-600 mb-4 font-bold">${item.description}</p>
+                            </div>
+                            <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
+                                <span class="font-fredoka text-2xl text-slate-900">$${parseFloat(item.price).toFixed(2)}</span>
+                                ${isSimpleAdd 
+                                    ? `<button onclick="addToCart('${item.name.replace(/'/g, "\\'")}', ${item.price})" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ Add Yum</button>`
+                                    : `<button onclick="openModifierModal('${item.name.replace(/'/g, "\\'")}', ${item.price})" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ Add to Order</button>`
+                                }
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            menuContainer.innerHTML = html;
+        }
+
+        // Dynamically renders the modal checkbox options from menu.json
+        function renderDynamicModifiers(modifiersList) {
+            const modalContainer = document.querySelector('#modifier-modal .space-y-3');
+            if (!modalContainer) return;
+
+            modalContainer.innerHTML = modifiersList.map(mod => `
+                <label class="flex items-center justify-between bg-yellow-50 p-3 rounded-xl comic-border cursor-pointer">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="${mod.id}" data-price="${mod.price}" class="w-5 h-5 text-brandPink rounded focus:ring-0 dynamic-mod-checkbox">
+                        <span class="font-fredoka font-bold text-slate-900">${mod.label}</span>
+                    </div>
+                    <span class="font-fredoka font-bold text-brandPurple">+$${parseFloat(mod.price).toFixed(2)}</span>
+                </label>
+            `).join('');
+        }
+
+        // Update modal total to read dynamic checkboxes
+        function updateModifierTotal() {
+            let total = activeModItem.basePrice;
+            const checkboxes = document.querySelectorAll('.dynamic-mod-checkbox');
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    total += parseFloat(cb.getAttribute('data-price') || 0);
+                }
+            });
+            document.getElementById('modifier-total-price').innerText = `$${total.toFixed(2)}`;
+        }
+
+        // Initialize CMS Config and Schedule Checks on Load
+        window.onload = async function() {
+            await loadSiteSettings();
+            await loadDropSettings();
+            await loadMenuSettings();
+            checkDropWindowSchedule();
+        };
+    </script>
+</body>
+</html>
