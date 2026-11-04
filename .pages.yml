@@ -8,6 +8,7 @@ content:
       - name: categories
         label: Menu Categories
         type: list
+        preview: title
         fields:
           - { name: title, label: Category Title, type: string }
           - { name: subtitle, label: Category Subtitle (Optional), type: string }
@@ -16,6 +17,7 @@ content:
           - name: items
             label: Food Items
             type: list
+            preview: name
             fields:
               - { name: name, label: Item Name, type: string }
               - { name: price, label: Price ($), type: number }
