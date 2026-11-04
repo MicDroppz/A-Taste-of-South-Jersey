@@ -1,4 +1,9 @@
-
+content:
+  - name: menu
+    label: Menu & Pricing
+    type: file
+    path: content/menu/menu.json
+    format: json
     fields:
       - name: modifiers
         label: Extras & Modifiers
