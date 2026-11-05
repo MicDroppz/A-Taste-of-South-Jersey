@@ -1031,33 +1031,38 @@
         }
 
         async function loadDropSettings() {
-            try {
-                const response = await fetch('./content/drop-settings.json');
-                if (!response.ok) return;
-                const data = await response.json();
+    try {
+        const response = await fetch('./content/drop-settings.json');
+        if (!response.ok) return;
+        const data = await response.json();
 
-                if (data.drop_min_amount) {
-                    DROP_CONFIG.minOrderAmount = parseFloat(data.drop_min_amount);
-                    const minAmountEl = document.getElementById('drop-min-amount');
-                    const minLabelEl = document.getElementById('drop-min-label-val');
-                    if (minAmountEl) minAmountEl.textContent = `$${DROP_CONFIG.minOrderAmount.toFixed(2)}`;
-                    if (minLabelEl) minLabelEl.textContent = `$${DROP_CONFIG.minOrderAmount.toFixed(2)}`;
-                }
-
-                if (data.drop_capacity_text) {
-                    const slotTextEl = document.getElementById('drop-slot-text');
-                    if (slotTextEl) slotTextEl.textContent = data.drop_capacity_text;
-                }
-
-                if (data.catering_deposit_pct) {
-                    DROP_CONFIG.depositPct = parseFloat(data.catering_deposit_pct);
-                    const depositLabel = document.getElementById('catering-deposit-label');
-                    if (depositLabel) depositLabel.textContent = `${DROP_CONFIG.depositPct}% deposit upfront`;
-                }
-            } catch (err) {
-                console.log("Using default drop settings:", err);
-            }
+        if (data.drop_min_amount) {
+            DROP_CONFIG.minOrderAmount = parseFloat(data.drop_min_amount);
+            const minAmountEl = document.getElementById('drop-min-amount');
+            const minLabelEl = document.getElementById('drop-min-label-val');
+            if (minAmountEl) minAmountEl.textContent = `$${DROP_CONFIG.minOrderAmount.toFixed(2)}`;
+            if (minLabelEl) minLabelEl.textContent = `$${DROP_CONFIG.minOrderAmount.toFixed(2)}`;
         }
+
+        if (data.drop_capacity_text) {
+            const slotTextEl = document.getElementById('drop-slot-text');
+            if (slotTextEl) slotTextEl.textContent = data.drop_capacity_text;
+        }
+
+        if (data.catering_deposit_pct) {
+            DROP_CONFIG.depositPct = parseFloat(data.catering_deposit_pct);
+            const depositLabel = document.getElementById('catering-deposit-label');
+            if (depositLabel) depositLabel.textContent = `${DROP_CONFIG.depositPct}% deposit upfront`;
+        }
+
+        if (data.catering_policy_text) {
+            const policyEl = document.getElementById('catering-policy-desc');
+            if (policyEl) policyEl.textContent = data.catering_policy_text;
+        }
+    } catch (err) {
+        console.log("Using default drop settings:", err);
+    }
+}
 
         // Apply Manual Status Override
         function applyStatusOverride(overrideState) {
