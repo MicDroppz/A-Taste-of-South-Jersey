@@ -61,7 +61,7 @@ content:
             label: Price
             type: number
 
-         - name: site_settings
+  - name: site_settings
     label: Site Settings & Truck Radar
     type: file
     path: content/settings.json
@@ -129,4 +129,4 @@ content:
 
       - name: catering_deposit_pct
         label: Catering Deposit Percentage (%)
-        type: number   
+        type: number
