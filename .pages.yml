@@ -5,21 +5,6 @@ content:
     path: content/menu/menu.json
     format: json
     fields:
-      - name: modifiers
-        label: Extras & Modifiers
-        type: object
-        list: true
-        fields:
-          - name: id
-            label: ID
-            type: string
-          - name: label
-            label: Modifier Name
-            type: string
-          - name: price
-            label: Price
-            type: number
-
       - name: categories
         label: Menu Categories
         type: object
@@ -60,3 +45,18 @@ content:
               - name: image
                 label: Image URL
                 type: string
+
+      - name: modifiers
+        label: Extras & Modifiers
+        type: object
+        list: true
+        fields:
+          - name: id
+            label: ID
+            type: string
+          - name: label
+            label: Modifier Name
+            type: string
+          - name: price
+            label: Price
+            type: number
