@@ -60,3 +60,73 @@ content:
           - name: price
             label: Price
             type: number
+
+         - name: site_settings
+    label: Site Settings & Truck Radar
+    type: file
+    path: content/settings.json
+    format: json
+    fields:
+      - name: announcement_bar
+        label: Top Announcement Banner Text
+        type: string
+
+      - name: primary_address
+        label: Current Truck Address & Location Info
+        type: string
+
+      - name: status_override
+        label: Live Operational Status Override
+        type: select
+        options:
+          - label: Auto (Schedule Based)
+            value: AUTO
+          - label: Force Open (🟢 OPEN NOW)
+            value: MANUAL_OPEN
+          - label: Force Closed (🔴 CLOSED NOW)
+            value: MANUAL_CLOSED
+
+      - name: weekly_schedule
+        label: Flexible Weekly Schedule Cards
+        type: object
+        list: true
+        fields:
+          - name: days
+            label: Days (e.g. TUES - THURS)
+            type: string
+          - name: location
+            label: Location (e.g. 1398 E Vine St)
+            type: string
+          - name: hours
+            label: Operating Hours (e.g. 11 AM - 8 PM)
+            type: string
+          - name: card_color
+            label: Color Theme
+            type: select
+            options:
+              - label: Yellow
+                value: yellow
+              - label: Teal
+                value: teal
+              - label: Pink
+                value: pink
+              - label: Purple
+                value: purple
+
+  - name: drop_settings
+    label: Delivery Drop & Catering Settings
+    type: file
+    path: content/drop-settings.json
+    format: json
+    fields:
+      - name: drop_min_amount
+        label: Sunday Delivery Drop Minimum Order Amount ($)
+        type: number
+
+      - name: drop_capacity_text
+        label: Slot Capacity Warning Text
+        type: string
+
+      - name: catering_deposit_pct
+        label: Catering Deposit Percentage (%)
+        type: number   
