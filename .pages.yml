@@ -79,11 +79,11 @@ content:
         label: Live Operational Status Override
         type: select
         options:
-          - name: Auto (Schedule Based)
+          - label: Auto (Schedule Based)
             value: AUTO
-          - name: Force Open (🟢 OPEN NOW)
+          - label: Force Open (🟢 OPEN NOW)
             value: MANUAL_OPEN
-          - name: Force Closed (🔴 CLOSED NOW)
+          - label: Force Closed (🔴 CLOSED NOW)
             value: MANUAL_CLOSED
 
       - name: weekly_schedule
@@ -104,13 +104,13 @@ content:
             label: Color Theme
             type: select
             options:
-              - name: Yellow
+              - label: Yellow
                 value: yellow
-              - name: Teal
+              - label: Teal
                 value: teal
-              - name: Pink
+              - label: Pink
                 value: pink
-              - name: Purple
+              - label: Purple
                 value: purple
 
   - name: drop_settings
@@ -130,3 +130,7 @@ content:
       - name: catering_deposit_pct
         label: Catering Deposit Percentage (%)
         type: number
+
+      - name: catering_policy_text
+        label: Catering Policy Description Text
+        type: text
