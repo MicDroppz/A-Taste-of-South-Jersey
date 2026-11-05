@@ -1,30 +1,30 @@
 {
-  "announcement_bar": "🔥 SPECIAL: Free Garlic Dip with any Panzarotti Combo today!",
+  "announcement_bar": "🔥 SERVING AUTHENTIC SOUTH JERSEY PANZAROTTIS & PHILLY CHEESESTEAKS IN KISSIMMEE, FL! 🥟✨",
   "primary_address": "1398 E Vine St, Kissimmee, FL 34744",
   "status_override": "AUTO",
   "weekly_schedule": [
     {
       "days": "TUES - THURS",
-      "location": "Kissimmee Hub",
-      "hours": "11:00 AM - 8:00 PM",
+      "location": "1398 E Vine St",
+      "hours": "11 AM - 8 PM",
       "card_color": "yellow"
     },
     {
-      "days": "FRIDAY RALLY",
-      "location": "Downtown Food Truck Park",
-      "hours": "4:00 PM - 10:00 PM",
+      "days": "FRIDAY NIGHT",
+      "location": "Truck Rally",
+      "hours": "4 PM - 9 PM",
       "card_color": "teal"
     },
     {
       "days": "SATURDAY",
-      "location": "Celebration Farmers Market",
-      "hours": "10:00 AM - 6:00 PM",
+      "location": "1398 E Vine St",
+      "hours": "11 AM - 9 PM",
       "card_color": "pink"
     },
     {
-      "days": "SUNDAY DROPS",
-      "location": "Neighborhood Delivery Route",
-      "hours": "12:00 PM - 5:00 PM",
+      "days": "SUNDAY",
+      "location": "Delivery Drops",
+      "hours": "10 AM - 6 PM",
       "card_color": "purple"
     }
   ]
