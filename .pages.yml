@@ -79,11 +79,11 @@ content:
         label: Live Operational Status Override
         type: select
         options:
-          - label: Auto (Schedule Based)
+          - name: Auto (Schedule Based)
             value: AUTO
-          - label: Force Open (🟢 OPEN NOW)
+          - name: Force Open (🟢 OPEN NOW)
             value: MANUAL_OPEN
-          - label: Force Closed (🔴 CLOSED NOW)
+          - name: Force Closed (🔴 CLOSED NOW)
             value: MANUAL_CLOSED
 
       - name: weekly_schedule
@@ -104,13 +104,13 @@ content:
             label: Color Theme
             type: select
             options:
-              - label: Yellow
+              - name: Yellow
                 value: yellow
-              - label: Teal
+              - name: Teal
                 value: teal
-              - label: Pink
+              - name: Pink
                 value: pink
-              - label: Purple
+              - name: Purple
                 value: purple
 
   - name: drop_settings
