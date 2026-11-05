@@ -1,6 +1,6 @@
 {
   "drop_min_amount": 30,
   "drop_capacity_text": "⚡ LIMITED SLOTS REMAINING! (70% Booked)",
-  "catering_deposit_pct": 750,
+  "catering_deposit_pct": 450,
   "catering_policy_text": "Large catering orders require a 250% deposit upfront to secure your date, with the remaining balance due upon delivery."
 }
