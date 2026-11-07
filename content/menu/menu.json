@@ -14,11 +14,6 @@
       "id": "mod-cheese",
       "label": "Extra Mozzarella Cheese Stuffed",
       "price": 1.5
-    },
-    {
-      "id": "boogy-woogi",
-      "label": "Boogery Woogies",
-      "price": 1000
     }
   ],
   "categories": [
@@ -31,7 +26,7 @@
       "items": [
         {
           "name": "Cheese Panzarotti",
-          "price": 10.00,
+          "price": 10.0,
           "badge": "CLASSIC ORIGINAL",
           "description": "Deep-fried golden pastry dough pocket packed with rich tomato sauce and oozing melted mozzarella cheese.",
           "image": "https://cdn.apartmenttherapy.info/image/upload/f_auto,q_auto:eco,c_fill,g_center,w_730,h_913/k/Photo/Recipes/2021-12-panzerotti%20/211208_ApartmentTherapy_Panzerotti_0345"
@@ -63,13 +58,6 @@
           "badge": "BEST VALUE!",
           "description": "Any signature Panzarotti served alongside a huge basket of golden crispy french fries!",
           "image": "https://s3-media0.fl.yelpcdn.com/bphoto/I70t6mXHelGgGp1Fhtg7sA/348s.jpg"
-        },
-        {
-          "name": "BBL",
-          "price": 30000,
-          "badge": "Bootilicious",
-          "description": "Get Fuller, Rounder ",
-          "image": "https://static.tvtropes.org/pmwiki/pub/images/fairly_oddparents_bigasses.png"
         }
       ]
     },
@@ -99,13 +87,6 @@
           "badge": "GREAT FOR SHARING",
           "description": "12 bite-sized mini Panzarottis deep-fried until golden brown, stuffed with cheese & sauce!",
           "image": "https://blog.giallozafferano.it/streedefingerfodd/wp-content/uploads/2025/10/Gemini_Generated_Image_q2xdc7q2xdc7q2xd.png"
-        },
-        {
-          "name": "Thick Thighs",
-          "price": 500,
-          "badge": "chewable",
-          "description": "feeds a family of 20",
-          "image": "https://media.craiyon.com/2025-06-10/Vb9cTj31S7WHQ40T7X6SMg.webp"
         }
       ]
     },

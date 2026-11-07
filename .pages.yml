@@ -1,3 +1,8 @@
+# Pages CMS configuration. Lives in the repo root.
+media:
+  input: images
+  output: /images
+
 content:
   - name: menu
     label: Menu & Pricing
@@ -11,7 +16,7 @@ content:
         list: true
         fields:
           - name: id
-            label: Category ID
+            label: Category ID (keep 'sides' unchanged - it controls the quick-add button)
             type: string
           - name: title
             label: Category Name
@@ -24,7 +29,21 @@ content:
             type: string
           - name: badge_color
             label: Badge Color
-            type: string
+            type: select
+            options:
+              values:
+                - name: bg-brandPurple
+                  label: Purple
+                - name: bg-brandOrange
+                  label: Orange
+                - name: bg-brandGreen
+                  label: Green
+                - name: bg-brandPink
+                  label: Pink
+                - name: bg-brandTeal
+                  label: Teal
+                - name: bg-brandRed
+                  label: Red
           - name: items
             label: Menu Items
             type: object
@@ -43,8 +62,8 @@ content:
                 label: Description
                 type: text
               - name: image
-                label: Image URL
-                type: string
+                label: Photo
+                type: image
 
       - name: modifiers
         label: Extras & Modifiers
@@ -52,7 +71,7 @@ content:
         list: true
         fields:
           - name: id
-            label: ID
+            label: ID (letters and dashes only)
             type: string
           - name: label
             label: Modifier Name
@@ -71,47 +90,169 @@ content:
         label: Top Announcement Banner Text
         type: string
 
+      - name: logo
+        label: Logo
+        type: image
+
       - name: primary_address
-        label: Current Truck Address & Location Info
+        label: Truck Address (street, city, state, ZIP)
         type: string
 
       - name: status_override
         label: Live Operational Status Override
         type: select
         options:
-          - label: Auto (Schedule Based)
-            value: AUTO
-          - label: Force Open (🟢 OPEN NOW)
-            value: MANUAL_OPEN
-          - label: Force Closed (🔴 CLOSED NOW)
-            value: MANUAL_CLOSED
+          values:
+            - name: AUTO
+              label: Auto (follows the weekly schedule below)
+            - name: MANUAL_OPEN
+              label: Force Open (OPEN NOW)
+            - name: MANUAL_CLOSED
+              label: Force Closed (CLOSED NOW)
 
       - name: weekly_schedule
-        label: Flexible Weekly Schedule Cards
+        label: Weekly Schedule Cards
         type: object
         list: true
         fields:
           - name: days
-            label: Days (e.g. TUES - THURS)
+            label: Card Title (e.g. TUES - THURS)
             type: string
+          - name: kind
+            label: Type
+            type: select
+            options:
+              values:
+                - name: truck
+                  label: Truck stop (drives the OPEN / CLOSED badge)
+                - name: delivery
+                  label: Delivery drop (drives the pre-order window)
+          - name: open_days
+            label: Open Days
+            type: select
+            options:
+              multiple: true
+              values:
+                - name: Sun
+                  label: Sunday
+                - name: Mon
+                  label: Monday
+                - name: Tue
+                  label: Tuesday
+                - name: Wed
+                  label: Wednesday
+                - name: Thu
+                  label: Thursday
+                - name: Fri
+                  label: Friday
+                - name: Sat
+                  label: Saturday
+          - name: opens
+            label: Opens
+            type: select
+            options:
+              values:
+                - name: "05:00"
+                  label: "5:00 AM"
+                - name: "06:00"
+                  label: "6:00 AM"
+                - name: "07:00"
+                  label: "7:00 AM"
+                - name: "08:00"
+                  label: "8:00 AM"
+                - name: "09:00"
+                  label: "9:00 AM"
+                - name: "10:00"
+                  label: "10:00 AM"
+                - name: "11:00"
+                  label: "11:00 AM"
+                - name: "12:00"
+                  label: "12:00 PM (noon)"
+                - name: "13:00"
+                  label: "1:00 PM"
+                - name: "14:00"
+                  label: "2:00 PM"
+                - name: "15:00"
+                  label: "3:00 PM"
+                - name: "16:00"
+                  label: "4:00 PM"
+                - name: "17:00"
+                  label: "5:00 PM"
+                - name: "18:00"
+                  label: "6:00 PM"
+                - name: "19:00"
+                  label: "7:00 PM"
+                - name: "20:00"
+                  label: "8:00 PM"
+                - name: "21:00"
+                  label: "9:00 PM"
+                - name: "22:00"
+                  label: "10:00 PM"
+                - name: "23:00"
+                  label: "11:00 PM"
+                - name: "24:00"
+                  label: "12:00 AM (midnight)"
+          - name: closes
+            label: Closes
+            type: select
+            options:
+              values:
+                - name: "05:00"
+                  label: "5:00 AM"
+                - name: "06:00"
+                  label: "6:00 AM"
+                - name: "07:00"
+                  label: "7:00 AM"
+                - name: "08:00"
+                  label: "8:00 AM"
+                - name: "09:00"
+                  label: "9:00 AM"
+                - name: "10:00"
+                  label: "10:00 AM"
+                - name: "11:00"
+                  label: "11:00 AM"
+                - name: "12:00"
+                  label: "12:00 PM (noon)"
+                - name: "13:00"
+                  label: "1:00 PM"
+                - name: "14:00"
+                  label: "2:00 PM"
+                - name: "15:00"
+                  label: "3:00 PM"
+                - name: "16:00"
+                  label: "4:00 PM"
+                - name: "17:00"
+                  label: "5:00 PM"
+                - name: "18:00"
+                  label: "6:00 PM"
+                - name: "19:00"
+                  label: "7:00 PM"
+                - name: "20:00"
+                  label: "8:00 PM"
+                - name: "21:00"
+                  label: "9:00 PM"
+                - name: "22:00"
+                  label: "10:00 PM"
+                - name: "23:00"
+                  label: "11:00 PM"
+                - name: "24:00"
+                  label: "12:00 AM (midnight)"
           - name: location
             label: Location (e.g. 1398 E Vine St)
-            type: string
-          - name: hours
-            label: Operating Hours (e.g. 11 AM - 8 PM)
             type: string
           - name: card_color
             label: Color Theme
             type: select
             options:
-              - label: Yellow
-                value: yellow
-              - label: Teal
-                value: teal
-              - label: Pink
-                value: pink
-              - label: Purple
-                value: purple
+              values:
+                - name: yellow
+                  label: Yellow
+                - name: teal
+                  label: Teal
+                - name: pink
+                  label: Pink
+                - name: purple
+                  label: Purple
 
   - name: drop_settings
     label: Delivery Drop & Catering Settings
@@ -127,10 +268,14 @@ content:
         label: Slot Capacity Warning Text
         type: string
 
+      - name: drop_deposit_pct
+        label: Sunday Delivery Drop Deposit Percentage (%)
+        type: number
+
       - name: catering_deposit_pct
         label: Catering Deposit Percentage (%)
         type: number
 
       - name: catering_policy_text
-        label: Catering Policy Description Text
+        label: Catering Policy Text (type {deposit} to insert the catering percentage)
         type: text

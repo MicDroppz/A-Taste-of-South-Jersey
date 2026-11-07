@@ -89,7 +89,7 @@
     <!-- Sticky Navigation Bar -->
     <nav id="main-nav" class="bg-white comic-border sticky top-0 z-40 shadow-comic mx-2 md:mx-6 my-2 rounded-2xl px-4 py-3 flex flex-wrap justify-between items-center bg-yellow-50">
         <div class="flex items-center gap-3 cursor-pointer" onclick="scrollToSection('hero')">
-            <img src="https://scontent.cdninstagram.com/v/t51.2885-19/419541794_341905135274525_7938065282477996207_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=107&ig_cache_key=GCKzARkdiiL_9TYBAK849hVRrClubkULAAAB1501500j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=9Y3ceDUKVeEQ7kNvwG9hTXZ&_nc_oc=AdoUrfvMRYsxG2OeEEYH-4wDS9c2wuLAvdqrMWMzJHPvSgk3KWZXXMVWLYayFvl9N8oOaP9uUx377Fzp7Tka8JU1&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_ss=7b689&oh=00_AQTBAVF-pwCIiOjhWyuSw2RQX00vvJWlaCtwAOalE5xN_w&oe=6AEFDD7E" alt="A Touch of South Jersey Logo" class="w-10 h-10 rounded-full comic-border shadow-comic-sm object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF66C4/000000?text=🥟';">
+            <img src="/images/logo.png" alt="A Touch of South Jersey Logo" class="js-logo w-10 h-10 rounded-full comic-border shadow-comic-sm object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF66C4/000000?text=🥟';">
             <div>
                 <span class="font-bangers text-2xl md:text-3xl tracking-wider text-brandPurple drop-shadow-[1px_1px_0px_#000] block leading-none">
                     A TOUCH OF SOUTH JERSEY
@@ -141,7 +141,7 @@
                 <!-- Brand Avatar with Green Ring -->
                 <div class="w-36 h-36 md:w-48 md:h-48 mx-auto mb-4 animate-float">
                     <div class="w-full h-full bg-brandGreen comic-border rounded-full flex items-center justify-center p-2 shadow-comic overflow-hidden">
-                        <img src="https://scontent.cdninstagram.com/v/t51.2885-19/419541794_341905135274525_7938065282477996207_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=107&ig_cache_key=GCKzARkdiiL_9TYBAK849hVRrClubkULAAAB1501500j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=9Y3ceDUKVeEQ7kNvwG9hTXZ&_nc_oc=AdoUrfvMRYsxG2OeEEYH-4wDS9c2wuLAvdqrMWMzJHPvSgk3KWZXXMVWLYayFvl9N8oOaP9uUx377Fzp7Tka8JU1&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_ss=7b689&oh=00_AQTBAVF-pwCIiOjhWyuSw2RQX00vvJWlaCtwAOalE5xN_w&oe=6AEFDD7E" alt="A Touch of South Jersey Logo" class="w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/200x200/7ED957/000000?text=🥟';">
+                        <img src="/images/logo.png" alt="A Touch of South Jersey Logo" class="js-logo w-full h-full object-cover rounded-full" onerror="this.onerror=null; this.src='https://placehold.co/200x200/7ED957/000000?text=🥟';">
                     </div>
                 </div>
 
@@ -526,8 +526,7 @@
 
                 <div class="bg-brandYellow comic-border p-5 rounded-2xl shadow-comic text-center max-w-md mx-auto mb-6">
                     <span class="font-bangers text-2xl text-brandPurple block">PRIMARY FOOD TRUCK SPOT</span>
-                    <p id="truck-address" class="font-fredoka text-xl font-bold text-slate-900 mt-1">1398 E Vine St</p>
-                    <p class="font-fredoka text-sm text-slate-700">Kissimmee, FL 34744</p>
+                    <p id="truck-address" class="font-fredoka text-xl font-bold text-slate-900 mt-1">1398 E Vine St, Kissimmee, FL 34744</p>
                     <span id="radar-live-pill" class="inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm">
                         CHECKING FRYER STATUS...
                     </span>
@@ -623,9 +622,9 @@
                     <div class="bg-white comic-border rounded-2xl p-5 shadow-comic flex items-start gap-3">
                         <span class="text-3xl">💳</span>
                         <div>
-                            <h4 class="font-bangers text-xl text-brandPurple">50% DEPOSIT TO LOCK IN</h4>
+                            <h4 class="font-bangers text-xl text-brandPurple"><span class="js-drop-pct">50</span>% DEPOSIT TO LOCK IN</h4>
                             <p class="font-fredoka text-xs text-slate-700 font-bold">
-                                Pay 50% upfront to hold your spot, and pay the remaining 50% upon delivery arrival!
+                                Pay <span class="js-drop-pct">50</span>% upfront to hold your spot, and pay the remaining <span class="js-drop-rem-pct">50</span>% upon delivery arrival!
                             </p>
                         </div>
                     </div>
@@ -681,7 +680,7 @@
                             </div>
                             <div class="grid grid-cols-2 gap-2 pt-2 text-center">
                                 <div class="bg-brandGreen text-slate-900 p-2 rounded-xl comic-border">
-                                    <span class="block text-xs font-bold">50% DEPOSIT DUE TODAY</span>
+                                    <span class="block text-xs font-bold"><span class="js-drop-pct">50</span>% DEPOSIT DUE TODAY</span>
                                     <span id="math-deposit-due" class="font-bangers text-xl">$2.50</span>
                                 </div>
                                 <div class="bg-brandYellow text-slate-900 p-2 rounded-xl comic-border">
@@ -763,7 +762,7 @@
     <footer class="bg-slate-900 text-white comic-border border-b-0 border-x-0 py-8 px-4 text-center mt-auto">
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-2">
-                <img src="https://scontent.cdninstagram.com/v/t51.2885-19/419541794_341905135274525_7938065282477996207_n.jpg?stp=dst-jpg_s150x150_tt6&_nc_cat=107&ig_cache_key=GCKzARkdiiL_9TYBAK849hVRrClubkULAAAB1501500j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=9Y3ceDUKVeEQ7kNvwG9hTXZ&_nc_oc=AdoUrfvMRYsxG2OeEEYH-4wDS9c2wuLAvdqrMWMzJHPvSgk3KWZXXMVWLYayFvl9N8oOaP9uUx377Fzp7Tka8JU1&_nc_zt=24&_nc_ht=scontent.cdninstagram.com&_nc_ss=7b689&oh=00_AQTBAVF-pwCIiOjhWyuSw2RQX00vvJWlaCtwAOalE5xN_w&oe=6AEFDD7E" alt="A Touch of South Jersey Logo" class="w-8 h-8 rounded-full border border-white object-cover">
+                <img src="/images/logo.png" alt="A Touch of South Jersey Logo" class="js-logo w-8 h-8 rounded-full border border-white object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/FF66C4/000000?text=%F0%9F%A5%9F';">
                 <span class="font-bangers text-2xl text-brandYellow">A TOUCH OF SOUTH JERSEY</span>
             </div>
             <p class="font-fredoka text-sm text-slate-400">
@@ -792,7 +791,7 @@
             <div class="space-y-3 mb-4">
                 <label class="flex items-center justify-between bg-yellow-50 p-3 rounded-xl comic-border cursor-pointer">
                     <div class="flex items-center gap-3">
-                        <input type="checkbox" id="mod-marinara" class="w-5 h-5 text-brandPink rounded focus:ring-0">
+                        <input type="checkbox" id="mod-marinara" data-price="1" data-label="Side of Warm Marinara Sauce" class="w-5 h-5 text-brandPink rounded focus:ring-0 dynamic-mod-checkbox">
                         <span class="font-fredoka font-bold text-slate-900">Side of Warm Marinara Sauce</span>
                     </div>
                     <span class="font-fredoka font-bold text-brandPurple">+$1.00</span>
@@ -800,7 +799,7 @@
 
                 <label class="flex items-center justify-between bg-yellow-50 p-3 rounded-xl comic-border cursor-pointer">
                     <div class="flex items-center gap-3">
-                        <input type="checkbox" id="mod-garlic" class="w-5 h-5 text-brandPink rounded focus:ring-0">
+                        <input type="checkbox" id="mod-garlic" data-price="1" data-label="Garlic Herb Dip" class="w-5 h-5 text-brandPink rounded focus:ring-0 dynamic-mod-checkbox">
                         <span class="font-fredoka font-bold text-slate-900">Garlic Herb Dip</span>
                     </div>
                     <span class="font-fredoka font-bold text-brandPurple">+$1.00</span>
@@ -808,7 +807,7 @@
 
                 <label class="flex items-center justify-between bg-yellow-50 p-3 rounded-xl comic-border cursor-pointer">
                     <div class="flex items-center gap-3">
-                        <input type="checkbox" id="mod-cheese" class="w-5 h-5 text-brandPink rounded focus:ring-0">
+                        <input type="checkbox" id="mod-cheese" data-price="1.5" data-label="Extra Mozzarella Cheese Stuffed" class="w-5 h-5 text-brandPink rounded focus:ring-0 dynamic-mod-checkbox">
                         <span class="font-fredoka font-bold text-slate-900">Extra Mozzarella Cheese Stuffed</span>
                     </div>
                     <span class="font-fredoka font-bold text-brandPurple">+$1.50</span>
@@ -850,7 +849,7 @@
                 <span class="text-2xl">⚠️</span>
                 <div>
                     <h4 class="font-bangers text-lg text-slate-900">CATERING POLICY & TERMS</h4>
-                    <p class="font-fredoka text-xs text-slate-800 leading-snug">
+                    <p id="catering-policy-desc" class="font-fredoka text-xs text-slate-800 leading-snug">
                         Large catering orders require a <strong id="catering-deposit-label">50% deposit upfront</strong> to secure your date, with the remaining balance due upon delivery.
                     </p>
                 </div>
@@ -942,13 +941,99 @@
         // Global CMS Configuration State
         const DROP_CONFIG = {
             minOrderAmount: 30.00,
-            depositPct: 50,         // Dynamic deposit percentage from drop-settings.json
+            depositPct: 50,          // Sunday Drop deposit % (drop_deposit_pct in drop-settings.json)
+            cateringDepositPct: 50, // Catering deposit % (catering_deposit_pct in drop-settings.json)
             forceOpen: false,
             manualSoldOut: false,
             dropDay: 0,
             startHour: 10,
             endHour: 18
         };
+
+        // ---------- Helpers ----------
+        // Escape text that comes from content files before putting it inside HTML
+        function esc(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        // Keep a CMS percentage between 0 and 100 so a typo (e.g. 850) can't break the math
+        function readPercent(value, fieldName) {
+            const n = parseFloat(value);
+            if (!Number.isFinite(n)) return null;
+            const clamped = Math.min(100, Math.max(0, n));
+            if (clamped !== n) {
+                console.warn(fieldName + ' should be between 0 and 100 (got ' + value + '). Using ' + clamped + '.');
+            }
+            return clamped;
+        }
+
+        // Day/time in the truck's time zone (Kissimmee), not the visitor's
+        const DAY_CODES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const DAY_NAMES = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+        let scheduleCards = [];   // filled from settings.json (weekly_schedule)
+
+        function getTruckTime() {
+            const parts = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'America/New_York',
+                weekday: 'short',
+                hour: 'numeric',
+                minute: 'numeric',
+                hourCycle: 'h23'
+            }).formatToParts(new Date());
+            const get = type => parts.find(p => p.type === type).value;
+            const day = DAY_CODES.indexOf(get('weekday'));
+            const hour = parseInt(get('hour'), 10);
+            const minute = parseInt(get('minute'), 10);
+            return { day, hour, minute, minutes: hour * 60 + minute };
+        }
+
+        // "11:00" -> 660 (minutes after midnight). Returns null if the value is missing or malformed.
+        function parseTime(value) {
+            const m = /^(\d{1,2}):(\d{2})$/.exec(String(value || '').trim());
+            if (!m) return null;
+            return parseInt(m[1], 10) * 60 + parseInt(m[2], 10);
+        }
+
+        // 1200 -> "8 PM", 1230 -> "8:30 PM", 1440 -> "12 AM"
+        function formatMinutes(mins) {
+            if (mins === null || mins === undefined) return '';
+            const h24 = Math.floor(mins / 60) % 24;
+            const m = mins % 60;
+            const suffix = h24 >= 12 ? 'PM' : 'AM';
+            const h12 = h24 % 12 === 0 ? 12 : h24 % 12;
+            return m ? `${h12}:${String(m).padStart(2, '0')} ${suffix}` : `${h12} ${suffix}`;
+        }
+
+        function formatTime(value) {
+            return formatMinutes(parseTime(value));
+        }
+
+        function isSlotActiveNow(card, now) {
+            const opens = parseTime(card.opens);
+            const closes = parseTime(card.closes);
+            const days = Array.isArray(card.open_days) ? card.open_days : [];
+            return opens !== null && closes !== null
+                && days.includes(DAY_CODES[now.day])
+                && now.minutes >= opens && now.minutes < closes;
+        }
+
+        // Next time any of these cards opens (looking up to a week ahead)
+        function nextOpening(cards, now) {
+            for (let offset = 0; offset <= 7; offset++) {
+                const dayIndex = (now.day + offset) % 7;
+                const starts = cards
+                    .filter(c => Array.isArray(c.open_days) && c.open_days.includes(DAY_CODES[dayIndex]))
+                    .map(c => parseTime(c.opens))
+                    .filter(t => t !== null && (offset > 0 || t > now.minutes));
+                if (starts.length) return { offset, dayIndex, time: Math.min(...starts) };
+            }
+            return null;
+        }
 
         // Active Modifier Item State
         let activeModItem = { name: '', basePrice: 0 };
@@ -967,13 +1052,22 @@
         async function loadSiteSettings() {
             try {
                 const response = await fetch('./content/settings.json');
-                if (!response.ok) return;
+                if (!response.ok) {
+                    console.warn('Could not load content/settings.json (HTTP ' + response.status + ').');
+                    checkTruckOpenStatus();
+                    return;
+                }
                 const data = await response.json();
 
                 // 1. Update Top Announcement
                 const announcementEl = document.getElementById('announcement-bar');
                 if (announcementEl && data.announcement_bar) {
                     announcementEl.textContent = data.announcement_bar;
+                }
+
+                // Logo (from settings.json; upload it in PageCMS)
+                if (data.logo) {
+                    document.querySelectorAll('.js-logo').forEach(img => { img.src = data.logo; });
                 }
 
                 // 2. Update Truck Address
@@ -1004,6 +1098,7 @@
         }
 
         function renderWeeklySchedule(scheduleList) {
+            scheduleCards = scheduleList;
             const container = document.getElementById('schedule-container');
             if (!container) return;
 
@@ -1021,48 +1116,68 @@
                 purple: 'text-brandPurple'
             };
 
-            container.innerHTML = scheduleList.map(item => `
+            container.innerHTML = scheduleList.map(item => {
+                const hasTimes = parseTime(item.opens) !== null && parseTime(item.closes) !== null;
+                const hoursText = hasTimes ? `${formatTime(item.opens)} - ${formatTime(item.closes)}` : (item.hours || '');
+                const icon = item.kind === 'delivery' ? '📦' : '📍';
+                return `
                 <div class="${colorMap[item.card_color] || 'bg-yellow-100'} comic-border rounded-xl p-3 text-center shadow-comic-sm">
-                    <span class="font-bangers text-xl ${headerColorMap[item.card_color] || 'text-brandOrange'} block">${item.days}</span>
-                    <div class="font-fredoka text-xs text-slate-900 font-bold my-1">📍 ${item.location}</div>
-                    <span class="text-[10px] font-bold bg-white px-2 py-0.5 rounded-md comic-border inline-block">${item.hours}</span>
-                </div>
-            `).join('');
+                    <span class="font-bangers text-xl ${headerColorMap[item.card_color] || 'text-brandOrange'} block">${esc(item.days)}</span>
+                    <div class="font-fredoka text-xs text-slate-900 font-bold my-1">${icon} ${esc(item.location)}</div>
+                    <span class="text-[10px] font-bold bg-white px-2 py-0.5 rounded-md comic-border inline-block">${esc(hoursText)}</span>
+                </div>`;
+            }).join('');
         }
 
         async function loadDropSettings() {
-    try {
-        const response = await fetch('./content/drop-settings.json');
-        if (!response.ok) return;
-        const data = await response.json();
+            try {
+                const response = await fetch('./content/drop-settings.json');
+                if (!response.ok) {
+                    console.warn('Could not load content/drop-settings.json (HTTP ' + response.status + '). Using built-in defaults.');
+                    return;
+                }
+                const data = await response.json();
 
-        if (data.drop_min_amount) {
-            DROP_CONFIG.minOrderAmount = parseFloat(data.drop_min_amount);
-            const minAmountEl = document.getElementById('drop-min-amount');
-            const minLabelEl = document.getElementById('drop-min-label-val');
-            if (minAmountEl) minAmountEl.textContent = `$${DROP_CONFIG.minOrderAmount.toFixed(2)}`;
-            if (minLabelEl) minLabelEl.textContent = `$${DROP_CONFIG.minOrderAmount.toFixed(2)}`;
-        }
+                const minAmount = parseFloat(data.drop_min_amount);
+                if (Number.isFinite(minAmount) && minAmount >= 0) {
+                    DROP_CONFIG.minOrderAmount = minAmount;
+                    ['drop-min-amount', 'drop-min-label-val'].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.textContent = `$${minAmount.toFixed(2)}`;
+                    });
+                }
 
-        if (data.drop_capacity_text) {
-            const slotTextEl = document.getElementById('drop-slot-text');
-            if (slotTextEl) slotTextEl.textContent = data.drop_capacity_text;
-        }
+                if (data.drop_capacity_text) {
+                    const slotTextEl = document.getElementById('drop-slot-text');
+                    if (slotTextEl) slotTextEl.textContent = data.drop_capacity_text;
+                }
 
-        if (data.catering_deposit_pct) {
-            DROP_CONFIG.depositPct = parseFloat(data.catering_deposit_pct);
-            const depositLabel = document.getElementById('catering-deposit-label');
-            if (depositLabel) depositLabel.textContent = `${DROP_CONFIG.depositPct}% deposit upfront`;
-        }
+                const dropPct = readPercent(data.drop_deposit_pct, 'drop_deposit_pct');
+                if (dropPct !== null) {
+                    DROP_CONFIG.depositPct = dropPct;
+                    document.querySelectorAll('.js-drop-pct').forEach(el => { el.textContent = dropPct; });
+                    document.querySelectorAll('.js-drop-rem-pct').forEach(el => { el.textContent = 100 - dropPct; });
+                }
 
-        if (data.catering_policy_text) {
-            const policyEl = document.getElementById('catering-policy-desc');
-            if (policyEl) policyEl.textContent = data.catering_policy_text;
+                const catPct = readPercent(data.catering_deposit_pct, 'catering_deposit_pct');
+                if (catPct !== null) {
+                    DROP_CONFIG.cateringDepositPct = catPct;
+                    const depositLabel = document.getElementById('catering-deposit-label');
+                    if (depositLabel) depositLabel.textContent = `${catPct}% deposit upfront`;
+                }
+
+                // Use {deposit} in the policy text to insert the catering percentage automatically
+                if (data.catering_policy_text) {
+                    const policyEl = document.getElementById('catering-policy-desc');
+                    if (policyEl) {
+                        policyEl.textContent = String(data.catering_policy_text)
+                            .replace(/\{deposit\}/g, `${DROP_CONFIG.cateringDepositPct}%`);
+                    }
+                }
+            } catch (err) {
+                console.warn('Problem reading drop-settings.json (check it for a JSON typo):', err);
+            }
         }
-    } catch (err) {
-        console.log("Using default drop settings:", err);
-    }
-}
 
         // Apply Manual Status Override
         function applyStatusOverride(overrideState) {
@@ -1092,17 +1207,31 @@
 
         // Check Truck Operational Status (Tuesday–Sunday)
         function checkTruckOpenStatus() {
-            const now = new Date();
-            const day = now.getDay();
-            const hour = now.getHours();
+            const now = getTruckTime();
+            const slots = scheduleCards.filter(c => c.kind !== 'delivery');
+            let isOpen;
+            let closedText = '🔒 TRUCK CLOSED';
 
-            const isTruckDay = (day >= 2 && day <= 6); // Tues (2) to Sat (6)
-            const isOpenHour = (hour >= 11 && hour < 20); // 11 AM to 8 PM
+            if (slots.length) {
+                // Driven by the schedule cards you edit in PageCMS
+                isOpen = slots.some(c => isSlotActiveNow(c, now));
+                if (!isOpen) {
+                    const next = nextOpening(slots, now);
+                    if (next) {
+                        const when = next.offset === 0 ? 'TODAY' : next.offset === 1 ? 'TOMORROW' : DAY_NAMES[next.dayIndex];
+                        closedText += ` • OPENS ${when} ${formatMinutes(next.time)}`;
+                    }
+                }
+            } else {
+                // Schedule unavailable: fall back to Tue-Sat, 11 AM - 8 PM
+                isOpen = (now.day >= 2 && now.day <= 6) && now.hour >= 11 && now.hour < 20;
+                closedText += ' • OPENS 11:00 AM';
+            }
 
             const badge = document.getElementById('live-open-badge');
             const radarPill = document.getElementById('radar-live-pill');
 
-            if (isTruckDay && isOpenHour) {
+            if (isOpen) {
                 if (badge) {
                     badge.className = "font-bangers text-xl px-4 py-1 rounded-full comic-border transform rotate-6 inline-block bg-brandGreen text-slate-900 animate-pulse";
                     badge.innerText = "🟢 OPEN NOW";
@@ -1118,7 +1247,7 @@
                 }
                 if (radarPill) {
                     radarPill.className = "inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm bg-slate-800 text-white";
-                    radarPill.innerText = "🔒 TRUCK CLOSED • OPENS 11:00 AM";
+                    radarPill.innerText = closedText;
                 }
             }
         }
@@ -1128,11 +1257,14 @@
             if (DROP_CONFIG.forceOpen) return true;
             if (DROP_CONFIG.manualSoldOut) return false;
 
-            const now = new Date();
-            const currentDay = now.getDay();
-            const currentHour = now.getHours();
-
-            return (currentDay === DROP_CONFIG.dropDay && currentHour >= DROP_CONFIG.startHour && currentHour < DROP_CONFIG.endHour);
+            const now = getTruckTime();
+            const dropSlots = scheduleCards.filter(c => c.kind === 'delivery');
+            if (dropSlots.length) {
+                // Driven by the "Delivery drop" card in the weekly schedule
+                return dropSlots.some(c => isSlotActiveNow(c, now));
+            }
+            // Schedule unavailable: fall back to Sundays 10 AM - 6 PM
+            return now.day === DROP_CONFIG.dropDay && now.hour >= DROP_CONFIG.startHour && now.hour < DROP_CONFIG.endHour;
         }
 
         // Initialize and Update Drop Window UI
@@ -1252,53 +1384,42 @@
         }
 
         // Modifier & Customization Modal Logic
+        function getModCheckboxes() {
+            return document.querySelectorAll('#modifier-modal .dynamic-mod-checkbox');
+        }
+
         function openModifierModal(itemName, price) {
             activeModItem = { name: itemName, basePrice: price };
             document.getElementById('modifier-item-title').innerText = `Add ${itemName}`;
-            document.getElementById('mod-marinara').checked = false;
-            document.getElementById('mod-garlic').checked = false;
-            document.getElementById('mod-cheese').checked = false;
+            getModCheckboxes().forEach(cb => { cb.checked = false; });
             document.getElementById('mod-special-notes').value = '';
-            
             updateModifierTotal();
-
-            document.getElementById('mod-marinara').onchange = updateModifierTotal;
-            document.getElementById('mod-garlic').onchange = updateModifierTotal;
-            document.getElementById('mod-cheese').onchange = updateModifierTotal;
-
-            const modal = document.getElementById('modifier-modal');
-            modal.classList.remove('opacity-0', 'pointer-events-none');
+            document.getElementById('modifier-modal').classList.remove('opacity-0', 'pointer-events-none');
         }
 
         function updateModifierTotal() {
             let total = activeModItem.basePrice;
-            if (document.getElementById('mod-marinara').checked) total += 1.00;
-            if (document.getElementById('mod-garlic').checked) total += 1.00;
-            if (document.getElementById('mod-cheese').checked) total += 1.50;
+            getModCheckboxes().forEach(cb => {
+                if (cb.checked) total += parseFloat(cb.dataset.price) || 0;
+            });
             document.getElementById('modifier-total-price').innerText = `$${total.toFixed(2)}`;
         }
 
         function closeModifierModal() {
-            const modal = document.getElementById('modifier-modal');
-            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('modifier-modal').classList.add('opacity-0', 'pointer-events-none');
         }
 
         function confirmModifierAdd() {
-            let mods = [];
+            const mods = [];
             let price = activeModItem.basePrice;
-            
-            if (document.getElementById('mod-marinara').checked) {
-                mods.push('Marinara (+$1.00)');
-                price += 1.00;
-            }
-            if (document.getElementById('mod-garlic').checked) {
-                mods.push('Garlic Dip (+$1.00)');
-                price += 1.00;
-            }
-            if (document.getElementById('mod-cheese').checked) {
-                mods.push('Extra Cheese (+$1.50)');
-                price += 1.50;
-            }
+
+            getModCheckboxes().forEach(cb => {
+                if (cb.checked) {
+                    const modPrice = parseFloat(cb.dataset.price) || 0;
+                    price += modPrice;
+                    mods.push(`${cb.dataset.label} (+$${modPrice.toFixed(2)})`);
+                }
+            });
 
             const notes = document.getElementById('mod-special-notes').value.trim();
             if (notes) {
@@ -1325,7 +1446,7 @@
         function handleCateringSubmit(e) {
             e.preventDefault();
             playSound('laser');
-            showToast(`🎉 Catering request received! Reminder: Large orders require a ${DROP_CONFIG.depositPct}% deposit. We'll contact you shortly!`);
+            showToast(`🎉 Catering request received! Reminder: Large orders require a ${DROP_CONFIG.cateringDepositPct}% deposit. We'll contact you shortly!`);
             closeCateringModal();
         }
 
@@ -1367,9 +1488,8 @@
             playSound('boing');
         }
 
-        function changeQty(itemName, delta) {
-            const index = cart.findIndex(item => item.name === itemName);
-            if (index !== -1) {
+        function changeQty(index, delta) {
+            if (index >= 0 && index < cart.length) {
                 cart[index].qty += delta;
                 if (cart[index].qty <= 0) {
                     cart.splice(index, 1);
@@ -1390,20 +1510,20 @@
             if (cart.length === 0) {
                 listEl.innerHTML = `<p class="text-center font-fredoka text-slate-400 py-8">Your order is empty! Add some delicious Panzarottis or Cheesesteaks! 🥟</p>`;
             } else {
-                listEl.innerHTML = cart.map(item => {
+                listEl.innerHTML = cart.map((item, idx) => {
                     const itemTotal = item.price * item.qty;
                     total += itemTotal;
                     count += item.qty;
                     return `
                         <div class="flex items-center justify-between bg-yellow-100 p-3 rounded-xl comic-border">
                             <div class="pr-2">
-                                <h4 class="font-bangers text-lg text-slate-800">${item.name}</h4>
+                                <h4 class="font-bangers text-lg text-slate-800">${esc(item.name)}</h4>
                                 <span class="font-fredoka text-sm text-slate-600">$${item.price.toFixed(2)} each</span>
                             </div>
                             <div class="flex items-center gap-2 shrink-0">
-                                <button onclick="changeQty('${item.name.replace(/'/g, "\\'")}', -1)" class="bg-brandPink text-white font-bold w-7 h-7 rounded-lg comic-border flex items-center justify-center shadow-comic-sm hover:bg-pink-600">-</button>
+                                <button onclick="changeQty(${idx}, -1)" class="bg-brandPink text-white font-bold w-7 h-7 rounded-lg comic-border flex items-center justify-center shadow-comic-sm hover:bg-pink-600">-</button>
                                 <span class="font-fredoka font-bold text-lg w-5 text-center">${item.qty}</span>
-                                <button onclick="changeQty('${item.name.replace(/'/g, "\\'")}', 1)" class="bg-brandGreen text-slate-900 font-bold w-7 h-7 rounded-lg comic-border flex items-center justify-center shadow-comic-sm hover:bg-green-400">+</button>
+                                <button onclick="changeQty(${idx}, 1)" class="bg-brandGreen text-slate-900 font-bold w-7 h-7 rounded-lg comic-border flex items-center justify-center shadow-comic-sm hover:bg-green-400">+</button>
                             </div>
                         </div>
                     `;
@@ -1529,7 +1649,10 @@
         async function loadMenuSettings() {
             try {
                 const response = await fetch('./content/menu/menu.json');
-                if (!response.ok) return;
+                if (!response.ok) {
+                    console.warn('Could not load content/menu/menu.json (HTTP ' + response.status + '). Showing the built-in menu.');
+                    return;
+                }
                 const data = await response.json();
 
                 // 1. Render Dynamic Modifiers inside Modal
@@ -1570,21 +1693,21 @@
                     <div class="mb-10">
                         <div class="flex items-center gap-3 mb-4">
                             <span class="${cat.badge_color || 'bg-brandPurple'} text-white font-bangers text-2xl px-4 py-1 rounded-2xl comic-border shadow-comic-sm">
-                                ${cat.icon || '🥟'} ${cat.title}
+                                ${esc(cat.icon || '🥟')} ${esc(cat.title)}
                             </span>
-                            ${cat.subtitle ? `<span class="font-fredoka text-xs font-bold text-slate-700 bg-white px-3 py-1 rounded-full comic-border hidden sm:inline-block">${cat.subtitle}</span>` : ''}
+                            ${cat.subtitle ? `<span class="font-fredoka text-xs font-bold text-slate-700 bg-white px-3 py-1 rounded-full comic-border hidden sm:inline-block">${esc(cat.subtitle)}</span>` : ''}
                         </div>
 
-                        <div class="grid grid-cols-1 ${cat.items.length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-3'} gap-6">
+                        <div class="grid grid-cols-1 ${(cat.items || []).length >= 4 ? 'sm:grid-cols-2 lg:grid-cols-4' : 'md:grid-cols-2 lg:grid-cols-3'} gap-6">
                 `;
 
-                cat.items.forEach(item => {
+                (cat.items || []).forEach(item => {
                     const colorTheme = COLOR_PALETTE[globalItemIndex % COLOR_PALETTE.length];
                     const rotationClass = (globalItemIndex % 2 === 0) ? 'hover:rotate-1' : 'hover:-rotate-1';
                     globalItemIndex++;
 
                     const badgeMarkup = item.badge 
-                        ? `<span class="absolute top-2 right-2 ${colorTheme.badgeBg} ${colorTheme.text} font-bangers text-sm px-2 py-0.5 rounded-lg comic-border">${item.badge}</span>`
+                        ? `<span class="absolute top-2 right-2 ${colorTheme.badgeBg} ${colorTheme.text} font-bangers text-sm px-2 py-0.5 rounded-lg comic-border">${esc(item.badge)}</span>`
                         : '';
 
                     const isSimpleAdd = cat.id === 'sides';
@@ -1593,17 +1716,17 @@
                         <div class="bg-white comic-border rounded-3xl p-5 shadow-comic flex flex-col justify-between ${rotationClass} transition-transform">
                             <div>
                                 <div class="h-48 ${colorTheme.bg} rounded-2xl comic-border mb-4 overflow-hidden relative flex items-center justify-center p-2">
-                                    <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/FFDE59/000000?text=${encodeURIComponent(item.name)}';">
+                                    <img src="${esc(item.image)}" alt="${esc(item.name)}" class="w-full h-full object-cover rounded-xl" onerror="this.onerror=null; this.src='https://placehold.co/400x300/FFDE59/000000?text=${encodeURIComponent(item.name)}';">
                                     ${badgeMarkup}
                                 </div>
-                                <h4 class="font-bangers text-2xl text-brandPurple mb-1 tracking-wide">${item.name}</h4>
-                                <p class="font-sans text-sm text-slate-600 mb-4 font-bold">${item.description}</p>
+                                <h4 class="font-bangers text-2xl text-brandPurple mb-1 tracking-wide">${esc(item.name)}</h4>
+                                <p class="font-sans text-sm text-slate-600 mb-4 font-bold">${esc(item.description)}</p>
                             </div>
                             <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
                                 <span class="font-fredoka text-2xl text-slate-900">$${parseFloat(item.price).toFixed(2)}</span>
                                 ${isSimpleAdd 
-                                    ? `<button onclick="addToCart('${item.name.replace(/'/g, "\\'")}', ${item.price})" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ Add Yum</button>`
-                                    : `<button onclick="openModifierModal('${item.name.replace(/'/g, "\\'")}', ${item.price})" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ Add to Order</button>`
+                                    ? `<button data-name="${esc(item.name)}" data-price="${parseFloat(item.price) || 0}" onclick="addToCart(this.dataset.name, parseFloat(this.dataset.price))" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ Add Yum</button>`
+                                    : `<button data-name="${esc(item.name)}" data-price="${parseFloat(item.price) || 0}" onclick="openModifierModal(this.dataset.name, parseFloat(this.dataset.price))" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ Add to Order</button>`
                                 }
                             </div>
                         </div>
@@ -1627,28 +1750,19 @@
             modalContainer.innerHTML = modifiersList.map(mod => `
                 <label class="flex items-center justify-between bg-yellow-50 p-3 rounded-xl comic-border cursor-pointer">
                     <div class="flex items-center gap-3">
-                        <input type="checkbox" id="${mod.id}" data-price="${mod.price}" class="w-5 h-5 text-brandPink rounded focus:ring-0 dynamic-mod-checkbox">
-                        <span class="font-fredoka font-bold text-slate-900">${mod.label}</span>
+                        <input type="checkbox" id="${esc(mod.id)}" data-price="${parseFloat(mod.price) || 0}" data-label="${esc(mod.label)}" class="w-5 h-5 text-brandPink rounded focus:ring-0 dynamic-mod-checkbox">
+                        <span class="font-fredoka font-bold text-slate-900">${esc(mod.label)}</span>
                     </div>
                     <span class="font-fredoka font-bold text-brandPurple">+$${parseFloat(mod.price).toFixed(2)}</span>
                 </label>
             `).join('');
         }
 
-        // Update modal total to read dynamic checkboxes
-        function updateModifierTotal() {
-            let total = activeModItem.basePrice;
-            const checkboxes = document.querySelectorAll('.dynamic-mod-checkbox');
-            checkboxes.forEach(cb => {
-                if (cb.checked) {
-                    total += parseFloat(cb.getAttribute('data-price') || 0);
-                }
-            });
-            document.getElementById('modifier-total-price').innerText = `$${total.toFixed(2)}`;
-        }
-
         // Initialize CMS Config and Schedule Checks on Load
         window.onload = async function() {
+            document.getElementById('modifier-modal').addEventListener('change', e => {
+                if (e.target.classList.contains('dynamic-mod-checkbox')) updateModifierTotal();
+            });
             await loadSiteSettings();
             await loadDropSettings();
             await loadMenuSettings();
