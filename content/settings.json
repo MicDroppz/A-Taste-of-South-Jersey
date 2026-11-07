@@ -31,7 +31,7 @@
     },
     {
       "days": "SATURDAY",
-      "kind": "truck",
+      "kind": "delivery",
       "open_days": [
         "Sat"
       ],
