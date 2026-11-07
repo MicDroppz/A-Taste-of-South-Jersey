@@ -1,8 +1,8 @@
 {
-  "announcement_bar": "🔥 SERVING AUTHENTIC SOUTH JERSEY PANZAROTTIS & PHILLY CHEESESTEAKS IN KISSIMMEE, FL! 🥟✨",
+  "announcement_bar": "?🔥 SERVING AUTHENTIC SOUTH JERSEY PANZAROTTIS & PHILLY CHEESESTEAKS IN KISSIMMEE, FL! 🥟✨",
   "logo": "/images/Logo ft.jpg",
-  "primary_address": "1398 E Vine St, Kissimmee, FL 34744",
-  "status_override": "AUTO",
+  "primary_address": "?1398 E Vine St, Kissimmee, FL 34744",
+  "status_override": "MANUAL_CLOSED",
   "weekly_schedule": [
     {
       "days": "TUES - THURS",
@@ -10,7 +10,8 @@
       "open_days": [
         "Tue",
         "Wed",
-        "Thu"
+        "Thu",
+        "Mon"
       ],
       "opens": "11:00",
       "closes": "20:00",
@@ -24,8 +25,8 @@
         "Fri"
       ],
       "opens": "16:00",
-      "closes": "21:00",
-      "location": "Truck Rally",
+      "closes": "05:00",
+      "location": "Strip Club",
       "card_color": "teal"
     },
     {
