@@ -1,9 +1,6 @@
 {
   "drop_min_amount": 30,
-  "slots_total": 10,
-  "slots_booked": 0,
-  "low_slots_warning_pct": 30,
-  "drop_capacity_text": "",
+  "drop_capacity_text": "⚡ LIMITED SLOTS REMAINING! (30% Booked)",
   "drop_deposit_pct": 50,
   "catering_deposit_pct": 50,
   "catering_policy_text": "Large catering orders require a {deposit} deposit upfront to secure your date, with the remaining balance due upon delivery."
