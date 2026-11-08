@@ -589,7 +589,7 @@
 
                 <div id="drop-closed-notice" class="hidden bg-slate-900 text-white comic-border p-6 rounded-2xl mb-8 shadow-comic text-center">
                     <span class="text-4xl mb-2 block">🔒</span>
-                    <h3 class="font-bangers text-3xl text-brandYellow mb-2">DELIVERY DROPS ARE CURRENTLY CLOSED!</h3>
+                    <h3 id="drop-closed-title" class="font-bangers text-3xl text-brandYellow mb-2">DELIVERY DROPS ARE CURRENTLY CLOSED!</h3>
                     <p class="font-fredoka text-slate-300 text-base max-w-xl mx-auto mb-4">
                         Our Sunday Delivery Drop ordering window opens automatically every <strong>Sunday between 10:00 AM and 6:00 PM EST</strong>!
                     </p>
@@ -656,12 +656,18 @@
                             </div>
 
                             <div>
-                                <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">DISTANCE FROM VINE ST *</label>
+                                <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1" id="delivery-label">DISTANCE FROM VINE ST *</label>
                                 <select id="drop-distance" onchange="recalculateDropTotals()" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple">
                                     <option value="5">Under 5 Miles (+$5.00 Delivery)</option>
                                     <option value="10">5 – 10 Miles (+$10.00 Delivery)</option>
                                     <option value="15">10 – 15 Miles (+$15.00 Delivery)</option>
                                 </select>
+                                <div id="quote-wrap" class="hidden">
+                                    <button type="button" id="quote-btn" onclick="getDeliveryQuote()" class="js-quote-btn w-full bg-brandTeal hover:bg-teal-300 font-fredoka font-bold px-4 py-2.5 rounded-xl comic-border shadow-comic-sm transition active:translate-y-0.5 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                                        📍 GET DELIVERY FEE
+                                    </button>
+                                    <p id="quote-msg" aria-live="polite" class="font-fredoka text-xs font-bold text-slate-600 mt-2">Enter your full address (street, city, ZIP), then tap the button.</p>
+                                </div>
                             </div>
                         </div>
 
@@ -945,6 +951,11 @@
             cateringDepositPct: 50, // Catering deposit % (catering_deposit_pct in drop-settings.json)
             forceOpen: false,
             manualSoldOut: false,
+            soldOut: false,         // true when slots_booked >= slots_total
+            slotsTotal: 0,          // slots_total in drop-settings.json (0 = not configured)
+            slotsBooked: 0,         // slots_booked in drop-settings.json
+            lowSlotsPct: 30,        // low_slots_warning_pct in drop-settings.json
+            capacityOverride: '',   // drop_capacity_text (optional custom message)
             dropDay: 0,
             startHour: 10,
             endHour: 18
@@ -1147,10 +1158,14 @@
                     });
                 }
 
-                if (data.drop_capacity_text) {
-                    const slotTextEl = document.getElementById('drop-slot-text');
-                    if (slotTextEl) slotTextEl.textContent = data.drop_capacity_text;
-                }
+                const slotsTotal = parseInt(data.slots_total, 10);
+                const slotsBooked = parseInt(data.slots_booked, 10);
+                DROP_CONFIG.slotsTotal = Number.isFinite(slotsTotal) && slotsTotal > 0 ? slotsTotal : 0;
+                DROP_CONFIG.slotsBooked = Number.isFinite(slotsBooked) && slotsBooked > 0 ? slotsBooked : 0;
+                const lowPct = readPercent(data.low_slots_warning_pct, 'low_slots_warning_pct');
+                if (lowPct !== null) DROP_CONFIG.lowSlotsPct = lowPct;
+                DROP_CONFIG.capacityOverride = data.drop_capacity_text ? String(data.drop_capacity_text) : '';
+                DROP_CONFIG.soldOut = DROP_CONFIG.slotsTotal > 0 && DROP_CONFIG.slotsBooked >= DROP_CONFIG.slotsTotal;
 
                 const dropPct = readPercent(data.drop_deposit_pct, 'drop_deposit_pct');
                 if (dropPct !== null) {
@@ -1254,6 +1269,7 @@
 
         // Check if current system clock falls within active Sunday Drop hours
         function isDropWindowActive() {
+            if (DROP_CONFIG.soldOut) return false;
             if (DROP_CONFIG.forceOpen) return true;
             if (DROP_CONFIG.manualSoldOut) return false;
 
@@ -1283,21 +1299,23 @@
                 }
                 if (closedNotice) closedNotice.classList.add('hidden');
                 if (form) {
-                    const inputs = form.querySelectorAll('input, select');
+                    const inputs = form.querySelectorAll('input, select, .js-quote-btn');
                     inputs.forEach(input => input.disabled = false);
                 }
-                if (slotBar) slotBar.style.width = '70%';
+                updateSlotMeter();
             } else {
                 if (statusBadge) {
                     statusBadge.className = "bg-slate-700 text-white font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2";
-                    statusBadge.innerText = "🔴 PRE-ORDERS CURRENTLY CLOSED";
+                    statusBadge.innerText = DROP_CONFIG.soldOut ? "🔴 SOLD OUT FOR THIS DROP" : "🔴 PRE-ORDERS CURRENTLY CLOSED";
                 }
                 if (closedNotice) closedNotice.classList.remove('hidden');
+                const closedTitle = document.getElementById('drop-closed-title');
+                if (closedTitle) closedTitle.textContent = DROP_CONFIG.soldOut ? 'SOLD OUT FOR THIS DROP!' : 'DELIVERY DROPS ARE CURRENTLY CLOSED!';
                 if (form) {
-                    const inputs = form.querySelectorAll('input, select');
+                    const inputs = form.querySelectorAll('input, select, .js-quote-btn');
                     inputs.forEach(input => input.disabled = true);
                 }
-                if (slotBar) slotBar.style.width = '0%';
+                if (DROP_CONFIG.soldOut) { updateSlotMeter(); } else if (slotBar) { slotBar.style.width = '0%'; }
             }
 
             recalculateDropTotals();
@@ -1306,8 +1324,7 @@
         // Delivery Drop Math Calculation
         function recalculateDropTotals() {
             const foodSubtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-            const distanceSelect = document.getElementById('drop-distance');
-            const deliveryFee = parseFloat(distanceSelect ? distanceSelect.value : 5);
+            const deliveryFee = getDeliveryFee();
 
             const totalOrder = foodSubtotal + deliveryFee;
             const depositMultiplier = DROP_CONFIG.depositPct / 100;
@@ -1315,7 +1332,7 @@
             const remainingDue = totalOrder - depositDue;
 
             document.getElementById('math-food-subtotal').innerText = `$${foodSubtotal.toFixed(2)}`;
-            document.getElementById('math-delivery-fee').innerText = `$${deliveryFee.toFixed(2)}`;
+            document.getElementById('math-delivery-fee').innerText = (DELIVERY.apiUrl && !deliveryQuote) ? 'enter address' : `$${deliveryFee.toFixed(2)}`;
             document.getElementById('math-total-order').innerText = `$${totalOrder.toFixed(2)}`;
             document.getElementById('math-deposit-due').innerText = `$${depositDue.toFixed(2)}`;
             document.getElementById('math-remaining-due').innerText = `$${remainingDue.toFixed(2)}`;
@@ -1341,6 +1358,16 @@
                     submitBtn.disabled = true;
                     submitBtn.className = "w-full bg-slate-300 text-slate-500 font-bangers text-2xl py-3 rounded-xl comic-border cursor-not-allowed transition";
                     submitBtn.innerText = "🔒 PRE-ORDERS CURRENTLY CLOSED";
+                }
+            } else if (foodSubtotal >= DROP_CONFIG.minOrderAmount && DELIVERY.apiUrl && !deliveryQuote) {
+                if (statusMsg) {
+                    statusMsg.className = "font-fredoka text-xs font-bold text-brandPurple mt-2 text-center";
+                    statusMsg.innerText = "📍 Minimum reached! Enter your address and tap GET DELIVERY FEE to continue.";
+                }
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.className = "w-full bg-slate-300 text-slate-500 font-bangers text-2xl py-3 rounded-xl comic-border cursor-not-allowed transition";
+                    submitBtn.innerText = "📍 GET YOUR DELIVERY FEE FIRST";
                 }
             } else if (foodSubtotal >= DROP_CONFIG.minOrderAmount) {
                 if (statusMsg) {
@@ -1376,6 +1403,10 @@
             const foodSubtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             if (foodSubtotal < DROP_CONFIG.minOrderAmount) {
                 showToast(`Minimum order of $${DROP_CONFIG.minOrderAmount.toFixed(2)} required! 🥟`);
+                return;
+            }
+            if (DELIVERY.apiUrl && !deliveryQuote) {
+                showToast('Please tap GET DELIVERY FEE first! 📍');
                 return;
             }
             const address = document.getElementById('drop-address').value;
@@ -1758,13 +1789,151 @@
             `).join('');
         }
 
+        // ---------- Delivery slots meter ----------
+        function updateSlotMeter() {
+            const bar = document.getElementById('drop-slot-bar');
+            const text = document.getElementById('drop-slot-text');
+            const total = DROP_CONFIG.slotsTotal;
+
+            if (!(total > 0)) {
+                // Capacity not set: keep the built-in look, use the custom message if there is one
+                if (bar) bar.style.width = '70%';
+                if (text && DROP_CONFIG.capacityOverride) text.textContent = DROP_CONFIG.capacityOverride;
+                return;
+            }
+
+            const booked = Math.min(DROP_CONFIG.slotsBooked, total);
+            const left = total - booked;
+            const leftPct = (left / total) * 100;
+            let barColor, textColor, label;
+
+            if (left === 0) {
+                barColor = 'bg-brandRed';
+                textColor = 'text-brandRed';
+                label = '🔴 SOLD OUT FOR THIS DROP!';
+            } else if (leftPct <= DROP_CONFIG.lowSlotsPct) {
+                barColor = 'bg-brandOrange';
+                textColor = 'text-brandRed';
+                label = `⚡ LIMITED SLOTS REMAINING! (${left} left)`;
+            } else {
+                barColor = 'bg-brandGreen';
+                textColor = 'text-slate-700';
+                label = `✅ SLOTS AVAILABLE (${left} of ${total} left)`;
+            }
+
+            if (bar) {
+                bar.className = `${barColor} h-full rounded-full transition-all duration-500`;
+                bar.style.width = `${Math.round((booked / total) * 100)}%`;
+            }
+            if (text) {
+                text.className = `font-fredoka text-xs font-bold ${textColor}`;
+                text.textContent = DROP_CONFIG.capacityOverride || label;
+            }
+        }
+
+        // ---------- Delivery fee (editable in PageCMS: content/delivery-pricing.json) ----------
+        const DELIVERY = { apiUrl: '' };
+        let deliveryQuote = null;   // { fee } once the customer has a quote
+
+        function getDeliveryFee() {
+            if (DELIVERY.apiUrl) return deliveryQuote ? deliveryQuote.fee : 0;
+            const select = document.getElementById('drop-distance');
+            return select ? (parseFloat(select.value) || 0) : 0;
+        }
+
+        async function loadDeliveryPricing() {
+            try {
+                const response = await fetch('./content/delivery-pricing.json');
+                if (!response.ok) {
+                    console.warn('Could not load content/delivery-pricing.json (HTTP ' + response.status + '). Using the built-in distance options.');
+                    return;
+                }
+                const data = await response.json();
+
+                // Manual distance tiers (used when no quote service is set)
+                const tiers = Array.isArray(data.manual_tiers)
+                    ? data.manual_tiers.filter(t => t && Number.isFinite(parseFloat(t.fee)))
+                    : [];
+                const select = document.getElementById('drop-distance');
+                if (select && tiers.length) {
+                    select.innerHTML = tiers.map(t =>
+                        `<option value="${parseFloat(t.fee)}">${esc(t.label)} (+$${parseFloat(t.fee).toFixed(2)} Delivery)</option>`
+                    ).join('');
+                }
+
+                // Address-based quote (Cloudflare Worker URL)
+                DELIVERY.apiUrl = String(data.quote_api_url || '').trim();
+                if (DELIVERY.apiUrl) {
+                    const quoteWrap = document.getElementById('quote-wrap');
+                    const label = document.getElementById('delivery-label');
+                    if (select) { select.classList.add('hidden'); select.required = false; }
+                    if (quoteWrap) quoteWrap.classList.remove('hidden');
+                    if (label) label.textContent = 'DELIVERY FEE *';
+                }
+            } catch (err) {
+                console.warn('Problem reading delivery-pricing.json (check it for a JSON typo):', err);
+            }
+        }
+
+        async function getDeliveryQuote() {
+            const addressEl = document.getElementById('drop-address');
+            const msg = document.getElementById('quote-msg');
+            const btn = document.getElementById('quote-btn');
+            const address = addressEl ? addressEl.value.trim() : '';
+            const say = (text, color) => {
+                if (msg) { msg.className = `font-fredoka text-xs font-bold mt-2 ${color}`; msg.textContent = text; }
+            };
+
+            if (address.length < 8) {
+                say('Please enter your full address (street, city and ZIP).', 'text-brandRed');
+                return;
+            }
+
+            if (btn) btn.disabled = true;
+            say('🚗 Checking the route and traffic...', 'text-slate-600');
+
+            try {
+                const response = await fetch(DELIVERY.apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ address })
+                });
+                const data = await response.json().catch(() => ({}));
+
+                if (!response.ok || !data.ok || !Number.isFinite(Number(data.fee))) {
+                    deliveryQuote = null;
+                    say(data.error || 'Could not get a delivery fee. Please try again.', 'text-brandRed');
+                } else {
+                    deliveryQuote = { fee: Number(data.fee) };
+                    const eta = data.eta_minutes ? ` • about ${data.eta_minutes} min drive` : '';
+                    const traffic = data.traffic === 'heavy' ? ' • includes a heavy-traffic surcharge' : '';
+                    say(`✅ Delivery fee $${deliveryQuote.fee.toFixed(2)}${eta}${traffic}`, 'text-slate-800');
+                }
+            } catch (err) {
+                deliveryQuote = null;
+                say('Could not reach the delivery fee service. Please try again.', 'text-brandRed');
+            } finally {
+                if (btn) btn.disabled = !isDropWindowActive();
+                recalculateDropTotals();
+            }
+        }
+
         // Initialize CMS Config and Schedule Checks on Load
         window.onload = async function() {
+            document.getElementById('drop-address').addEventListener('input', () => {
+                if (deliveryQuote) {
+                    deliveryQuote = null;
+                    const msg = document.getElementById('quote-msg');
+                    if (msg) { msg.className = 'font-fredoka text-xs font-bold mt-2 text-slate-600'; msg.textContent = 'Address changed: tap GET DELIVERY FEE again.'; }
+                    recalculateDropTotals();
+                }
+            });
             document.getElementById('modifier-modal').addEventListener('change', e => {
                 if (e.target.classList.contains('dynamic-mod-checkbox')) updateModifierTotal();
             });
             await loadSiteSettings();
             await loadDropSettings();
+            await loadDeliveryPricing();
             await loadMenuSettings();
             checkDropWindowSchedule();
         };

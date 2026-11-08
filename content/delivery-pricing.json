@@ -1,0 +1,26 @@
+{
+  "quote_api_url": "",
+  "base_fee": 3,
+  "per_mile": 1,
+  "per_minute": 0.15,
+  "minimum_fee": 5,
+  "maximum_fee": 30,
+  "max_distance_miles": 20,
+  "round_to": 0.5,
+  "heavy_traffic_threshold_pct": 30,
+  "heavy_traffic_surcharge": 3,
+  "manual_tiers": [
+    {
+      "label": "Under 5 Miles",
+      "fee": 5
+    },
+    {
+      "label": "5 – 10 Miles",
+      "fee": 10
+    },
+    {
+      "label": "10 – 15 Miles",
+      "fee": 15
+    }
+  ]
+}

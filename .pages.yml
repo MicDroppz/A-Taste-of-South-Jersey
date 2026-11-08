@@ -264,8 +264,20 @@ content:
         label: Sunday Delivery Drop Minimum Order Amount ($)
         type: number
 
+      - name: slots_total
+        label: Delivery Slots Available Per Drop
+        type: number
+
+      - name: slots_booked
+        label: Slots Booked So Far (reset to 0 after each drop)
+        type: number
+
+      - name: low_slots_warning_pct
+        label: Show "Limited Slots" When This % (or less) Of Slots Remain
+        type: number
+
       - name: drop_capacity_text
-        label: Slot Capacity Warning Text
+        label: Custom Slot Message (optional - leave empty for the automatic message)
         type: string
 
       - name: drop_deposit_pct
@@ -279,3 +291,61 @@ content:
       - name: catering_policy_text
         label: Catering Policy Text (type {deposit} to insert the catering percentage)
         type: text
+
+  - name: delivery_pricing
+    label: Delivery Fees
+    type: file
+    path: content/delivery-pricing.json
+    format: json
+    fields:
+      - name: quote_api_url
+        label: Delivery Quote Service URL (leave empty to use the manual distance tiers below)
+        type: string
+
+      - name: base_fee
+        label: Base Delivery Fee ($)
+        type: number
+
+      - name: per_mile
+        label: Fee Per Mile ($)
+        type: number
+
+      - name: per_minute
+        label: Fee Per Minute of Drive Time, Including Traffic ($)
+        type: number
+
+      - name: minimum_fee
+        label: Minimum Delivery Fee ($)
+        type: number
+
+      - name: maximum_fee
+        label: Maximum Delivery Fee ($)
+        type: number
+
+      - name: max_distance_miles
+        label: Maximum Delivery Distance (miles)
+        type: number
+
+      - name: round_to
+        label: Round Fee To The Nearest ($, e.g. 0.5)
+        type: number
+
+      - name: heavy_traffic_threshold_pct
+        label: Heavy Traffic = Drive Takes This % Longer Than Usual
+        type: number
+
+      - name: heavy_traffic_surcharge
+        label: Heavy Traffic Surcharge ($)
+        type: number
+
+      - name: manual_tiers
+        label: Manual Distance Tiers (used only when no quote service URL is set)
+        type: object
+        list: true
+        fields:
+          - name: label
+            label: Distance Label (e.g. Under 5 Miles)
+            type: string
+          - name: fee
+            label: Fee ($)
+            type: number
