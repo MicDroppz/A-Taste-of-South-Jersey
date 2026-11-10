@@ -1,21 +1,4 @@
 {
-  "modifiers": [
-    {
-      "id": "mod-marinara",
-      "label": "Side of Warm Marinara Sauce",
-      "price": 1
-    },
-    {
-      "id": "mod-garlic",
-      "label": "Garlic Herb Dip",
-      "price": 1
-    },
-    {
-      "id": "mod-cheese",
-      "label": "Extra Mozzarella Cheese Stuffed",
-      "price": 1.5
-    }
-  ],
   "categories": [
     {
       "id": "panzarottis",
@@ -26,10 +9,10 @@
       "items": [
         {
           "name": "Cheese Panzarotti",
-          "price": 10.0,
+          "price": 10,
           "badge": "CLASSIC ORIGINAL",
           "description": "Deep-fried golden pastry dough pocket packed with rich tomato sauce and oozing melted mozzarella cheese.",
-          "image": ""
+          "image": "/images/geminigeneratedimageg94lx6g94lx6g94l-1.jpg"
         },
         {
           "name": "Pepperoni Panzarotti",
@@ -99,8 +82,7 @@
         {
           "name": "Crispy French Fries",
           "price": 4,
-          "description": "Hot, golden, lightly salted potato fries.",
-          "image": ""
+          "description": "Hot, golden, lightly salted potato fries."
         },
         {
           "name": "Gooey Cheese Fries",
@@ -111,16 +93,31 @@
         {
           "name": "Ice Cold Soda",
           "price": 2,
-          "description": "Assorted canned sodas to quench your thirst.",
-          "image": ""
+          "description": "Assorted canned sodas to quench your thirst."
         },
         {
           "name": "Bottled Water",
           "price": 1.5,
-          "description": "Pure purified drinking water bottle.",
-          "image": ""
+          "description": "Pure purified drinking water bottle."
         }
       ]
+    }
+  ],
+  "modifiers": [
+    {
+      "id": "mod-marinara",
+      "label": "Side of Warm Marinara Sauce",
+      "price": 1
+    },
+    {
+      "id": "mod-garlic",
+      "label": "Garlic Herb Dip",
+      "price": 1
+    },
+    {
+      "id": "mod-cheese",
+      "label": "Extra Mozzarella Cheese Stuffed",
+      "price": 1.5
     }
   ]
 }
