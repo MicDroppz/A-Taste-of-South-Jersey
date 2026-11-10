@@ -706,7 +706,8 @@
         </section>
 
         <!-- FRYER ALERT VIP SIGNUP BANNER -->
-        <section class="px-4 max-w-6xl mx-auto">
+        <!-- Hidden until "vip_signup_enabled" is true in content/settings.json -->
+        <section id="vip-section" class="hidden px-4 max-w-6xl mx-auto">
             <div class="bg-brandYellow comic-border shadow-comic-lg rounded-3xl p-6 md:p-8 text-center relative overflow-hidden">
                 <span class="bg-brandPink text-white font-bangers text-xl px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2">
                     NEVER MISS A HOT PANZAROTTI
@@ -718,9 +719,11 @@
                     Get instant text or email updates whenever our food truck opens up in Kissimmee or drops secret discount codes!
                 </p>
 
-                <form onsubmit="handleVipSignup(event)" class="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
-                    <input type="text" id="vip-contact" placeholder="Enter phone # or email..." required class="flex-1 font-fredoka px-4 py-3 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-4 focus:ring-brandPink">
-                    <button type="submit" class="bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-xl px-6 py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5">
+                <form id="vip-form" onsubmit="handleVipSignup(event)" class="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+                    <!-- Spam trap: real people never see or fill this in -->
+                    <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none">
+                    <input type="text" id="vip-contact" name="contact" placeholder="Enter phone # or email..." required class="flex-1 font-fredoka px-4 py-3 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-4 focus:ring-brandPink">
+                    <button type="submit" id="vip-submit" class="bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-xl px-6 py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed">
                         🔔 JOIN VIP RADAR
                     </button>
                 </form>
@@ -861,40 +864,42 @@
                 </div>
             </div>
 
-            <form onsubmit="handleCateringSubmit(event)" class="space-y-4">
+            <form id="catering-form" onsubmit="handleCateringSubmit(event)" class="space-y-4">
+                <!-- Spam trap: real people never see or fill this in -->
+                <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">YOUR NAME *</label>
-                        <input type="text" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="John Doe">
+                        <input type="text" name="name" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="John Doe">
                     </div>
                     <div>
                         <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">PHONE OR EMAIL *</label>
-                        <input type="text" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="(407) 555-0199">
+                        <input type="text" name="contact" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="(407) 555-0199">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">EVENT DATE *</label>
-                        <input type="date" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple">
+                        <input type="date" name="event_date" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple">
                     </div>
                     <div>
                         <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">ESTIMATED GUEST COUNT *</label>
-                        <input type="number" min="10" max="500" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="50">
+                        <input type="number" name="guest_count" min="10" max="500" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="50">
                     </div>
                 </div>
 
                 <div>
                     <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">EVENT LOCATION / CITY *</label>
-                    <input type="text" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="Kissimmee, Orlando, Davenport, etc.">
+                    <input type="text" name="event_location" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="Kissimmee, Orlando, Davenport, etc.">
                 </div>
 
                 <div>
                     <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">SPECIAL REQUESTS / MENU PREFERENCES</label>
-                    <textarea rows="3" class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="Tell us about your party details, Panzarotti requests, or Philly cheesesteak preferences!"></textarea>
+                    <textarea rows="3" name="special_requests" class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="Tell us about your party details, Panzarotti requests, or Philly cheesesteak preferences!"></textarea>
                 </div>
 
-                <button type="submit" class="w-full bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-2xl py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5">
+                <button type="submit" id="catering-submit" class="w-full bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-2xl py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed">
                     🚀 SUBMIT CATERING INQUIRY
                 </button>
             </form>
@@ -1028,9 +1033,17 @@
             const opens = parseTime(card.opens);
             const closes = parseTime(card.closes);
             const days = Array.isArray(card.open_days) ? card.open_days : [];
-            return opens !== null && closes !== null
-                && days.includes(DAY_CODES[now.day])
-                && now.minutes >= opens && now.minutes < closes;
+            if (opens === null || closes === null) return false;
+            if (closes > opens) {
+                // Normal same-day hours (e.g. 11:00 - 20:00)
+                return days.includes(DAY_CODES[now.day])
+                    && now.minutes >= opens && now.minutes < closes;
+            }
+            // Overnight hours (e.g. 16:00 - 05:00): open from the listed day's start time
+            // until the closing time the next morning
+            const yesterday = DAY_CODES[(now.day + 6) % 7];
+            return (days.includes(DAY_CODES[now.day]) && now.minutes >= opens)
+                || (days.includes(yesterday) && now.minutes < closes);
         }
 
         // Next time any of these cards opens (looking up to a week ahead)
@@ -1090,6 +1103,12 @@
                 addressEls.forEach(el => {
                     if (data.primary_address) el.textContent = data.primary_address;
                 });
+
+                // VIP "Fryer Alert" signup: hidden unless settings.json has "vip_signup_enabled": true
+                const vipSection = document.getElementById('vip-section');
+                if (vipSection) {
+                    vipSection.classList.toggle('hidden', data.vip_signup_enabled !== true);
+                }
 
                 // 3. Render Weekly Schedule Cards
                 if (data.weekly_schedule && Array.isArray(data.weekly_schedule)) {
@@ -1474,18 +1493,100 @@
             modal.classList.add('opacity-0', 'pointer-events-none');
         }
 
-        function handleCateringSubmit(e) {
+        // ---------- Web3Forms (sends form submissions to your email) ----------
+        // 1) Go to https://web3forms.com, enter the email that should receive requests, and
+        //    they email you a free Access Key. 2) Paste it below. The key is safe to be public.
+        const WEB3FORMS = {
+            endpoint: 'https://api.web3forms.com/submit',
+            accessKey: 'YOUR_WEB3FORMS_ACCESS_KEY'
+        };
+
+        // Sends one form to Web3Forms. Returns true only if it really went through.
+        async function sendToWeb3Forms(fields) {
+            if (!WEB3FORMS.accessKey || WEB3FORMS.accessKey.startsWith('YOUR_')) {
+                console.warn('Web3Forms access key is not set yet (see WEB3FORMS in index.html).');
+                showToast("⚠️ This form isn't switched on yet. Please call or message us instead!", 5000);
+                return false;
+            }
+            try {
+                const response = await fetch(WEB3FORMS.endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ access_key: WEB3FORMS.accessKey, ...fields })
+                });
+                const result = await response.json().catch(() => ({}));
+                if (response.ok && result.success) return true;
+                console.warn('Web3Forms rejected the submission:', result);
+            } catch (err) {
+                console.warn('Could not reach Web3Forms:', err);
+            }
+            showToast("😕 Sorry, that didn't go through. Please check your connection and try again.", 5000);
+            return false;
+        }
+
+        // Catering Form Submit
+        async function handleCateringSubmit(e) {
             e.preventDefault();
+            const form = e.target;
+            const btn = document.getElementById('catering-submit');
+            const data = new FormData(form);
+            if (data.get('botcheck')) return; // spam trap was filled in: silently ignore
+
+            const contact = String(data.get('contact') || '').trim();
+            const originalLabel = btn.innerHTML;
+            btn.disabled = true;
+            btn.textContent = '⏳ SENDING...';
+
+            const ok = await sendToWeb3Forms({
+                subject: 'New Catering Inquiry - A Touch of South Jersey',
+                from_name: 'South Jersey Website',
+                replyto: contact.includes('@') ? contact : undefined,
+                'Name': data.get('name'),
+                'Phone or Email': contact,
+                'Event Date': data.get('event_date'),
+                'Guest Count': data.get('guest_count'),
+                'Event Location': data.get('event_location'),
+                'Special Requests': data.get('special_requests') || '(none)',
+                botcheck: ''
+            });
+
+            btn.disabled = false;
+            btn.innerHTML = originalLabel;
+            if (!ok) return;
+
             playSound('laser');
-            showToast(`🎉 Catering request received! Reminder: Large orders require a ${DROP_CONFIG.cateringDepositPct}% deposit. We'll contact you shortly!`);
+            showToast(`🎉 Catering request sent! Reminder: Large orders require a ${DROP_CONFIG.cateringDepositPct}% deposit. We'll contact you shortly!`, 6000);
+            form.reset();
             closeCateringModal();
         }
 
-        // VIP Sign-up Logic
-        function handleVipSignup(e) {
+        // VIP Sign-up (section stays hidden until vip_signup_enabled is true in settings.json)
+        async function handleVipSignup(e) {
             e.preventDefault();
+            const form = e.target;
+            const btn = document.getElementById('vip-submit');
             const contactInput = document.getElementById('vip-contact');
-            showToast(`🚨 You're signed up for Fryer Alerts! We will alert ${contactInput.value} when the truck is hot!`);
+            const data = new FormData(form);
+            if (data.get('botcheck')) return; // spam trap was filled in: silently ignore
+
+            const contact = contactInput.value.trim();
+            const originalLabel = btn.innerHTML;
+            btn.disabled = true;
+            btn.textContent = '⏳ SENDING...';
+
+            const ok = await sendToWeb3Forms({
+                subject: 'New Fryer Alert VIP Signup - A Touch of South Jersey',
+                from_name: 'South Jersey Website',
+                replyto: contact.includes('@') ? contact : undefined,
+                'VIP Contact': contact,
+                botcheck: ''
+            });
+
+            btn.disabled = false;
+            btn.innerHTML = originalLabel;
+            if (!ok) return;
+
+            showToast(`🚨 You're on the Fryer Alert list! We'll reach out at ${contact} when the truck is hot!`, 5000);
             contactInput.value = '';
             playSound('honk');
         }
@@ -1601,13 +1702,15 @@
         }
 
         // Custom Toast Notification
-        function showToast(msg) {
+        let toastTimer = null;
+        function showToast(msg, durationMs = 3000) {
             const toast = document.getElementById('toast');
             toast.innerText = msg;
             toast.classList.remove('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
                 toast.classList.add('opacity-0', 'pointer-events-none');
-            }, 3000);
+            }, durationMs);
         }
 
         // Joke Generator Logic
