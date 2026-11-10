@@ -2,6 +2,8 @@
 media:
   input: images
   output: /images
+  rename: safe        # uploads get web-safe names (no spaces/odd characters)
+  extensions: [png, jpg, jpeg, webp, gif, svg]
 
 content:
   - name: menu
@@ -109,6 +111,10 @@ content:
               label: Force Open (OPEN NOW)
             - name: MANUAL_CLOSED
               label: Force Closed (CLOSED NOW)
+
+      - name: vip_signup_enabled
+        label: Show the "Fryer Alert" VIP signup section on the website
+        type: boolean
 
       - name: weekly_schedule
         label: Weekly Schedule Cards
