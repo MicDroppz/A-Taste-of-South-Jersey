@@ -578,7 +578,7 @@
                         </p>
                     </div>
                     
-                    <div id="drop-slot-box" class="bg-white comic-border p-4 rounded-2xl shadow-comic text-center min-w-[260px]">
+                    <div id="drop-slot-box" class="hidden bg-white comic-border p-4 rounded-2xl shadow-comic text-center min-w-[260px]">
                         <span id="drop-slot-label" class="font-bangers text-lg text-slate-900 block">DELIVERY SLOT STATUS</span>
                         <div class="w-full bg-slate-200 rounded-full h-4 comic-border my-2 overflow-hidden">
                             <div id="drop-slot-bar" class="bg-brandPink h-full rounded-full transition-all duration-500" style="width: 70%;"></div>
@@ -624,7 +624,7 @@
                         <div>
                             <h4 class="font-bangers text-xl text-brandPurple"><span class="js-drop-pct">50</span>% DEPOSIT TO LOCK IN</h4>
                             <p class="font-fredoka text-xs text-slate-700 font-bold">
-                                Pay <span class="js-drop-pct">50</span>% upfront to hold your spot, and pay the remaining <span class="js-drop-rem-pct">50</span>% upon delivery arrival!
+                                Pay <span class="js-drop-pct">50</span>% of your food plus the delivery fee upfront, and the rest when we arrive!
                             </p>
                         </div>
                     </div>
@@ -649,6 +649,10 @@
                     </div>
 
                     <form id="drop-form" onsubmit="handleDeliveryDropSubmit(event)" class="space-y-4">
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <input type="text" id="drop-name" required placeholder="Your name" class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900">
+                        <input type="tel" id="drop-phone" required placeholder="Phone number" class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900">
+                    </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">DELIVERY ADDRESS *</label>
@@ -686,7 +690,7 @@
                             </div>
                             <div class="grid grid-cols-2 gap-2 pt-2 text-center">
                                 <div class="bg-brandGreen text-slate-900 p-2 rounded-xl comic-border">
-                                    <span class="block text-xs font-bold"><span class="js-drop-pct">50</span>% DEPOSIT DUE TODAY</span>
+                                    <span class="block text-xs font-bold"><span class="js-drop-pct">50</span>% OF FOOD + DELIVERY FEE DUE TODAY</span>
                                     <span id="math-deposit-due" class="font-bangers text-xl">$2.50</span>
                                 </div>
                                 <div class="bg-brandYellow text-slate-900 p-2 rounded-xl comic-border">
@@ -1190,7 +1194,7 @@
                 const lowPct = readPercent(data.low_slots_warning_pct, 'low_slots_warning_pct');
                 if (lowPct !== null) DROP_CONFIG.lowSlotsPct = lowPct;
                 DROP_CONFIG.capacityOverride = data.drop_capacity_text ? String(data.drop_capacity_text) : '';
-                DROP_CONFIG.soldOut = DROP_CONFIG.slotsTotal > 0 && DROP_CONFIG.slotsBooked >= DROP_CONFIG.slotsTotal;
+                DROP_CONFIG.soldOut = false; // slots were removed: use drop_status instead
                 // CMS switch: drop_status = AUTO | SOLD_OUT | FORCE_OPEN
                 if (data.drop_status === 'SOLD_OUT') DROP_CONFIG.soldOut = true;
                 if (data.drop_status === 'FORCE_OPEN') { DROP_CONFIG.soldOut = false; DROP_CONFIG.forceOpen = true; }
@@ -1356,11 +1360,11 @@
 
             const totalOrder = foodSubtotal + deliveryFee;
             const depositMultiplier = DROP_CONFIG.depositPct / 100;
-            const depositDue = totalOrder * depositMultiplier;
+            const depositDue = foodSubtotal * depositMultiplier + deliveryFee; // % of food + delivery fee in full
             const remainingDue = totalOrder - depositDue;
 
             document.getElementById('math-food-subtotal').innerText = `$${foodSubtotal.toFixed(2)}`;
-            document.getElementById('math-delivery-fee').innerText = (DELIVERY.apiUrl && !deliveryQuote) ? 'enter address' : `$${deliveryFee.toFixed(2)}`;
+            document.getElementById('math-delivery-fee').innerText = needsQuote() ? 'enter address' : `$${deliveryFee.toFixed(2)}`;
             document.getElementById('math-total-order').innerText = `$${totalOrder.toFixed(2)}`;
             document.getElementById('math-deposit-due').innerText = `$${depositDue.toFixed(2)}`;
             document.getElementById('math-remaining-due').innerText = `$${remainingDue.toFixed(2)}`;
@@ -1387,15 +1391,15 @@
                     submitBtn.className = "w-full bg-slate-300 text-slate-500 font-bangers text-2xl py-3 rounded-xl comic-border cursor-not-allowed transition";
                     submitBtn.innerText = "🔒 PRE-ORDERS CURRENTLY CLOSED";
                 }
-            } else if (foodSubtotal >= DROP_CONFIG.minOrderAmount && DELIVERY.apiUrl && !deliveryQuote) {
+            } else if (foodSubtotal >= DROP_CONFIG.minOrderAmount && needsQuote()) {
                 if (statusMsg) {
                     statusMsg.className = "font-fredoka text-xs font-bold text-brandPurple mt-2 text-center";
-                    statusMsg.innerText = "📍 Minimum reached! Enter your address and tap GET DELIVERY FEE to continue.";
+                    statusMsg.innerText = "📍 Minimum reached! Enter your full address with ZIP code to see your delivery fee.";
                 }
                 if (submitBtn) {
                     submitBtn.disabled = true;
                     submitBtn.className = "w-full bg-slate-300 text-slate-500 font-bangers text-2xl py-3 rounded-xl comic-border cursor-not-allowed transition";
-                    submitBtn.innerText = "📍 GET YOUR DELIVERY FEE FIRST";
+                    submitBtn.innerText = "📍 ENTER ADDRESS + ZIP FIRST";
                 }
             } else if (foodSubtotal >= DROP_CONFIG.minOrderAmount) {
                 if (statusMsg) {
@@ -1421,7 +1425,7 @@
             }
         }
 
-        function handleDeliveryDropSubmit(e) {
+        async function handleDeliveryDropSubmit(e) {
             e.preventDefault();
             if (!isDropWindowActive()) {
                 showToast("Sunday Drop pre-orders are currently closed! 🔒");
@@ -1433,13 +1437,35 @@
                 showToast(`Minimum order of $${DROP_CONFIG.minOrderAmount.toFixed(2)} required! 🥟`);
                 return;
             }
-            if (DELIVERY.apiUrl && !deliveryQuote) {
-                showToast('Please tap GET DELIVERY FEE first! 📍');
+            if (needsQuote()) {
+                showToast('Please enter your full address with ZIP code so we can price delivery. 📍', 4000);
                 return;
             }
             const address = document.getElementById('drop-address').value;
+            const fee = getDeliveryFee(), total = foodSubtotal + fee;
+            const due = foodSubtotal * DROP_CONFIG.depositPct / 100 + fee;
+            const btn = document.getElementById('drop-submit-btn'), label = btn.innerHTML;
+            btn.disabled = true; btn.textContent = '⏳ SENDING...';
+            const ok = await sendToWeb3Forms({
+                subject: 'New DELIVERY Drop Order - A Touch of South Jersey',
+                from_name: 'South Jersey Website',
+                'Order Type': 'Delivery drop',
+                'Name': document.getElementById('drop-name').value.trim(),
+                'Phone': document.getElementById('drop-phone').value.trim(),
+                'Delivery Address': address,
+                'Items': cart.map(i => `${i.qty} x ${i.name} ($${(i.price * i.qty).toFixed(2)})`).join('\n'),
+                'Food Subtotal': `$${foodSubtotal.toFixed(2)}`,
+                'Delivery Fee': `$${fee.toFixed(2)}`,
+                'Total (before tax)': `$${total.toFixed(2)}`,
+                'Due Online Now': `$${due.toFixed(2)}`,
+                'Due At Delivery': `$${(total - due).toFixed(2)}`,
+                botcheck: ''
+            });
+            btn.innerHTML = label; btn.disabled = false;
+            if (!ok) return;
             playSound('laser');
-            showToast(`📦 Sunday Drop slot locked for ${address}! ${DROP_CONFIG.depositPct}% deposit requested.`);
+            showToast("📦 Delivery order received! We'll confirm and send your payment details shortly.", 7000);
+            cart.length = 0; updateCartUI(); recalculateDropTotals();
         }
 
         // Modifier & Customization Modal Logic
@@ -1907,7 +1933,7 @@
                             </div>
                             <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
                                 <span class="font-fredoka text-2xl text-slate-900">$${parseFloat(item.price).toFixed(2)}</span>
-                                ${isSimpleAdd 
+                                ${item.sold_out === true ? `<button disabled class="bg-slate-300 text-slate-500 font-fredoka px-4 py-2 rounded-xl comic-border cursor-not-allowed">SOLD OUT</button>` : isSimpleAdd 
                                     ? `<button data-name="${esc(item.name)}" data-price="${parseFloat(item.price) || 0}" onclick="addToCart(this.dataset.name, parseFloat(this.dataset.price))" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ Add Yum</button>`
                                     : `<button data-name="${esc(item.name)}" data-price="${parseFloat(item.price) || 0}" onclick="openModifierModal(this.dataset.name, parseFloat(this.dataset.price))" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ Add to Order</button>`
                                 }
@@ -1987,7 +2013,24 @@
         const DELIVERY = { apiUrl: '' };
         let deliveryQuote = null;   // { fee } once the customer has a quote
 
+        DELIVERY.zones = [];
+        function zoneLookup() {
+            const zip = (document.getElementById('drop-address').value.match(/\b\d{5}\b/g) || []).pop();
+            return zip ? DELIVERY.zones.find(z => z.zips.includes(zip)) || null : null;
+        }
+        function needsQuote() {
+            if (DELIVERY.zones.length) return !zoneLookup();
+            return DELIVERY.apiUrl && !deliveryQuote;
+        }
+        function updateZoneMsg() {
+            const msg = document.getElementById('quote-msg'), z = zoneLookup();
+            const hasZip = /\b\d{5}\b/.test(document.getElementById('drop-address').value);
+            msg.textContent = z ? `✅ ${z.name}: delivery fee $${z.fee.toFixed(2)}` : hasZip ? "Sorry, that ZIP is outside our delivery area. Please call us!" : 'Enter your full address including ZIP code to see your delivery fee.';
+            recalculateDropTotals();
+        }
+
         function getDeliveryFee() {
+            if (DELIVERY.zones.length) { const z = zoneLookup(); return z ? z.fee : 0; }
             if (DELIVERY.apiUrl) return deliveryQuote ? deliveryQuote.fee : 0;
             const select = document.getElementById('drop-distance');
             return select ? (parseFloat(select.value) || 0) : 0;
@@ -2001,6 +2044,19 @@
                     return;
                 }
                 const data = await response.json();
+
+                // ZIP delivery zones (the simple, recommended setup)
+                DELIVERY.zones = (Array.isArray(data.zones) ? data.zones : []).map(z => ({ name: String(z.name || 'Delivery'), fee: parseFloat(z.fee), zips: String(z.zips || '').match(/\d{5}/g) || [] })).filter(z => Number.isFinite(z.fee) && z.zips.length);
+                if (DELIVERY.zones.length) {
+                    const sel = document.getElementById('drop-distance');
+                    if (sel) { sel.classList.add('hidden'); sel.required = false; }
+                    document.getElementById('quote-btn').classList.add('hidden');
+                    document.getElementById('quote-wrap').classList.remove('hidden');
+                    document.getElementById('delivery-label').textContent = 'DELIVERY FEE (BY ZIP CODE)';
+                    document.getElementById('drop-address').addEventListener('input', updateZoneMsg);
+                    updateZoneMsg();
+                    return;
+                }
 
                 // Manual distance tiers (used when no quote service is set)
                 const tiers = Array.isArray(data.manual_tiers)
