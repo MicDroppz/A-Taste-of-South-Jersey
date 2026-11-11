@@ -3,7 +3,6 @@ media:
   input: images
   output: /images
   rename: safe        # uploads get web-safe names (no spaces/odd characters)
-  extensions: [png, jpg, jpeg, webp, gif, svg]
 
 content:
   - name: menu
@@ -266,6 +265,18 @@ content:
     path: content/drop-settings.json
     format: json
     fields:
+      - name: drop_status
+        label: Delivery drop status
+        type: select
+        options:
+          values:
+            - name: AUTO
+              label: Automatic (follows the weekly schedule)
+            - name: SOLD_OUT
+              label: Sold out - no delivery right now
+            - name: FORCE_OPEN
+              label: Force open (for an unscheduled drop)
+
       - name: drop_min_amount
         label: Sunday Delivery Drop Minimum Order Amount ($)
         type: number
