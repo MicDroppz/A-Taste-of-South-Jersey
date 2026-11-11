@@ -571,7 +571,7 @@
                             🔴 DELIVERY DROP PRE-ORDERS
                         </span>
                         <h2 class="font-bangers text-4xl md:text-5xl text-brandPurple">
-                            SUNDAY DELIVERY DROP CALCULATOR 📦
+                            DELIVERY ORDERS 📦
                         </h2>
                         <p id="drop-schedule-subtitle" class="font-fredoka text-slate-900 font-bold text-base">
                             Delivery Only • Drop Window: Sundays 10:00 AM – 6:00 PM EST (Or Until Sold Out)
@@ -591,10 +591,10 @@
                     <span class="text-4xl mb-2 block">🔒</span>
                     <h3 id="drop-closed-title" class="font-bangers text-3xl text-brandYellow mb-2">DELIVERY DROPS ARE CURRENTLY CLOSED!</h3>
                     <p class="font-fredoka text-slate-300 text-base max-w-xl mx-auto mb-4">
-                        Our Sunday Delivery Drop ordering window opens automatically every <strong>Sunday between 10:00 AM and 6:00 PM EST</strong>!
+                        <span id="drop-closed-text">Delivery ordering opens automatically on delivery days.</span>
                     </p>
                     <div class="inline-block bg-brandPurple text-white font-fredoka font-bold text-sm px-4 py-2 rounded-xl comic-border">
-                        📅 Next Drop Window: Sunday at 10:00 AM EST
+                        <span id="drop-next-text">📅 Next delivery window: see the schedule above</span>
                     </div>
                 </div>
 
@@ -675,7 +675,7 @@
                             </div>
                         </div>
 
-                        <div class="bg-purple-50 comic-border p-4 rounded-2xl space-y-2 font-fredoka">
+                        <div id="drop-math-box" class="bg-purple-50 comic-border p-4 rounded-2xl space-y-2 font-fredoka">
                             <div class="flex justify-between text-sm">
                                 <span>Food Subtotal:</span>
                                 <span id="math-food-subtotal" class="font-bold">$0.00</span>
@@ -752,7 +752,7 @@
                             </p>
                             <p class="flex items-start gap-2">
                                 <span class="text-2xl">📦</span>
-                                <span><strong>Sunday Delivery Days:</strong> On Sunday Drop days, there is no physical truck address to visit—we deliver fresh, hot Panzarottis straight to your door!</span>
+                                <span><strong>Delivery Days:</strong> On delivery days, there is no physical truck address to visit—we deliver fresh, hot Panzarottis straight to your door!</span>
                             </p>
                         </div>
                     </div>
@@ -935,7 +935,7 @@
                     <span id="cart-total" class="font-bangers text-2xl text-brandPurple">$0.00</span>
                 </div>
                 <div id="cart-badge-container" class="mb-4"></div>
-                <div class="space-y-2 mb-3 font-fredoka text-sm">
+                <div id="pickup-fields" class="space-y-2 mb-3 font-fredoka text-sm">
                     <input type="text" id="pickup-name" placeholder="Your name" class="w-full p-2 rounded-xl comic-border text-slate-900">
                     <input type="tel" id="pickup-phone" placeholder="Phone number (we text you a payment link)" class="w-full p-2 rounded-xl comic-border text-slate-900">
                     <label class="block font-bold">Pickup time (at the truck)</label>
@@ -1196,6 +1196,7 @@
                 DROP_CONFIG.capacityOverride = data.drop_capacity_text ? String(data.drop_capacity_text) : '';
                 DROP_CONFIG.soldOut = false; // slots were removed: use drop_status instead
                 // CMS switch: drop_status = AUTO | SOLD_OUT | FORCE_OPEN
+                DELIVERY.owner = data.delivery_mode !== 'RESERVE'; // default: customers send a delivery request
                 if (data.drop_status === 'SOLD_OUT') DROP_CONFIG.soldOut = true;
                 if (data.drop_status === 'FORCE_OPEN') { DROP_CONFIG.soldOut = false; DROP_CONFIG.forceOpen = true; }
 
@@ -1316,7 +1317,69 @@
         }
 
         // Initialize and Update Drop Window UI
+        // ---------- Pickup / delivery switch + schedule-driven delivery text ----------
+        const ORDER = { type: 'pickup' };
+        const FULL_DAYS = { Sun: 'Sunday', Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday', Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday' };
+        function dayHasKind(kind) {
+            const d = DAY_CODES[getTruckTime().day];
+            return scheduleCards.some(c => c.kind === kind && Array.isArray(c.open_days) && c.open_days.includes(d));
+        }
+        function deliveryToday() { return !!DROP_CONFIG.forceOpen || (!DROP_CONFIG.soldOut && dayHasKind('delivery')); }
+        function fmt12(t) {
+            const m = parseTime(t); if (m === null) return t;
+            const h = Math.floor(m / 60) % 24;
+            return `${h % 12 || 12}:${String(m % 60).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
+        }
+        function nextDelivery() {
+            const now = getTruckTime();
+            for (let i = 0; i < 7; i++) {
+                const d = DAY_CODES[(now.day + i) % 7];
+                const c = scheduleCards.find(c => c.kind === 'delivery' && Array.isArray(c.open_days) && c.open_days.includes(d)
+                    && (i > 0 || isSlotActiveNow(c, now) || now.minutes < parseTime(c.opens)));
+                if (c) return { c, d, i };
+            }
+            return null;
+        }
+        function updateDeliveryText() {
+            const n = nextDelivery(); if (!n) return;
+            const win = `${fmt12(n.c.opens)} – ${fmt12(n.c.closes)} ET`;
+            const when = n.i === 0 ? 'Today' : FULL_DAYS[n.d];
+            window.dropNextText = `${when} ${win}`;
+            const set = (id, t) => { const el = document.getElementById(id); if (el) el.textContent = t; };
+            set('drop-schedule-subtitle', n.i === 0 ? `Delivery Only • Today's delivery window: ${win} (or until sold out)` : `Delivery Only • Next delivery: ${when} ${win}`);
+            set('drop-next-text', `📅 Next delivery window: ${when} ${win}`);
+        }
+        function setOrderType(t) { ORDER.type = t; updateOrderTypeUI(); }
+        function updateOrderTypeUI() {
+            const d = deliveryToday();
+            const p = dayHasKind('truck') || !d;
+            if (!d) ORDER.type = 'pickup'; else if (!p) ORDER.type = 'delivery';
+            let bar = document.getElementById('order-type-bar');
+            const menu = document.getElementById('menu');
+            if (!bar && menu) {
+                bar = document.createElement('div');
+                bar.id = 'order-type-bar';
+                bar.className = 'flex justify-center gap-3 my-4 font-bangers text-xl';
+                bar.innerHTML = '<button id="ot-pickup" onclick="setOrderType(\'pickup\')" class="px-5 py-2 rounded-xl comic-border">🥡 PICKUP</button><button id="ot-delivery" onclick="setOrderType(\'delivery\')" class="px-5 py-2 rounded-xl comic-border">🚚 DELIVERY</button>';
+                menu.parentNode.insertBefore(bar, menu);
+            }
+            if (bar) {
+                bar.classList.toggle('hidden', !(d && p));
+                ['pickup', 'delivery'].forEach(k => { document.getElementById('ot-' + k).className = 'px-5 py-2 rounded-xl comic-border ' + (ORDER.type === k ? 'bg-brandGreen shadow-comic-sm' : 'bg-white'); });
+            }
+            document.querySelectorAll('.js-add-label').forEach(el => { el.textContent = ORDER.type === 'delivery' ? 'Add to Delivery' : 'Add to Pickup'; });
+        }
+        function refreshDeliveryModeUI() {
+            const req = !!DELIVERY.owner, $ = id => document.getElementById(id);
+            $('drop-math-box').classList.toggle('hidden', req);
+            const card = document.querySelector('.js-drop-pct'); if (card && card.closest('.comic-border')) card.closest('.comic-border').classList.toggle('hidden', req);
+            $('quote-wrap').classList.toggle('hidden', req || !DELIVERY.zones.length);
+            const sel = $('drop-distance'); if (sel && req) { sel.classList.add('hidden'); sel.required = false; }
+            recalculateDropTotals();
+        }
+
         function checkDropWindowSchedule() {
+            updateDeliveryText(); updateOrderTypeUI(); refreshDeliveryModeUI();
             const isActive = isDropWindowActive();
             const statusBadge = document.getElementById('drop-status-badge');
             const closedNotice = document.getElementById('drop-closed-notice');
@@ -1327,7 +1390,7 @@
             if (isActive) {
                 if (statusBadge) {
                     statusBadge.className = "bg-brandGreen text-slate-900 font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2 animate-pulse";
-                    statusBadge.innerText = "🟢 SUNDAY DROP PRE-ORDERS LIVE NOW!";
+                    statusBadge.innerText = "🟢 DELIVERY ORDERS OPEN NOW!";
                 }
                 if (closedNotice) closedNotice.classList.add('hidden');
                 if (form) {
@@ -1384,7 +1447,7 @@
             if (!isActive) {
                 if (statusMsg) {
                     statusMsg.className = "font-fredoka text-xs font-bold text-slate-500 mt-2 text-center";
-                    statusMsg.innerText = "🔒 Sunday Drop ordering is closed. Window opens Sunday at 10:00 AM EST.";
+                    statusMsg.innerText = `🔒 Delivery ordering is closed right now. Next window: ${window.dropNextText || "see the schedule"}`;
                 }
                 if (submitBtn) {
                     submitBtn.disabled = true;
@@ -1404,12 +1467,12 @@
             } else if (foodSubtotal >= DROP_CONFIG.minOrderAmount) {
                 if (statusMsg) {
                     statusMsg.className = "font-fredoka text-xs font-bold text-brandGreen mt-2 text-center";
-                    statusMsg.innerText = "🎉 Minimum order threshold reached! Ready to lock in your Sunday Drop slot!";
+                    statusMsg.innerText = (DELIVERY.owner ? "🎉 Minimum reached! Add your name, phone and address, then send your request." : "🎉 Minimum reached! Ready to reserve your delivery!");
                 }
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.className = "w-full bg-brandRed hover:bg-red-600 text-white font-bangers text-2xl py-3 rounded-xl comic-border shadow-comic transition cursor-pointer active:translate-y-0.5";
-                    submitBtn.innerText = `🚀 RESERVE SUNDAY DROP SLOT (${DROP_CONFIG.depositPct}% DEPOSIT)`;
+                    submitBtn.innerText = (DELIVERY.owner ? "🚚 REQUEST DELIVERY" : `🚀 RESERVE MY DELIVERY (${DROP_CONFIG.depositPct}% DEPOSIT)`);
                 }
             } else {
                 const needed = (DROP_CONFIG.minOrderAmount - foodSubtotal).toFixed(2);
@@ -1428,7 +1491,7 @@
         async function handleDeliveryDropSubmit(e) {
             e.preventDefault();
             if (!isDropWindowActive()) {
-                showToast("Sunday Drop pre-orders are currently closed! 🔒");
+                showToast("Delivery ordering is closed right now! 🔒");
                 return;
             }
 
@@ -1457,14 +1520,14 @@
                 'Food Subtotal': `$${foodSubtotal.toFixed(2)}`,
                 'Delivery Fee': DELIVERY.owner ? 'TO BE SET BY OWNER - add to the balance due at delivery' : `$${fee.toFixed(2)}`,
                 'Total (before tax)': `$${total.toFixed(2)}`,
-                'Due Online Now': `$${due.toFixed(2)}`,
-                'Due At Delivery': `$${(total - due).toFixed(2)}` + (DELIVERY.owner ? ' + delivery fee (owner to add)' : ''),
+                'Due Online Now': DELIVERY.owner ? 'Owner to quote (deposit % of food + delivery fee)' : `$${due.toFixed(2)}`,
+                'Due At Delivery': DELIVERY.owner ? 'Owner to confirm' : `$${(total - due).toFixed(2)}`,
                 botcheck: ''
             });
             btn.innerHTML = label; btn.disabled = false;
             if (!ok) return;
             playSound('laser');
-            showToast("📦 Delivery order received! We'll confirm and send your payment details shortly.", 7000);
+            showToast(DELIVERY.owner ? "📦 Delivery request sent! We'll text you the delivery fee and a payment link." : "📦 Delivery order received! We'll confirm and send your payment details shortly.", 7000);
             cart.length = 0; updateCartUI(); recalculateDropTotals();
         }
 
@@ -1712,6 +1775,9 @@
         }
 
         function buildPickupSlots() {
+            const del = ORDER.type === 'delivery';
+            document.getElementById('pickup-fields').classList.toggle('hidden', del);
+            document.getElementById('checkout-btn').textContent = del ? '🚚 CONTINUE TO DELIVERY' : '🎉 PLACE PICKUP ORDER!';
             const sel = document.getElementById('pickup-time');
             if (!sel) return;
             const now = getTruckTime();
@@ -1746,6 +1812,12 @@
 
         async function checkoutCart() {
             if (cart.length === 0) { showToast("Your cart is empty! 🥟"); return; }
+            if (ORDER.type === 'delivery') {
+                toggleCartModal();
+                document.getElementById('drop-container').scrollIntoView({ behavior: 'smooth' });
+                showToast('Add your name, phone and address to finish your delivery request 🚚', 5000);
+                return;
+            }
             const name = document.getElementById('pickup-name').value.trim();
             const phone = document.getElementById('pickup-phone').value.trim();
             if (!name || phone.replace(/\D/g, '').length < 10) {
@@ -1934,8 +2006,8 @@
                             <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
                                 <span class="font-fredoka text-2xl text-slate-900">$${parseFloat(item.price).toFixed(2)}</span>
                                 ${item.sold_out === true ? `<button disabled class="bg-slate-300 text-slate-500 font-fredoka px-4 py-2 rounded-xl comic-border cursor-not-allowed">SOLD OUT</button>` : isSimpleAdd 
-                                    ? `<button data-name="${esc(item.name)}" data-price="${parseFloat(item.price) || 0}" onclick="addToCart(this.dataset.name, parseFloat(this.dataset.price))" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ Add Yum</button>`
-                                    : `<button data-name="${esc(item.name)}" data-price="${parseFloat(item.price) || 0}" onclick="openModifierModal(this.dataset.name, parseFloat(this.dataset.price))" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ Add to Order</button>`
+                                    ? `<button data-name="${esc(item.name)}" data-price="${parseFloat(item.price) || 0}" onclick="addToCart(this.dataset.name, parseFloat(this.dataset.price))" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ <span class="js-add-label">Add</span></button>`
+                                    : `<button data-name="${esc(item.name)}" data-price="${parseFloat(item.price) || 0}" onclick="openModifierModal(this.dataset.name, parseFloat(this.dataset.price))" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ <span class="js-add-label">Add</span></button>`
                                 }
                             </div>
                         </div>
@@ -1949,6 +2021,7 @@
             });
 
             menuContainer.innerHTML = html;
+            if (typeof updateOrderTypeUI === "function") updateOrderTypeUI();
         }
 
         // Dynamically renders the modal checkbox options from menu.json
@@ -2048,23 +2121,6 @@
                 }
                 const data = await response.json();
 
-                // Owner sets the delivery fee after the order (added to the balance due at delivery)
-                if (data.fee_mode === 'OWNER_SETS') {
-                    DELIVERY.owner = true;
-                    const sel = document.getElementById('drop-distance');
-                    if (sel) { sel.classList.add('hidden'); sel.required = false; }
-                    document.getElementById('quote-btn').classList.add('hidden');
-                    document.getElementById('quote-wrap').classList.remove('hidden');
-                    document.getElementById('delivery-label').textContent = 'DELIVERY FEE';
-                    document.getElementById('quote-msg').textContent = "We'll confirm your delivery fee by text. It's added to the balance you pay when we arrive.";
-                    const pcts = document.querySelectorAll('.js-drop-pct');
-                    if (pcts[0]) pcts[0].parentElement.innerHTML = `Pay <span class="js-drop-pct">${DROP_CONFIG.depositPct}</span>% of your food upfront. We confirm your delivery fee, and you pay the rest (plus delivery) when we arrive!`;
-                    const pcts2 = document.querySelectorAll('.js-drop-pct');
-                    if (pcts2[1]) pcts2[1].parentElement.innerHTML = `<span class="js-drop-pct">${DROP_CONFIG.depositPct}</span>% OF FOOD DUE TODAY`;
-                    recalculateDropTotals();
-                    return;
-                }
-
                 // ZIP delivery zones (the simple, recommended setup)
                 DELIVERY.zones = (Array.isArray(data.zones) ? data.zones : []).map(z => ({ name: String(z.name || 'Delivery'), fee: parseFloat(z.fee), zips: String(z.zips || '').match(/\d{5}/g) || [] })).filter(z => Number.isFinite(z.fee) && z.zips.length);
                 if (DELIVERY.zones.length) {
@@ -2075,6 +2131,7 @@
                     document.getElementById('delivery-label').textContent = 'DELIVERY FEE (BY ZIP CODE)';
                     document.getElementById('drop-address').addEventListener('input', updateZoneMsg);
                     updateZoneMsg();
+                    refreshDeliveryModeUI();
                     return;
                 }
 
