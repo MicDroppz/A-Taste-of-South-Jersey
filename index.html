@@ -931,7 +931,13 @@
                     <span id="cart-total" class="font-bangers text-2xl text-brandPurple">$0.00</span>
                 </div>
                 <div id="cart-badge-container" class="mb-4"></div>
-                <button onclick="checkoutCart()" class="w-full bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-2xl py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5">
+                <div class="space-y-2 mb-3 font-fredoka text-sm">
+                    <input type="text" id="pickup-name" placeholder="Your name" class="w-full p-2 rounded-xl comic-border text-slate-900">
+                    <input type="tel" id="pickup-phone" placeholder="Phone number (we text you a payment link)" class="w-full p-2 rounded-xl comic-border text-slate-900">
+                    <label class="block font-bold">Pickup time (at the truck)</label>
+                    <select id="pickup-time" class="w-full p-2 rounded-xl comic-border text-slate-900"></select>
+                </div>
+                <button id="checkout-btn" onclick="checkoutCart()" class="w-full bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-2xl py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5">
                     🎉 PLACE ORDER!
                 </button>
             </div>
@@ -1185,6 +1191,9 @@
                 if (lowPct !== null) DROP_CONFIG.lowSlotsPct = lowPct;
                 DROP_CONFIG.capacityOverride = data.drop_capacity_text ? String(data.drop_capacity_text) : '';
                 DROP_CONFIG.soldOut = DROP_CONFIG.slotsTotal > 0 && DROP_CONFIG.slotsBooked >= DROP_CONFIG.slotsTotal;
+                // CMS switch: drop_status = AUTO | SOLD_OUT | FORCE_OPEN
+                if (data.drop_status === 'SOLD_OUT') DROP_CONFIG.soldOut = true;
+                if (data.drop_status === 'FORCE_OPEN') { DROP_CONFIG.soldOut = false; DROP_CONFIG.forceOpen = true; }
 
                 const dropPct = readPercent(data.drop_deposit_pct, 'drop_deposit_pct');
                 if (dropPct !== null) {
@@ -1498,7 +1507,7 @@
         //    they email you a free Access Key. 2) Paste it below. The key is safe to be public.
         const WEB3FORMS = {
             endpoint: 'https://api.web3forms.com/submit',
-            accessKey: '8f07a1d9-b50d-400f-9c61-1d8c749447ae'
+            accessKey: 'YOUR_WEB3FORMS_ACCESS_KEY'
         };
 
         // Sends one form to Web3Forms. Returns true only if it really went through.
@@ -1676,7 +1685,27 @@
             }
         }
 
+        function buildPickupSlots() {
+            const sel = document.getElementById('pickup-time');
+            if (!sel) return;
+            const now = getTruckTime();
+            const open = scheduleCards.find(c => c.kind === 'truck' && isSlotActiveNow(c, now));
+            const fmt = m => { const h = Math.floor(m / 60) % 24, mm = m % 60; return `${h % 12 || 12}:${String(mm).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`; };
+            const opts = [];
+            if (open) {
+                const o = parseTime(open.opens), c = parseTime(open.closes);
+                const end = c > o ? c : c + 1440;
+                const cur = now.minutes < o ? now.minutes + 1440 : now.minutes;
+                opts.push(['ASAP', 'As soon as possible (about 20 min)']);
+                for (let t = Math.ceil((cur + 20) / 15) * 15; t <= end - 15 && opts.length < 11; t += 15) opts.push([fmt(t), fmt(t)]);
+            } else {
+                opts.push(['NEXT_OPEN', "We're closed now - we'll confirm your pickup time"]);
+            }
+            sel.innerHTML = opts.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join('');
+        }
+
         function toggleCartModal() {
+            buildPickupSlots();
             const modal = document.getElementById('cart-modal');
             const drawer = document.getElementById('cart-drawer-content');
             
@@ -1689,13 +1718,33 @@
             }
         }
 
-        function checkoutCart() {
-            if (cart.length === 0) {
-                showToast("Your cart is empty! 🥟");
+        async function checkoutCart() {
+            if (cart.length === 0) { showToast("Your cart is empty! 🥟"); return; }
+            const name = document.getElementById('pickup-name').value.trim();
+            const phone = document.getElementById('pickup-phone').value.trim();
+            if (!name || phone.replace(/\D/g, '').length < 10) {
+                showToast('Please add your name and a phone number so we can text you! 📱', 4000);
                 return;
             }
+            const btn = document.getElementById('checkout-btn');
+            const label = btn.innerHTML;
+            btn.disabled = true; btn.textContent = '⏳ SENDING...';
+            const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+            const ok = await sendToWeb3Forms({
+                subject: 'New PICKUP Order - A Touch of South Jersey',
+                from_name: 'South Jersey Website',
+                'Order Type': 'Pickup (customer pays by link)',
+                'Name': name,
+                'Phone': phone,
+                'Pickup Time': document.getElementById('pickup-time').value,
+                'Items': cart.map(i => `${i.qty} x ${i.name} ($${(i.price * i.qty).toFixed(2)})`).join('\n'),
+                'Subtotal (before tax)': `$${subtotal.toFixed(2)}`,
+                botcheck: ''
+            });
+            btn.disabled = false; btn.innerHTML = label;
+            if (!ok) return;
             playSound('laser');
-            showToast("🎉 Order placed! Get ready for authentic South Jersey yumminess! 🥟");
+            showToast("🎉 Order received! We'll text you a payment link to confirm your pickup. 🥟", 7000);
             cart.length = 0;
             updateCartUI();
             toggleCartModal();
