@@ -1,7 +1,7 @@
 {
-  "drop_min_amount": 30,
+  "drop_min_amount": 5,
   "slots_total": 17,
-  "slots_booked": 25,
+  "slots_booked": 10,
   "low_slots_warning_pct": 10,
   "drop_capacity_text": "⚡ LIMITED SLOTS REMAINING! (80% Booked)",
   "drop_deposit_pct": 55,
