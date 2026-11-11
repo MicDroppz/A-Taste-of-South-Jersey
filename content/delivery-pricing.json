@@ -1,4 +1,5 @@
 {
+  "fee_mode": "ZONES",
   "zones": [
     {
       "name": "Close - Kissimmee",
