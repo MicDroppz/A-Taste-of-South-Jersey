@@ -53,10 +53,10 @@
       "card_color": "purple"
     },
     {
-      "days": "TUESDAY T",
+      "days": "TUESDAY T$",
       "kind": "delivery",
       "open_days": [
-        "Tue"
+        "Wed"
       ],
       "opens": "09:00",
       "closes": "24:00",
