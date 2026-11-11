@@ -302,6 +302,16 @@ content:
     path: content/delivery-pricing.json
     format: json
     fields:
+      - name: fee_mode
+        label: How is the delivery fee set?
+        type: select
+        options:
+          values:
+            - name: ZONES
+              label: Automatic by ZIP code (fee shows at checkout - uses the zones below)
+            - name: OWNER_SETS
+              label: I set the fee myself after the order (added to the balance due at delivery)
+
       - name: zones
         label: Delivery Zones (customers must enter a ZIP code listed here)
         type: object
