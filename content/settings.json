@@ -2,8 +2,8 @@
   "announcement_bar": "🔥 SERVING AUTHENTIC SOUTH JERSEY PANZAROTTIS & PHILLY CHEESESTEAKS IN KISSIMMEE, FL! 🥟✨",
   "logo": "/images/Logo ft.jpg",
   "primary_address": "1398 E Vine St, Kissimmee, FL 34744",
-  "vip_signup_enabled": false,
   "status_override": "MANUAL_CLOSED",
+  "vip_signup_enabled": true,
   "weekly_schedule": [
     {
       "days": "TUES - THURS",
