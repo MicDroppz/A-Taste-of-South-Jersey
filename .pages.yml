@@ -62,6 +62,9 @@ content:
               - name: description
                 label: Description
                 type: text
+              - name: sold_out
+                label: Sold out today? (turns the Add button grey)
+                type: boolean
               - name: image
                 label: Photo
                 type: image
@@ -281,22 +284,6 @@ content:
         label: Sunday Delivery Drop Minimum Order Amount ($)
         type: number
 
-      - name: slots_total
-        label: Delivery Slots Available Per Drop
-        type: number
-
-      - name: slots_booked
-        label: Slots Booked So Far (reset to 0 after each drop)
-        type: number
-
-      - name: low_slots_warning_pct
-        label: Show "Limited Slots" When This % (or less) Of Slots Remain
-        type: number
-
-      - name: drop_capacity_text
-        label: Custom Slot Message (optional - leave empty for the automatic message)
-        type: string
-
       - name: drop_deposit_pct
         label: Sunday Delivery Drop Deposit Percentage (%)
         type: number
@@ -310,59 +297,22 @@ content:
         type: text
 
   - name: delivery_pricing
-    label: Delivery Fees
+    label: Delivery Fees (by ZIP code)
     type: file
     path: content/delivery-pricing.json
     format: json
     fields:
-      - name: quote_api_url
-        label: Delivery Quote Service URL (leave empty to use the manual distance tiers below)
-        type: string
-
-      - name: base_fee
-        label: Base Delivery Fee ($)
-        type: number
-
-      - name: per_mile
-        label: Fee Per Mile ($)
-        type: number
-
-      - name: per_minute
-        label: Fee Per Minute of Drive Time, Including Traffic ($)
-        type: number
-
-      - name: minimum_fee
-        label: Minimum Delivery Fee ($)
-        type: number
-
-      - name: maximum_fee
-        label: Maximum Delivery Fee ($)
-        type: number
-
-      - name: max_distance_miles
-        label: Maximum Delivery Distance (miles)
-        type: number
-
-      - name: round_to
-        label: Round Fee To The Nearest ($, e.g. 0.5)
-        type: number
-
-      - name: heavy_traffic_threshold_pct
-        label: Heavy Traffic = Drive Takes This % Longer Than Usual
-        type: number
-
-      - name: heavy_traffic_surcharge
-        label: Heavy Traffic Surcharge ($)
-        type: number
-
-      - name: manual_tiers
-        label: Manual Distance Tiers (used only when no quote service URL is set)
+      - name: zones
+        label: Delivery Zones (customers must enter a ZIP code listed here)
         type: object
         list: true
         fields:
-          - name: label
-            label: Distance Label (e.g. Under 5 Miles)
+          - name: name
+            label: Zone Name (e.g. Close - Kissimmee)
             type: string
           - name: fee
-            label: Fee ($)
+            label: Delivery Fee ($)
             type: number
+          - name: zips
+            label: ZIP Codes in this zone (separate with commas)
+            type: text
