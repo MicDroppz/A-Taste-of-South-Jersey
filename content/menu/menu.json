@@ -82,7 +82,8 @@
         {
           "name": "Crispy French Fries",
           "price": 4,
-          "description": "Hot, golden, lightly salted potato fries."
+          "description": "Hot, golden, lightly salted potato fries.",
+          "image": "/images/5de7488a-06ae-4f8d-a63f-235aa808c9aa.jpg"
         },
         {
           "name": "Gooey Cheese Fries",
@@ -93,12 +94,14 @@
         {
           "name": "Ice Cold Soda",
           "price": 2,
-          "description": "Assorted canned sodas to quench your thirst."
+          "description": "Assorted canned sodas to quench your thirst.",
+          "image": "/images/geminigeneratedimager4b7bkr4b7bkr4b7.jpg"
         },
         {
           "name": "Bottled Water",
           "price": 1.5,
-          "description": "Pure purified drinking water bottle."
+          "description": "Pure purified drinking water bottle.",
+          "image": "/images/barberchairtray3.jpg"
         }
       ]
     }
