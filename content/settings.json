@@ -51,6 +51,17 @@
       "closes": "18:00",
       "location": "Delivery Drops",
       "card_color": "purple"
+    },
+    {
+      "days": "TUESDAY T",
+      "kind": "delivery",
+      "open_days": [
+        "Tue"
+      ],
+      "opens": "09:00",
+      "closes": "23:00",
+      "location": "DELIVERY DROP",
+      "card_color": "pink"
     }
   ]
 }
