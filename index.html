@@ -1364,7 +1364,7 @@
             const remainingDue = totalOrder - depositDue;
 
             document.getElementById('math-food-subtotal').innerText = `$${foodSubtotal.toFixed(2)}`;
-            document.getElementById('math-delivery-fee').innerText = needsQuote() ? 'enter address' : `$${deliveryFee.toFixed(2)}`;
+            document.getElementById('math-delivery-fee').innerText = DELIVERY.owner ? 'added at delivery' : needsQuote() ? 'enter address' : `$${deliveryFee.toFixed(2)}`;
             document.getElementById('math-total-order').innerText = `$${totalOrder.toFixed(2)}`;
             document.getElementById('math-deposit-due').innerText = `$${depositDue.toFixed(2)}`;
             document.getElementById('math-remaining-due').innerText = `$${remainingDue.toFixed(2)}`;
@@ -1455,10 +1455,10 @@
                 'Delivery Address': address,
                 'Items': cart.map(i => `${i.qty} x ${i.name} ($${(i.price * i.qty).toFixed(2)})`).join('\n'),
                 'Food Subtotal': `$${foodSubtotal.toFixed(2)}`,
-                'Delivery Fee': `$${fee.toFixed(2)}`,
+                'Delivery Fee': DELIVERY.owner ? 'TO BE SET BY OWNER - add to the balance due at delivery' : `$${fee.toFixed(2)}`,
                 'Total (before tax)': `$${total.toFixed(2)}`,
                 'Due Online Now': `$${due.toFixed(2)}`,
-                'Due At Delivery': `$${(total - due).toFixed(2)}`,
+                'Due At Delivery': `$${(total - due).toFixed(2)}` + (DELIVERY.owner ? ' + delivery fee (owner to add)' : ''),
                 botcheck: ''
             });
             btn.innerHTML = label; btn.disabled = false;
@@ -2014,11 +2014,13 @@
         let deliveryQuote = null;   // { fee } once the customer has a quote
 
         DELIVERY.zones = [];
+        DELIVERY.owner = false;   // true when delivery_pricing.json has fee_mode = OWNER_SETS
         function zoneLookup() {
             const zip = (document.getElementById('drop-address').value.match(/\b\d{5}\b/g) || []).pop();
             return zip ? DELIVERY.zones.find(z => z.zips.includes(zip)) || null : null;
         }
         function needsQuote() {
+            if (DELIVERY.owner) return false;
             if (DELIVERY.zones.length) return !zoneLookup();
             return DELIVERY.apiUrl && !deliveryQuote;
         }
@@ -2030,6 +2032,7 @@
         }
 
         function getDeliveryFee() {
+            if (DELIVERY.owner) return 0;
             if (DELIVERY.zones.length) { const z = zoneLookup(); return z ? z.fee : 0; }
             if (DELIVERY.apiUrl) return deliveryQuote ? deliveryQuote.fee : 0;
             const select = document.getElementById('drop-distance');
@@ -2044,6 +2047,23 @@
                     return;
                 }
                 const data = await response.json();
+
+                // Owner sets the delivery fee after the order (added to the balance due at delivery)
+                if (data.fee_mode === 'OWNER_SETS') {
+                    DELIVERY.owner = true;
+                    const sel = document.getElementById('drop-distance');
+                    if (sel) { sel.classList.add('hidden'); sel.required = false; }
+                    document.getElementById('quote-btn').classList.add('hidden');
+                    document.getElementById('quote-wrap').classList.remove('hidden');
+                    document.getElementById('delivery-label').textContent = 'DELIVERY FEE';
+                    document.getElementById('quote-msg').textContent = "We'll confirm your delivery fee by text. It's added to the balance you pay when we arrive.";
+                    const pcts = document.querySelectorAll('.js-drop-pct');
+                    if (pcts[0]) pcts[0].parentElement.innerHTML = `Pay <span class="js-drop-pct">${DROP_CONFIG.depositPct}</span>% of your food upfront. We confirm your delivery fee, and you pay the rest (plus delivery) when we arrive!`;
+                    const pcts2 = document.querySelectorAll('.js-drop-pct');
+                    if (pcts2[1]) pcts2[1].parentElement.innerHTML = `<span class="js-drop-pct">${DROP_CONFIG.depositPct}</span>% OF FOOD DUE TODAY`;
+                    recalculateDropTotals();
+                    return;
+                }
 
                 // ZIP delivery zones (the simple, recommended setup)
                 DELIVERY.zones = (Array.isArray(data.zones) ? data.zones : []).map(z => ({ name: String(z.name || 'Delivery'), fee: parseFloat(z.fee), zips: String(z.zips || '').match(/\d{5}/g) || [] })).filter(z => Number.isFinite(z.fee) && z.zips.length);
