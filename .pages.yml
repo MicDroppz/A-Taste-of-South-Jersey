@@ -280,12 +280,22 @@ content:
             - name: FORCE_OPEN
               label: Force open (for an unscheduled drop)
 
+      - name: delivery_mode
+        label: How do customers order delivery?
+        type: select
+        options:
+          values:
+            - name: REQUEST
+              label: Request a quote (customer sends order + address, I reply with the fee and a payment link)
+            - name: RESERVE
+              label: Reserve with deposit (fee shows by ZIP code at checkout)
+
       - name: drop_min_amount
-        label: Sunday Delivery Drop Minimum Order Amount ($)
+        label: Delivery Minimum Order Amount ($)
         type: number
 
       - name: drop_deposit_pct
-        label: Sunday Delivery Drop Deposit Percentage (%)
+        label: Delivery Deposit Percentage (%)
         type: number
 
       - name: catering_deposit_pct
@@ -302,16 +312,6 @@ content:
     path: content/delivery-pricing.json
     format: json
     fields:
-      - name: fee_mode
-        label: How is the delivery fee set?
-        type: select
-        options:
-          values:
-            - name: ZONES
-              label: Automatic by ZIP code (fee shows at checkout - uses the zones below)
-            - name: OWNER_SETS
-              label: I set the fee myself after the order (added to the balance due at delivery)
-
       - name: zones
         label: Delivery Zones (customers must enter a ZIP code listed here)
         type: object
