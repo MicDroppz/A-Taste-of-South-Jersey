@@ -1,6 +1,7 @@
 {
   "drop_status": "AUTO",
-  "drop_min_amount": 30,
+  "delivery_mode": "REQUEST",
+  "drop_min_amount": 5,
   "drop_deposit_pct": 55,
   "catering_deposit_pct": 50,
   "catering_policy_text": "Large catering orders require a {deposit} deposit upfront to secure your date, with the remaining balance due upon delivery."
