@@ -1,4 +1,5 @@
 {
+  "drop_status": "AUTO",
   "drop_min_amount": 5,
   "slots_total": 17,
   "slots_booked": 10,
