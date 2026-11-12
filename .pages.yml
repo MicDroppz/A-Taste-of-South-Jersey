@@ -99,7 +99,7 @@ content:
         type: image
 
       - name: primary_address
-        label: Truck Address (street, city, state, ZIP)
+        label: Default Truck Address (shown when no truck stop is scheduled)
         type: string
 
       - name: status_override
@@ -246,7 +246,7 @@ content:
                 - name: "24:00"
                   label: "12:00 AM (midnight)"
           - name: location
-            label: Location (e.g. 1398 E Vine St)
+            label: Location (shown on the site as the truck address for this stop, e.g. 1398 E Vine St, Kissimmee, FL)
             type: string
           - name: card_color
             label: Color Theme
