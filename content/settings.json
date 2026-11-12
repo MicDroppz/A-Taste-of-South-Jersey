@@ -1,5 +1,6 @@
 {
   "announcement_bar": "🔥 SERVING AUTHENTIC SOUTH JERSEY PANZAROTTIS & PHILLY CHEESESTEAKS IN KISSIMMEE, FL! 🥟✨",
+  "web3forms_access_key": "8f07a1d9-b50d-400f-9c61-1d8c749447ae",
   "logo": "/images/Logoft.jpg",
   "primary_address": "1398 E Vine St, Kissimmee, FL 34744",
   "status_override": "AUTO",
@@ -9,7 +10,8 @@
       "show": false
     },
     "facebook": {
-      "show": false
+      "show": true,
+      "url": "https://www.facebook.com/share/1FBDsigMBm/"
     },
     "tiktok": {
       "show": false
@@ -21,8 +23,10 @@
       "show": false
     }
   },
+  "allergen_note_show": false,
   "weekly_schedule": [
     {
+      "off": false,
       "days": "Wednesday",
       "kind": "truck",
       "open_days": [
@@ -34,6 +38,7 @@
       "card_color": "yellow"
     },
     {
+      "off": false,
       "days": "FRIDAY NIGHT",
       "kind": "truck",
       "open_days": [
@@ -45,6 +50,7 @@
       "card_color": "teal"
     },
     {
+      "off": false,
       "days": "SATURDAY",
       "kind": "delivery",
       "open_days": [
@@ -56,6 +62,7 @@
       "card_color": "pink"
     },
     {
+      "off": false,
       "days": "SUNDAY",
       "kind": "delivery",
       "open_days": [
@@ -67,6 +74,7 @@
       "card_color": "purple"
     },
     {
+      "off": false,
       "days": "thurs truck stop both test ",
       "kind": "delivery",
       "open_days": [
