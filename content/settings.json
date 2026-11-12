@@ -51,7 +51,7 @@
     },
     {
       "days": "TUESDAY T$",
-      "kind": "delivery",
+      "kind": "truck",
       "open_days": [
         "Wed"
       ],
@@ -62,7 +62,7 @@
     },
     {
       "days": "thurs truck stop both test ",
-      "kind": "truck",
+      "kind": "delivery",
       "open_days": [
         "Thu"
       ],
