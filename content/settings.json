@@ -86,6 +86,30 @@
       "closes": "22:00",
       "location": "st cloud",
       "card_color": "purple"
+    },
+    {
+      "off": false,
+      "days": "Thurs pickup",
+      "kind": "truck",
+      "open_days": [
+        "Thu"
+      ],
+      "opens": "15:00",
+      "closes": "22:00",
+      "location": "1398 E Vine St elms",
+      "card_color": "yellow"
+    },
+    {
+      "off": true,
+      "days": "thursday delivery ",
+      "kind": "delivery",
+      "open_days": [
+        "Thu"
+      ],
+      "opens": "15:00",
+      "closes": "22:00",
+      "location": "drops",
+      "card_color": "pink"
     }
   ]
 }
