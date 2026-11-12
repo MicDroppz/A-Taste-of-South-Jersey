@@ -122,6 +122,61 @@ content:
         label: Show the "Fryer Alert" VIP signup section on the website
         type: boolean
 
+      - name: social
+        label: Social Media Links (turn ON only the ones you want to show on the website)
+        type: object
+        fields:
+          - name: instagram
+            label: Instagram
+            type: object
+            fields:
+              - name: show
+                label: Show on website?
+                type: boolean
+              - name: url
+                label: Link (full address starting with https://)
+                type: string
+          - name: facebook
+            label: Facebook
+            type: object
+            fields:
+              - name: show
+                label: Show on website?
+                type: boolean
+              - name: url
+                label: Link (full address starting with https://)
+                type: string
+          - name: tiktok
+            label: TikTok
+            type: object
+            fields:
+              - name: show
+                label: Show on website?
+                type: boolean
+              - name: url
+                label: Link (full address starting with https://)
+                type: string
+          - name: youtube
+            label: YouTube
+            type: object
+            fields:
+              - name: show
+                label: Show on website?
+                type: boolean
+              - name: url
+                label: Link (full address starting with https://)
+                type: string
+          - name: x
+            label: X (Twitter)
+            type: object
+            fields:
+              - name: show
+                label: Show on website?
+                type: boolean
+              - name: url
+                label: Link (full address starting with https://)
+                type: string
+
       - name: weekly_schedule
         label: Weekly Schedule Cards
         type: object
