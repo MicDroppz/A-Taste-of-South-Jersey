@@ -103,16 +103,16 @@ content:
         type: string
 
       - name: status_override
-        label: Live Operational Status Override
+        label: Truck / Pickup Status Override (does not change delivery - use the Delivery drop status setting for that)
         type: select
         options:
           values:
             - name: AUTO
               label: Auto (follows the weekly schedule below)
             - name: MANUAL_OPEN
-              label: Force Open (OPEN NOW)
+              label: Force Open (pickup shows open all day, ignores hours)
             - name: MANUAL_CLOSED
-              label: Force Closed (CLOSED NOW)
+              label: Force Closed (pickup shows closed all day, ignores hours - set back to Auto when done)
 
       - name: vip_signup_enabled
         label: Show the "Fryer Alert" VIP signup section on the website
