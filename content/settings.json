@@ -76,7 +76,7 @@
       "card_color": "purple"
     },
     {
-      "off": false,
+      "off": true,
       "days": "thurs truck stop both test ",
       "kind": "both",
       "open_days": [
