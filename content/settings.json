@@ -59,6 +59,17 @@
       "closes": "24:00",
       "location": "DELIVERY DROP",
       "card_color": "pink"
+    },
+    {
+      "days": "Thurs del test",
+      "kind": "delivery",
+      "open_days": [
+        "Thu"
+      ],
+      "opens": "10:00",
+      "closes": "22:00",
+      "location": "delivery you bozo ",
+      "card_color": "yellow"
     }
   ]
 }
