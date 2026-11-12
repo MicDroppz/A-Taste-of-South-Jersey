@@ -3,7 +3,7 @@
   "logo": "/images/Logo ft.jpg",
   "primary_address": "1398 E Vine St, Kissimmee, FL 34744",
   "status_override": "MANUAL_CLOSED",
-  "vip_signup_enabled": true,
+  "vip_signup_enabled": false,
   "weekly_schedule": [
     {
       "days": "Wednesday",
