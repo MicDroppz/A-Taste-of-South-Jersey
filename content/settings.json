@@ -6,13 +6,10 @@
   "vip_signup_enabled": true,
   "weekly_schedule": [
     {
-      "days": "TUES - THURS",
+      "days": "Wednesday",
       "kind": "truck",
       "open_days": [
-        "Tue",
-        "Wed",
-        "Thu",
-        "Mon"
+        "Wed"
       ],
       "opens": "11:00",
       "closes": "22:00",
