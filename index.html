@@ -1380,8 +1380,8 @@
             if (!bar && menu) {
                 bar = document.createElement('div');
                 bar.id = 'order-type-bar';
-                bar.className = 'flex justify-center gap-3 my-4 font-bangers text-xl';
-                bar.innerHTML = '<button id="ot-pickup" onclick="setOrderType(\'pickup\')" class="px-5 py-2 rounded-xl comic-border">🥡 PICKUP</button><button id="ot-delivery" onclick="setOrderType(\'delivery\')" class="px-5 py-2 rounded-xl comic-border">🚚 DELIVERY</button>';
+                bar.className = 'flex flex-col items-center gap-2 my-4';
+                bar.innerHTML = '<div class="font-bangers text-2xl text-slate-900">CHOOSE PICKUP OR DELIVERY</div><div class="flex gap-3 font-bangers text-xl"><button id="ot-pickup" onclick="setOrderType(\'pickup\')" class="px-5 py-2 rounded-xl comic-border">🥡 PICKUP</button><button id="ot-delivery" onclick="setOrderType(\'delivery\')" class="px-5 py-2 rounded-xl comic-border">🚚 DELIVERY</button></div>';
                 menu.parentNode.insertBefore(bar, menu);
             }
             if (bar) {
