@@ -61,17 +61,6 @@
       "card_color": "pink"
     },
     {
-      "days": "Thurs del test",
-      "kind": "delivery",
-      "open_days": [
-        "Thu"
-      ],
-      "opens": "10:00",
-      "closes": "22:00",
-      "location": "space drops",
-      "card_color": "yellow"
-    },
-    {
       "days": "thurs truck stop both test ",
       "kind": "truck",
       "open_days": [
