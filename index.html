@@ -1360,6 +1360,18 @@
             set('drop-schedule-subtitle', n.i === 0 ? `Delivery Only • Today's delivery window: ${win} (or until sold out)` : `Delivery Only • Next delivery: ${when} ${win}`);
             set('drop-next-text', `📅 Next delivery window: ${when} ${win}`);
         }
+        // Add ?debug to the web address (e.g. yoursite.com/?debug) to see why the site thinks it is open or closed
+        function showDebugPanel() {
+            let el = document.getElementById('dbg-panel');
+            if (!el) { el = document.createElement('pre'); el.id = 'dbg-panel'; el.style.cssText = 'position:fixed;bottom:0;left:0;right:0;max-height:45vh;overflow:auto;background:#000;color:#0f0;font:11px monospace;padding:6px;z-index:99999;white-space:pre-wrap;margin:0'; document.body.appendChild(el); }
+            const now = getTruckTime(), pad = n => String(n).padStart(2, '0');
+            const L = [`SITE TIME (Eastern): ${DAY_CODES[now.day]} ${pad(Math.floor(now.minutes / 60))}:${pad(now.minutes % 60)}`,
+                `truck/pickup override: ${window.statusOverride}`,
+                `delivery: soldOut=${DROP_CONFIG.soldOut} forceOpen=${DROP_CONFIG.forceOpen} requestMode=${DELIVERY.owner}`,
+                `pickupAvail=${pickupAvail()}  deliveryAvail=${deliveryAvail()}`, '--- schedule cards ---'];
+            scheduleCards.forEach(c => L.push(`${c.kind} | ${c.days || ''} | open_days=${JSON.stringify(c.open_days)} | ${c.opens}-${c.closes} | activeNow=${isSlotActiveNow(c, now)}`));
+            el.textContent = L.join('\n');
+        }
         function startDeliveryOrder() {
             ORDER.type = 'delivery'; updateOrderTypeUI();
             document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
@@ -1420,6 +1432,7 @@
 
         function checkDropWindowSchedule() {
             updateDeliveryText(); updateOrderTypeUI(); refreshDeliveryModeUI(); updateTruckLocation();
+            if (/[?&]debug/.test(location.search)) showDebugPanel();
             const isActive = isDropWindowActive();
             const statusBadge = document.getElementById('drop-status-badge');
             const closedNotice = document.getElementById('drop-closed-notice');
