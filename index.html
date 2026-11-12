@@ -1131,6 +1131,7 @@
                 window.statusOverride = data.status_override || "AUTO";
                 if (data.web3forms_access_key && String(data.web3forms_access_key).trim()) WEB3FORMS.accessKey = String(data.web3forms_access_key).trim();
                 renderSocialLinks(data.social);
+                renderAllergenNote(data);
                 if (data.status_override && data.status_override !== "AUTO") {
                     applyStatusOverride(data.status_override);
                 } else {
@@ -1142,8 +1143,10 @@
             }
         }
 
-        function renderWeeklySchedule(scheduleList) {
-            scheduleCards = scheduleList;
+        function renderWeeklySchedule(fullList) {
+            const scheduleList = fullList.filter(c => c.off !== true); // cards turned OFF are ignored everywhere on the site
+            // A "Both" card counts as a truck stop AND a delivery day (shown once on the page)
+            scheduleCards = scheduleList.flatMap(c => c.kind === 'both' ? [{ ...c, kind: 'truck' }, { ...c, kind: 'delivery' }] : [c]);
             const container = document.getElementById('schedule-container');
             if (!container) return;
 
@@ -1164,7 +1167,7 @@
             container.innerHTML = scheduleList.map(item => {
                 const hasTimes = parseTime(item.opens) !== null && parseTime(item.closes) !== null;
                 const hoursText = hasTimes ? `${formatTime(item.opens)} - ${formatTime(item.closes)}` : (item.hours || '');
-                const icon = item.kind === 'delivery' ? '📦' : '📍';
+                const icon = item.kind === 'both' ? '📦' + '📍' : item.kind === 'delivery' ? '📦' : '📍';
                 return `
                 <div class="${colorMap[item.card_color] || 'bg-yellow-100'} comic-border rounded-xl p-3 text-center shadow-comic-sm">
                     <span class="font-bangers text-xl ${headerColorMap[item.card_color] || 'text-brandOrange'} block">${esc(item.days)}</span>
@@ -1204,6 +1207,7 @@
                 DELIVERY.owner = data.delivery_mode !== 'RESERVE'; // default: customers send a delivery request
                 if (data.drop_status === 'SOLD_OUT') DROP_CONFIG.soldOut = true;
                 if (data.drop_status === 'FORCE_OPEN') { DROP_CONFIG.soldOut = false; DROP_CONFIG.forceOpen = true; }
+                if (typeof updateStatusBadge === 'function') updateStatusBadge();
 
                 const dropPct = readPercent(data.drop_deposit_pct, 'drop_deposit_pct');
                 if (dropPct !== null) {
@@ -1233,77 +1237,33 @@
         }
 
         // Apply Manual Status Override
-        function applyStatusOverride(overrideState) {
-            const badge = document.getElementById('live-open-badge');
-            const radarPill = document.getElementById('radar-live-pill');
-
-            if (overrideState === "MANUAL_OPEN" || overrideState === "OPEN") {
-                if (badge) {
-                    badge.className = "font-bangers text-xl px-4 py-1 rounded-full comic-border transform rotate-6 inline-block bg-brandGreen text-slate-900 animate-pulse";
-                    badge.innerText = "🟢 OPEN NOW";
-                }
-                if (radarPill) {
-                    radarPill.className = "inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm bg-brandGreen text-slate-900";
-                    radarPill.innerText = "🔥 FRYER IS HOT & SERVING NOW!";
-                }
+        // ONE status for the whole site: OPEN (truck pickup), DELIVERY ONLY, or CLOSED. Uses the same checks as the order buttons.
+        function updateStatusBadge() {
+            const now = getTruckTime(), pickup = pickupAvail(), delivery = deliveryAvail();
+            const badge = document.getElementById('live-open-badge'), pill = document.getElementById('radar-live-pill');
+            const B = 'font-bangers text-xl px-4 py-1 rounded-full comic-border transform rotate-6 inline-block ';
+            const P = 'inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm ';
+            let bc, bt, pc, pt;
+            if (pickup) {
+                bc = B + 'bg-brandGreen text-slate-900 animate-pulse'; bt = '🟢 OPEN NOW';
+                pc = P + 'bg-brandGreen text-slate-900'; pt = '🔥 FRYER IS HOT & SERVING NOW!';
+            } else if (delivery) {
+                bc = B + 'bg-brandOrange text-slate-900 animate-pulse'; bt = '🚚 OPEN FOR DELIVERY ONLY';
+                pc = P + 'bg-brandOrange text-slate-900'; pt = '🚚 DELIVERY ORDERS OPEN (NO TRUCK PICKUP)';
             } else {
-                if (badge) {
-                    badge.className = "font-bangers text-xl px-4 py-1 rounded-full comic-border transform rotate-6 inline-block bg-brandRed text-white";
-                    badge.innerText = "🔴 CLOSED NOW";
-                }
-                if (radarPill) {
-                    radarPill.className = "inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm bg-slate-800 text-white";
-                    radarPill.innerText = "🔒 TRUCK CLOSED";
-                }
+                bc = B + 'bg-brandRed text-white'; bt = '🔴 CLOSED NOW';
+                pc = P + 'bg-slate-800 text-white'; pt = '🔴 CLOSED';
+                const next = scheduleCards.length ? nextOpening(scheduleCards, now) : null;
+                if (next) pt += ` • OPENS ${next.offset === 0 ? 'TODAY' : next.offset === 1 ? 'TOMORROW' : DAY_NAMES[next.dayIndex]} ${formatMinutes(next.time)}`;
             }
+            if (badge) { badge.className = bc; badge.textContent = bt; }
+            if (pill) { pill.className = pc; pill.textContent = pt; }
         }
+        function applyStatusOverride() { updateStatusBadge(); }
+        function checkTruckOpenStatus() { updateStatusBadge(); }
 
         // Check Truck Operational Status (Tuesday–Sunday)
-        function checkTruckOpenStatus() {
-            const now = getTruckTime();
-            const slots = scheduleCards.filter(c => c.kind !== 'delivery');
-            let isOpen;
-            let closedText = '🔒 TRUCK CLOSED';
-
-            if (slots.length) {
-                // Driven by the schedule cards you edit in PageCMS
-                isOpen = slots.some(c => isSlotActiveNow(c, now));
-                if (!isOpen) {
-                    const next = nextOpening(slots, now);
-                    if (next) {
-                        const when = next.offset === 0 ? 'TODAY' : next.offset === 1 ? 'TOMORROW' : DAY_NAMES[next.dayIndex];
-                        closedText += ` • OPENS ${when} ${formatMinutes(next.time)}`;
-                    }
-                }
-            } else {
-                // Schedule unavailable: fall back to Tue-Sat, 11 AM - 8 PM
-                isOpen = (now.day >= 2 && now.day <= 6) && now.hour >= 11 && now.hour < 20;
-                closedText += ' • OPENS 11:00 AM';
-            }
-
-            const badge = document.getElementById('live-open-badge');
-            const radarPill = document.getElementById('radar-live-pill');
-
-            if (isOpen) {
-                if (badge) {
-                    badge.className = "font-bangers text-xl px-4 py-1 rounded-full comic-border transform rotate-6 inline-block bg-brandGreen text-slate-900 animate-pulse";
-                    badge.innerText = "🟢 OPEN NOW";
-                }
-                if (radarPill) {
-                    radarPill.className = "inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm bg-brandGreen text-slate-900";
-                    radarPill.innerText = "🔥 FRYER IS HOT & SERVING NOW!";
-                }
-            } else {
-                if (badge) {
-                    badge.className = "font-bangers text-xl px-4 py-1 rounded-full comic-border transform rotate-6 inline-block bg-brandRed text-white";
-                    badge.innerText = "🔴 CLOSED NOW";
-                }
-                if (radarPill) {
-                    radarPill.className = "inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm bg-slate-800 text-white";
-                    radarPill.innerText = closedText;
-                }
-            }
-        }
+        
 
         // Check if current system clock falls within active Sunday Drop hours
         function isDropWindowActive() {
@@ -1384,6 +1344,19 @@
             el.innerHTML = on.map(([k, label]) => `<a href="${esc(String(social[k].url).trim())}" target="_blank" rel="noopener noreferrer" class="bg-brandYellow text-slate-900 font-bangers text-lg px-3 py-1 rounded-full comic-border hover:scale-105 transition">${label}</a>`).join('');
         }
 
+        // Allergen note: shown under the menu only when switched on and filled in (CMS: Site Settings)
+        function renderAllergenNote(data) {
+            let el = document.getElementById('allergen-note'); const menu = document.getElementById('menu');
+            const text = String(data.allergen_note || '').trim();
+            if (!(data.allergen_note_show === true && text)) { if (el) el.remove(); return; }
+            if (!el && menu) {
+                el = document.createElement('p'); el.id = 'allergen-note';
+                el.className = 'max-w-3xl mx-auto my-4 text-center font-fredoka text-sm text-slate-900 bg-white comic-border rounded-xl p-3';
+                menu.parentNode.insertBefore(el, menu.nextSibling);
+            }
+            if (el) el.textContent = '⚠️ ' + text;
+        }
+
         function startDeliveryOrder() {
             ORDER.type = 'delivery'; updateOrderTypeUI();
             document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
@@ -1395,6 +1368,8 @@
             const now = getTruckTime(), trucks = scheduleCards.filter(c => c.kind === 'truck' && c.location);
             const act = window.statusOverride === 'MANUAL_CLOSED' ? null : trucks.find(c => isSlotActiveNow(c, now));
             if (act) { lab.textContent = '📍 TRUCK IS HERE NOW'; addr.textContent = act.location; return; }
+            const dact = deliveryAvail() ? scheduleCards.find(c => c.kind === 'delivery' && isSlotActiveNow(c, now)) : null;
+            if (dact) { lab.textContent = '🚚 DELIVERY DAY'; addr.textContent = dact.location || 'Delivery orders open'; return; }
             for (let i = 0; i < 7; i++) {
                 const d = DAY_CODES[(now.day + i) % 7];
                 const c = trucks.find(c => Array.isArray(c.open_days) && c.open_days.includes(d) && (i > 0 || now.minutes < parseTime(c.opens)));
