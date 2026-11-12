@@ -62,13 +62,13 @@
     },
     {
       "days": "Thurs del test",
-      "kind": "delivery",
+      "kind": "truck",
       "open_days": [
         "Thu"
       ],
       "opens": "10:00",
       "closes": "22:00",
-      "location": "delivery you bozo ",
+      "location": "1398 E Vine St elms",
       "card_color": "yellow"
     }
   ]
