@@ -177,11 +177,22 @@ content:
                 label: Link (full address starting with https://)
                 type: string
 
+      - name: allergen_note_show
+        label: Show the allergen note under the menu?
+        type: boolean
+
+      - name: allergen_note
+        label: Allergen note text (e.g. Contains dairy, wheat and eggs. Fried in shared oil.)
+        type: text
+
       - name: weekly_schedule
         label: Weekly Schedule Cards
         type: object
         list: true
         fields:
+          - name: off
+            label: Turn this card OFF (keeps it saved, but hides it and treats it as closed)
+            type: boolean
           - name: days
             label: Card Title (e.g. TUES - THURS)
             type: string
@@ -191,9 +202,11 @@ content:
             options:
               values:
                 - name: truck
-                  label: Truck stop (drives the OPEN / CLOSED badge)
+                  label: Truck stop (customers pick up at the truck)
                 - name: delivery
-                  label: Delivery drop (drives the pre-order window)
+                  label: Delivery only (no truck pickup)
+                - name: both
+                  label: Both (truck stop + delivery)
           - name: open_days
             label: Open Days
             type: select
