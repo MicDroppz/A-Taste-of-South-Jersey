@@ -1426,6 +1426,8 @@
             const form = document.getElementById('drop-form');
             const slotBar = document.getElementById('drop-slot-bar');
             const slotText = document.getElementById('drop-slot-text');
+            // When delivery is closed, hide the whole order box (not just grey it out)
+            if (form && form.parentElement) form.parentElement.classList.toggle('hidden', !isActive);
 
             if (isActive) {
                 if (statusBadge) {
