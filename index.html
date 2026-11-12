@@ -782,6 +782,7 @@
             <p class="font-fredoka text-sm text-slate-400">
                 © 2026 A Touch of South Jersey (Est. 2023). Bringing South Jersey Comfort to Kissimmee, FL!
             </p>
+            <div id="social-links" class="hidden"></div>
             <div class="flex gap-3">
                 <span class="text-2xl cursor-pointer hover:scale-125 transition">🧀</span>
                 <span class="text-2xl cursor-pointer hover:scale-125 transition">🥩</span>
@@ -1129,6 +1130,7 @@
                 // 4. Handle Status Override if provided
                 window.statusOverride = data.status_override || "AUTO";
                 if (data.web3forms_access_key && String(data.web3forms_access_key).trim()) WEB3FORMS.accessKey = String(data.web3forms_access_key).trim();
+                renderSocialLinks(data.social);
                 if (data.status_override && data.status_override !== "AUTO") {
                     applyStatusOverride(data.status_override);
                 } else {
@@ -1315,8 +1317,8 @@
                 // Driven by the "Delivery drop" card in the weekly schedule
                 return dropSlots.some(c => isSlotActiveNow(c, now));
             }
-            // Schedule unavailable: fall back to Sundays 10 AM - 6 PM
-            return now.day === DROP_CONFIG.dropDay && now.hour >= DROP_CONFIG.startHour && now.hour < DROP_CONFIG.endHour;
+            // No delivery cards in the schedule (or it failed to load): delivery stays closed
+            return false;
         }
 
         // Initialize and Update Drop Window UI
@@ -1372,6 +1374,16 @@
             scheduleCards.forEach(c => L.push(`${c.kind} | ${c.days || ''} | open_days=${JSON.stringify(c.open_days)} | ${c.opens}-${c.closes} | activeNow=${isSlotActiveNow(c, now)}`));
             el.textContent = L.join('\n');
         }
+        // Social links: shown only when "show" is on and a full https:// link is filled in (CMS: Site Settings)
+        function renderSocialLinks(social) {
+            const el = document.getElementById('social-links'); if (!el) return;
+            const defs = [['instagram', '📸 Instagram'], ['facebook', '👍 Facebook'], ['tiktok', '🎵 TikTok'], ['youtube', '▶️ YouTube'], ['x', '✖️ X']];
+            const on = defs.filter(([k]) => social && social[k] && social[k].show === true && /^https?:\/\//i.test(String(social[k].url || '').trim()));
+            if (!on.length) { el.className = 'hidden'; return; }
+            el.className = 'flex flex-wrap justify-center gap-2';
+            el.innerHTML = on.map(([k, label]) => `<a href="${esc(String(social[k].url).trim())}" target="_blank" rel="noopener noreferrer" class="bg-brandYellow text-slate-900 font-bangers text-lg px-3 py-1 rounded-full comic-border hover:scale-105 transition">${label}</a>`).join('');
+        }
+
         function startDeliveryOrder() {
             ORDER.type = 'delivery'; updateOrderTypeUI();
             document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
