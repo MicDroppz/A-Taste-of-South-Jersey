@@ -85,13 +85,17 @@ content:
             type: number
 
   - name: site_settings
-    label: Site Settings & Truck Radar
+    label: Site Settings, Hours & Location
     type: file
     path: content/settings.json
     format: json
     fields:
       - name: announcement_bar
         label: Top Announcement Banner Text
+        type: string
+
+      - name: web3forms_access_key
+        label: Web3Forms Access Key (from web3forms.com - makes the catering, delivery and pickup forms email you)
         type: string
 
       - name: logo
