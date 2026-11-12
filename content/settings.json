@@ -76,7 +76,7 @@
     {
       "off": false,
       "days": "thurs truck stop both test ",
-      "kind": "delivery",
+      "kind": "both",
       "open_days": [
         "Thu"
       ],
