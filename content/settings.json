@@ -7,14 +7,16 @@
   "vip_signup_enabled": true,
   "social": {
     "instagram": {
-      "show": false
+      "show": true,
+      "url": "https://www.instagram.com/atouchofsouthjersey/"
     },
     "facebook": {
       "show": true,
       "url": "https://www.facebook.com/share/1FBDsigMBm/"
     },
     "tiktok": {
-      "show": false
+      "show": true,
+      "url": "?"
     },
     "youtube": {
       "show": false
