@@ -1326,6 +1326,15 @@
             const d = DAY_CODES[getTruckTime().day];
             return scheduleCards.some(c => c.kind === kind && Array.isArray(c.open_days) && c.open_days.includes(d));
         }
+        // Pickup is available while the truck is open, or opens later today (not when closed / forced closed)
+        function pickupAvail() {
+            if (window.statusOverride === 'MANUAL_CLOSED') return false;
+            if (window.statusOverride === 'MANUAL_OPEN') return true;
+            const now = getTruckTime();
+            return scheduleCards.some(c => c.kind === 'truck' && (isSlotActiveNow(c, now)
+                || (Array.isArray(c.open_days) && c.open_days.includes(DAY_CODES[now.day]) && now.minutes < parseTime(c.opens))));
+        }
+        function deliveryAvail() { return isDropWindowActive(); }
         function deliveryToday() { return !!DROP_CONFIG.forceOpen || (!DROP_CONFIG.soldOut && dayHasKind('delivery')); }
         function fmt12(t) {
             const m = parseTime(t); if (m === null) return t;
@@ -1372,8 +1381,7 @@
         setInterval(() => { updateTruckLocation(); updateDeliveryText(); updateOrderTypeUI(); }, 60000);
         function setOrderType(t) { ORDER.type = t; updateOrderTypeUI(); }
         function updateOrderTypeUI() {
-            const d = deliveryToday();
-            const p = dayHasKind('truck') || !d;
+            const d = deliveryAvail(), p = pickupAvail();
             if (!d) ORDER.type = 'pickup'; else if (!p) ORDER.type = 'delivery';
             let bar = document.getElementById('order-type-bar');
             const menu = document.getElementById('menu');
@@ -1388,7 +1396,11 @@
                 bar.classList.toggle('hidden', !(d && p));
                 ['pickup', 'delivery'].forEach(k => { document.getElementById('ot-' + k).className = 'px-5 py-2 rounded-xl comic-border ' + (ORDER.type === k ? 'bg-brandGreen shadow-comic-sm' : 'bg-white'); });
             }
-            document.querySelectorAll('.js-add-label').forEach(el => { el.textContent = ORDER.type === 'delivery' ? 'Add to Delivery' : 'Add to Pickup'; });
+            const closed = !d && !p;
+            document.querySelectorAll('.js-add-label').forEach(el => {
+                el.textContent = closed ? 'Ordering Closed' : (ORDER.type === 'delivery' ? 'Add to Delivery' : 'Add to Pickup');
+                const b = el.closest('button'); if (b) { b.disabled = closed; b.classList.toggle('opacity-50', closed); }
+            });
         }
         function refreshDeliveryModeUI() {
             const req = !!DELIVERY.owner, $ = id => document.getElementById(id);
@@ -1846,6 +1858,7 @@
                 showToast('Add your name, phone and address to finish your delivery request 🚚', 5000);
                 return;
             }
+            if (!pickupAvail()) { showToast('Pickup ordering is closed right now. Please check the schedule! 🔒', 5000); return; }
             const name = document.getElementById('pickup-name').value.trim();
             const phone = document.getElementById('pickup-phone').value.trim();
             if (!name || phone.replace(/\D/g, '').length < 10) {
