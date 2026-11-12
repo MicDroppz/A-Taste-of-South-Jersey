@@ -574,7 +574,7 @@
                             DELIVERY ORDERS 📦
                         </h2>
                         <p id="drop-schedule-subtitle" class="font-fredoka text-slate-900 font-bold text-base">
-                            Delivery Only • Drop Window: Sundays 10:00 AM – 6:00 PM EST (Or Until Sold Out)
+                            Delivery Only • Delivery window: see the schedule above (or until sold out)
                         </p>
                     </div>
                     
@@ -729,7 +729,7 @@
                     <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none">
                     <input type="text" id="vip-contact" name="contact" placeholder="Enter phone # or email..." required class="flex-1 font-fredoka px-4 py-3 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-4 focus:ring-brandPink">
                     <button type="submit" id="vip-submit" class="bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-xl px-6 py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed">
-                        🔔 JOIN VIP RADAR
+                        🔔 JOIN VIP ALERTS
                     </button>
                 </form>
             </div>
@@ -1128,6 +1128,7 @@
 
                 // 4. Handle Status Override if provided
                 window.statusOverride = data.status_override || "AUTO";
+                if (data.web3forms_access_key && String(data.web3forms_access_key).trim()) WEB3FORMS.accessKey = String(data.web3forms_access_key).trim();
                 if (data.status_override && data.status_override !== "AUTO") {
                     applyStatusOverride(data.status_override);
                 } else {
@@ -1990,7 +1991,7 @@
 
         async function loadMenuSettings() {
             try {
-                const response = await fetch('./content/menu/menu.json');
+                const response = await fetch('./content/menu/menu.json?t=' + Date.now(), { cache: 'no-store' });
                 if (!response.ok) {
                     console.warn('Could not load content/menu/menu.json (HTTP ' + response.status + '). Showing the built-in menu.');
                     return;
@@ -2175,7 +2176,7 @@
 
         async function loadDeliveryPricing() {
             try {
-                const response = await fetch('./content/delivery-pricing.json');
+                const response = await fetch('./content/delivery-pricing.json?t=' + Date.now(), { cache: 'no-store' });
                 if (!response.ok) {
                     console.warn('Could not load content/delivery-pricing.json (HTTP ' + response.status + '). Using the built-in distance options.');
                     return;
