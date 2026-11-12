@@ -525,7 +525,7 @@
                 </div>
 
                 <div class="bg-brandYellow comic-border p-5 rounded-2xl shadow-comic text-center max-w-md mx-auto mb-6">
-                    <span class="font-bangers text-2xl text-brandPurple block">PRIMARY FOOD TRUCK SPOT</span>
+                    <span id="truck-spot-label" class="font-bangers text-2xl text-brandPurple block">FOOD TRUCK SPOT</span>
                     <p id="truck-address" class="font-fredoka text-xl font-bold text-slate-900 mt-1">1398 E Vine St, Kissimmee, FL 34744</p>
                     <span id="radar-live-pill" class="inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm">
                         CHECKING FRYER STATUS...
@@ -632,7 +632,7 @@
 
                 <div class="bg-white comic-border rounded-3xl p-6 shadow-comic max-w-3xl mx-auto">
                     <h3 class="font-bangers text-3xl text-slate-900 mb-4 text-center">
-                        📋 ORDER CALCULATOR & CHECKOUT
+                        📋 <span id="drop-form-title">ORDER CALCULATOR</span>
                     </h3>
 
                     <div class="bg-yellow-50 comic-border p-4 rounded-2xl mb-6">
@@ -648,6 +648,7 @@
                         </p>
                     </div>
 
+                    <button type="button" onclick="startDeliveryOrder()" class="w-full mb-4 bg-brandOrange hover:bg-orange-400 text-slate-900 font-bangers text-xl py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5">🛒 ADD TO DELIVERY CART (PICK YOUR FOOD)</button>
                     <form id="drop-form" onsubmit="handleDeliveryDropSubmit(event)" class="space-y-4">
                     <div class="grid sm:grid-cols-2 gap-3">
                         <input type="text" id="drop-name" required placeholder="Your name" class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900">
@@ -1126,6 +1127,7 @@
                 }
 
                 // 4. Handle Status Override if provided
+                window.statusOverride = data.status_override || "AUTO";
                 if (data.status_override && data.status_override !== "AUTO") {
                     applyStatusOverride(data.status_override);
                 } else {
@@ -1349,6 +1351,25 @@
             set('drop-schedule-subtitle', n.i === 0 ? `Delivery Only • Today's delivery window: ${win} (or until sold out)` : `Delivery Only • Next delivery: ${when} ${win}`);
             set('drop-next-text', `📅 Next delivery window: ${when} ${win}`);
         }
+        function startDeliveryOrder() {
+            ORDER.type = 'delivery'; updateOrderTypeUI();
+            document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+            showToast('Delivery selected! Add your food, then come back to send your request. 🚚', 5000);
+        }
+        function updateTruckLocation() {
+            const lab = document.getElementById('truck-spot-label'), addr = document.getElementById('truck-address');
+            if (!lab || !addr || !scheduleCards.length) return;
+            const now = getTruckTime(), trucks = scheduleCards.filter(c => c.kind === 'truck' && c.location);
+            const act = window.statusOverride === 'MANUAL_CLOSED' ? null : trucks.find(c => isSlotActiveNow(c, now));
+            if (act) { lab.textContent = '📍 TRUCK IS HERE NOW'; addr.textContent = act.location; return; }
+            for (let i = 0; i < 7; i++) {
+                const d = DAY_CODES[(now.day + i) % 7];
+                const c = trucks.find(c => Array.isArray(c.open_days) && c.open_days.includes(d) && (i > 0 || now.minutes < parseTime(c.opens)));
+                if (c) { lab.textContent = `NEXT STOP: ${i === 0 ? 'TODAY' : FULL_DAYS[d].toUpperCase()} ${fmt12(c.opens)}`; addr.textContent = c.location; return; }
+            }
+            lab.textContent = 'FOOD TRUCK SPOT';
+        }
+        setInterval(() => { updateTruckLocation(); updateDeliveryText(); updateOrderTypeUI(); }, 60000);
         function setOrderType(t) { ORDER.type = t; updateOrderTypeUI(); }
         function updateOrderTypeUI() {
             const d = deliveryToday();
@@ -1372,14 +1393,21 @@
         function refreshDeliveryModeUI() {
             const req = !!DELIVERY.owner, $ = id => document.getElementById(id);
             $('drop-math-box').classList.toggle('hidden', req);
-            const card = document.querySelector('.js-drop-pct'); if (card && card.closest('.comic-border')) card.closest('.comic-border').classList.toggle('hidden', req);
+            let card = $('drop-third-card');
+            if (!card) { const e = document.querySelector('.js-drop-pct'); card = e && e.closest('.comic-border'); if (card) { card.id = 'drop-third-card'; card.dataset.orig = card.innerHTML; } }
+            if (card && card.dataset.mode !== (req ? 'req' : 'res')) {
+                card.dataset.mode = req ? 'req' : 'res';
+                card.innerHTML = req ? '<div class="font-fredoka"><div class="font-bangers text-xl text-brandPurple">📝 FILL OUT THE FORM &amp; REQUEST DELIVERY</div><p class="text-xs font-bold mt-1">Add your food, enter your name, phone and address, then tap REQUEST DELIVERY. We text you the fee and a payment link!</p></div>' : card.dataset.orig;
+                card.querySelectorAll('.js-drop-pct').forEach(e => { e.textContent = DROP_CONFIG.depositPct; });
+            }
+            $('drop-form-title').textContent = req ? 'DELIVERY REQUEST' : 'ORDER CALCULATOR';
             $('quote-wrap').classList.toggle('hidden', req || !DELIVERY.zones.length);
             const sel = $('drop-distance'); if (sel && req) { sel.classList.add('hidden'); sel.required = false; }
             recalculateDropTotals();
         }
 
         function checkDropWindowSchedule() {
-            updateDeliveryText(); updateOrderTypeUI(); refreshDeliveryModeUI();
+            updateDeliveryText(); updateOrderTypeUI(); refreshDeliveryModeUI(); updateTruckLocation();
             const isActive = isDropWindowActive();
             const statusBadge = document.getElementById('drop-status-badge');
             const closedNotice = document.getElementById('drop-closed-notice');
