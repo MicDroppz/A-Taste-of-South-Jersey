@@ -29,7 +29,7 @@
   "allergen_note": "crocodile skin ",
   "weekly_schedule": [
     {
-      "off": false,
+      "off": true,
       "days": "Wednesday",
       "kind": "truck",
       "open_days": [
