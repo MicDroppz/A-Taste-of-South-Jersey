@@ -107,8 +107,8 @@
       "open_days": [
         "Sun"
       ],
-      "opens": "15:00",
-      "closes": "22:00",
+      "opens": "08:00",
+      "closes": "20:00",
       "location": "drops",
       "card_color": "pink"
     }
