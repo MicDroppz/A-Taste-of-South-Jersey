@@ -90,7 +90,7 @@
     {
       "off": false,
       "days": "Thurs pickup",
-      "kind": "truck",
+      "kind": "both",
       "open_days": [
         "Thu"
       ],
