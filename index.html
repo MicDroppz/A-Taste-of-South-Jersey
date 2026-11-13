@@ -102,14 +102,16 @@
             <button onclick="scrollToSection('menu')" class="bg-brandTeal hover:bg-teal-300 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
                 😋 Menu
             </button>
-            <button onclick="scrollToSection('funzone')" class="bg-brandGreen hover:bg-green-300 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
-                🤪 Fun Zone
+            <button type="button" data-order="pickup" data-variant="nav" onclick="orderButtonClick('pickup')" class="js-order-btn bg-slate-200 text-slate-500 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition text-xs sm:text-base font-bold">
+                <span class="block leading-tight">🥡 Order Pickup</span>
+                <span class="js-order-hint block text-[10px] sm:text-xs font-semibold leading-tight">Checking…</span>
             </button>
-            <button onclick="scrollToSection('radar')" class="bg-brandOrange hover:bg-orange-300 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
+            <button type="button" data-order="delivery" data-variant="nav" onclick="orderButtonClick('delivery')" class="js-order-btn bg-slate-200 text-slate-500 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition text-xs sm:text-base font-bold">
+                <span class="block leading-tight">🚚 Order Delivery</span>
+                <span class="js-order-hint block text-[10px] sm:text-xs font-semibold leading-tight">Checking…</span>
+            </button>
+            <button onclick="scrollToSection('radar')" class="bg-brandGreen hover:bg-green-300 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
                 🕒 Hours &amp; Location
-            </button>
-            <button onclick="scrollToSection('delivery-drop')" class="bg-brandRed text-white hover:bg-red-600 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
-                📦 Delivery Days
             </button>
             <button onclick="openCateringModal()" class="bg-brandPurple text-white hover:bg-purple-600 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
                 🎪 Catering
@@ -157,11 +159,19 @@
                     <button onclick="scrollToSection('menu')" class="bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-2xl px-8 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
                         🥟 SEE FULL MENU
                     </button>
-                    <button onclick="scrollToSection('radar')" class="bg-brandOrange hover:bg-orange-400 text-slate-900 font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
-                        🕒 HOURS &amp; LOCATION
+                    <button type="button" data-order="pickup" data-variant="hero" onclick="orderButtonClick('pickup')" class="js-order-btn bg-slate-200 text-slate-500 font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
+                        <span class="block leading-tight">🥡 ORDER PICKUP</span>
+                        <span class="js-order-hint block font-fredoka text-sm font-bold leading-tight tracking-normal">Checking…</span>
                     </button>
-                    <button onclick="scrollToSection('delivery-drop')" class="bg-brandRed text-white hover:bg-red-600 font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
+                    <button type="button" data-order="delivery" data-variant="hero" onclick="orderButtonClick('delivery')" class="js-order-btn bg-slate-200 text-slate-500 font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
+                        <span class="block leading-tight">🚚 ORDER DELIVERY</span>
+                        <span class="js-order-hint block font-fredoka text-sm font-bold leading-tight tracking-normal">Checking…</span>
+                    </button>
+                    <button onclick="scrollToSection('radar')" class="bg-brandTeal hover:bg-teal-300 text-slate-900 font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
                         📦 DELIVERY DAYS
+                    </button>
+                    <button onclick="scrollToSection('funzone')" class="bg-brandPink hover:bg-pink-400 text-white font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
+                        🤪 FUN ZONE
                     </button>
                 </div>
 
@@ -1313,7 +1323,7 @@
         }
         function nextDelivery() {
             const now = getTruckTime();
-            for (let i = 0; i < 7; i++) {
+            for (let i = 0; i < 8; i++) {
                 const d = DAY_CODES[(now.day + i) % 7];
                 const c = scheduleCards.find(c => c.kind === 'delivery' && Array.isArray(c.open_days) && c.open_days.includes(d)
                     && (i > 0 || isSlotActiveNow(c, now) || now.minutes < parseTime(c.opens)));
@@ -1393,6 +1403,53 @@
         }
         setInterval(refreshAll, 30000);
         function setOrderType(t) { ORDER.type = t; updateOrderTypeUI(); }
+
+        // ---------- Order Pickup / Order Delivery buttons (top bar + first card) ----------
+        // Open: bright button. Closed: greyed out with the next opening time underneath; tapping it shows the schedule.
+        function nextTruckOpening() {
+            const now = getTruckTime();
+            for (let i = 0; i < 8; i++) {
+                const d = DAY_CODES[(now.day + i) % 7];
+                const c = scheduleCards
+                    .filter(c => c.kind === 'truck' && Array.isArray(c.open_days) && c.open_days.includes(d) && (i > 0 || now.minutes < parseTime(c.opens)))
+                    .sort((a, b) => parseTime(a.opens) - parseTime(b.opens))[0];
+                if (c) return { c, d, i };
+            }
+            return null;
+        }
+        function orderHintClosed(kind) {
+            if (kind === 'pickup' && window.statusOverride === 'MANUAL_CLOSED') return 'Closed right now';
+            if (kind === 'delivery' && (DROP_CONFIG.soldOut || DROP_CONFIG.manualSoldOut)) return 'Sold out right now';
+            const n = kind === 'pickup' ? nextTruckOpening() : nextDelivery();
+            if (!n) return 'Not scheduled';
+            const abbr = FULL_DAYS[n.d].slice(0, 3);
+            const when = n.i === 0 ? 'today' : n.i === 1 ? 'tomorrow' : n.i === 7 ? 'next ' + abbr : abbr;
+            return `Opens ${when} ${fmt12(n.c.opens).replace(':00', '')}`;
+        }
+        function updateOrderButtons() {
+            const V = {
+                nav: { base: 'font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold', hint: 'js-order-hint block text-[10px] sm:text-xs font-semibold leading-tight' },
+                hero: { base: 'font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition', hint: 'js-order-hint block font-fredoka text-sm font-bold leading-tight tracking-normal' }
+            };
+            const OPEN = { pickup: 'bg-brandOrange hover:bg-orange-300 text-slate-900', delivery: 'bg-brandRed hover:bg-red-600 text-white' };
+            const CLOSED = 'bg-slate-200 hover:bg-slate-300 text-slate-500';
+            document.querySelectorAll('.js-order-btn').forEach(btn => {
+                const kind = btn.dataset.order, v = V[btn.dataset.variant] || V.nav;
+                const ok = kind === 'pickup' ? pickupAvail() : deliveryAvail();
+                btn.className = 'js-order-btn ' + v.base + ' ' + (ok ? OPEN[kind] : CLOSED);
+                btn.setAttribute('aria-disabled', ok ? 'false' : 'true');
+                btn.title = ok ? '' : 'Not available right now - tap to see our hours';
+                const hint = btn.querySelector('.js-order-hint');
+                if (hint) { hint.className = v.hint; hint.textContent = ok ? 'Open now' : orderHintClosed(kind); }
+            });
+        }
+        function orderButtonClick(kind) {
+            const ok = kind === 'pickup' ? pickupAvail() : deliveryAvail();
+            if (!ok) { scrollToSection('radar'); return; }   // closed: show the schedule instead
+            ORDER.type = kind; updateOrderTypeUI();
+            scrollToSection('menu');
+            showToast(kind === 'delivery' ? 'Delivery selected! Add your food, then come back to send your request. 🚚' : 'Pickup selected! Add your food and check out. 🥡', 4500);
+        }
         function updateOrderTypeUI() {
             const d = deliveryAvail(), p = pickupAvail();
             if (!d) ORDER.type = 'pickup'; else if (!p) ORDER.type = 'delivery';
@@ -1409,6 +1466,7 @@
                 bar.classList.toggle('hidden', !(d && p));
                 ['pickup', 'delivery'].forEach(k => { document.getElementById('ot-' + k).className = 'px-5 py-2 rounded-xl comic-border ' + (ORDER.type === k ? 'bg-brandGreen shadow-comic-sm' : 'bg-white'); });
             }
+            updateOrderButtons();
             const closed = !d && !p;
             document.querySelectorAll('.js-add-label').forEach(el => {
                 el.textContent = closed ? 'Ordering Closed' : (ORDER.type === 'delivery' ? 'Add to Delivery' : 'Add to Pickup');
