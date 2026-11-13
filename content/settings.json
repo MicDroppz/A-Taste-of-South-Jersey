@@ -113,7 +113,7 @@
       "card_color": "pink"
     },
     {
-      "off": false,
+      "off": true,
       "days": "Friday web fix testing",
       "kind": "truck",
       "open_days": [
