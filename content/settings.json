@@ -79,7 +79,7 @@
     {
       "off": false,
       "days": "FRIDAY 5 (Card Title)",
-      "kind": "both",
+      "kind": "truck",
       "open_days": [
         "Fri"
       ],
