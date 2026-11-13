@@ -53,7 +53,7 @@
       "card_color": "teal"
     },
     {
-      "off": false,
+      "off": true,
       "days": "SATURDAY",
       "kind": "delivery",
       "open_days": [
@@ -65,7 +65,7 @@
       "card_color": "pink"
     },
     {
-      "off": false,
+      "off": true,
       "days": "SUNDAY",
       "kind": "delivery",
       "open_days": [
@@ -89,7 +89,7 @@
       "card_color": "purple"
     },
     {
-      "off": false,
+      "off": true,
       "days": "Thurs pickup",
       "kind": "both",
       "open_days": [
