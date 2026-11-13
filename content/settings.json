@@ -78,10 +78,10 @@
     },
     {
       "off": true,
-      "days": "thurs truck stop both test ",
+      "days": "FRIDAY 5",
       "kind": "both",
       "open_days": [
-        "Thu"
+        "Fri"
       ],
       "opens": "10:00",
       "closes": "22:00",
@@ -90,10 +90,10 @@
     },
     {
       "off": true,
-      "days": "Thurs pickup",
+      "days": "SATURDAY 6",
       "kind": "both",
       "open_days": [
-        "Thu"
+        "Sat"
       ],
       "opens": "15:00",
       "closes": "22:00",
@@ -102,10 +102,10 @@
     },
     {
       "off": true,
-      "days": "thursday delivery ",
+      "days": "SUNDAY",
       "kind": "delivery",
       "open_days": [
-        "Thu"
+        "Sun"
       ],
       "opens": "15:00",
       "closes": "22:00",
