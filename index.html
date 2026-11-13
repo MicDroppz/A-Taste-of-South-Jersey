@@ -515,8 +515,8 @@
         <section id="radar" class="px-4 max-w-4xl mx-auto scroll-mt-28">
             <div class="bg-white comic-border shadow-comic-lg rounded-3xl p-6 md:p-8">
                 <div class="text-center mb-6">
-                    <span class="bg-brandRed text-white font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2 animate-pulse">
-                        🔴 LIVE OPEN / CLOSED STATUS
+                    <span id="radar-header-pill" class="bg-slate-800 text-white font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2">
+                        CHECKING STATUS...
                     </span>
                     <h2 class="font-bangers text-4xl md:text-5xl text-brandPurple">
                         OPEN HOURS &amp; LOCATIONS 🚚📍
@@ -1258,6 +1258,14 @@
             }
             if (badge) { badge.className = bc; badge.textContent = bt; }
             if (pill) { pill.className = pc; pill.textContent = pt; }
+            // Pill above "Open Hours & Locations": same status as the top banner
+            const head = document.getElementById('radar-header-pill');
+            if (head) {
+                const H = 'font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2 ';
+                if (pickup) { head.className = H + 'bg-brandGreen text-slate-900 animate-pulse'; head.textContent = '🟢 OPEN NOW'; }
+                else if (delivery) { head.className = H + 'bg-brandOrange text-slate-900 animate-pulse'; head.textContent = '🚚 OPEN FOR DELIVERY ONLY'; }
+                else { head.className = H + 'bg-brandRed text-white'; head.textContent = '🔴 CLOSED NOW'; }
+            }
         }
         function applyStatusOverride() { updateStatusBadge(); }
         function checkTruckOpenStatus() { updateStatusBadge(); }
