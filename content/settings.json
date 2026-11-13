@@ -30,10 +30,10 @@
   "weekly_schedule": [
     {
       "off": true,
-      "days": "Wednesday",
+      "days": "MONDAY 1",
       "kind": "truck",
       "open_days": [
-        "Wed"
+        "Mon"
       ],
       "opens": "11:00",
       "closes": "22:00",
@@ -42,10 +42,10 @@
     },
     {
       "off": true,
-      "days": "FRIDAY NIGHT",
+      "days": "TUESDAY 2",
       "kind": "truck",
       "open_days": [
-        "Fri"
+        "Tue"
       ],
       "opens": "16:00",
       "closes": "05:00",
@@ -54,10 +54,10 @@
     },
     {
       "off": true,
-      "days": "SATURDAY",
+      "days": "WEDNESDAY 3",
       "kind": "delivery",
       "open_days": [
-        "Sat"
+        "Wed"
       ],
       "opens": "11:00",
       "closes": "21:00",
@@ -66,10 +66,10 @@
     },
     {
       "off": true,
-      "days": "SUNDAY",
+      "days": "THURSDAY 4",
       "kind": "delivery",
       "open_days": [
-        "Sun"
+        "Thu"
       ],
       "opens": "10:00",
       "closes": "18:00",
