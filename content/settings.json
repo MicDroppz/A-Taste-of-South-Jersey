@@ -41,7 +41,7 @@
       "card_color": "yellow"
     },
     {
-      "off": false,
+      "off": true,
       "days": "FRIDAY NIGHT",
       "kind": "truck",
       "open_days": [
@@ -111,6 +111,18 @@
       "closes": "22:00",
       "location": "drops",
       "card_color": "pink"
+    },
+    {
+      "off": false,
+      "days": "Friday web fix testing",
+      "kind": "truck",
+      "open_days": [
+        "Fri"
+      ],
+      "opens": "10:00",
+      "closes": "22:00",
+      "location": "1398 kissimmee",
+      "card_color": "purple"
     }
   ]
 }
