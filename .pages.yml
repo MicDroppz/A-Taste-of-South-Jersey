@@ -361,6 +361,8 @@ content:
               label: Request a quote (customer sends order + address, I reply with the fee and a payment link)
             - name: RESERVE
               label: Reserve with deposit (fee shows by ZIP code at checkout)
+            - name: PAY_FULL
+              label: Pay in full with delivery fee (no deposit - food + fee by ZIP code, all paid up front)
 
       - name: drop_min_amount
         label: Delivery Minimum Order Amount ($)
