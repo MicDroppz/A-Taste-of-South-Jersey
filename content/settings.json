@@ -78,8 +78,8 @@
     },
     {
       "off": false,
-      "days": "FRIDAY 5 (Card Title)",
-      "kind": "delivery",
+      "days": "FRIDAY 5 (Card Title) Pickup Order & Delivery",
+      "kind": "both",
       "open_days": [
         "Fri"
       ],
