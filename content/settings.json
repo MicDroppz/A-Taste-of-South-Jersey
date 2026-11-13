@@ -88,7 +88,7 @@
       "card_color": "purple"
     },
     {
-      "off": true,
+      "off": false,
       "days": "Thurs pickup",
       "kind": "truck",
       "open_days": [
@@ -100,7 +100,7 @@
       "card_color": "yellow"
     },
     {
-      "off": false,
+      "off": true,
       "days": "thursday delivery ",
       "kind": "delivery",
       "open_days": [
