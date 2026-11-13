@@ -41,7 +41,7 @@
       "card_color": "yellow"
     },
     {
-      "off": false,
+      "off": true,
       "days": "FRIDAY NIGHT",
       "kind": "truck",
       "open_days": [
