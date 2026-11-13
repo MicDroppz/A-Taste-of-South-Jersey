@@ -30,7 +30,7 @@
   "weekly_schedule": [
     {
       "off": false,
-      "days": "MONDAY 1",
+      "days": "MONDAY 1 (Card Title)",
       "kind": "truck",
       "open_days": [
         "Mon"
@@ -42,7 +42,7 @@
     },
     {
       "off": false,
-      "days": "TUESDAY 2",
+      "days": "TUESDAY 2 (Card Title)",
       "kind": "truck",
       "open_days": [
         "Tue"
@@ -54,7 +54,7 @@
     },
     {
       "off": false,
-      "days": "WEDNESDAY 3",
+      "days": "WEDNESDAY 3 (Card Title)",
       "kind": "delivery",
       "open_days": [
         "Wed"
@@ -66,7 +66,7 @@
     },
     {
       "off": false,
-      "days": "THURSDAY 4",
+      "days": "THURSDAY 4 (Card Title)",
       "kind": "delivery",
       "open_days": [
         "Thu"
@@ -78,7 +78,7 @@
     },
     {
       "off": false,
-      "days": "FRIDAY 5",
+      "days": "FRIDAY 5 (Card Title)",
       "kind": "both",
       "open_days": [
         "Fri"
@@ -90,7 +90,7 @@
     },
     {
       "off": false,
-      "days": "SATURDAY 6",
+      "days": "SATURDAY 6 (Card Title)",
       "kind": "both",
       "open_days": [
         "Sat"
@@ -102,7 +102,7 @@
     },
     {
       "off": false,
-      "days": "SUNDAY 7",
+      "days": "SUNDAY 7 (Card Title)",
       "kind": "delivery",
       "open_days": [
         "Sun"
