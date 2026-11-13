@@ -700,11 +700,11 @@
                                 <span id="math-total-order">$5.00</span>
                             </div>
                             <div class="grid grid-cols-2 gap-2 pt-2 text-center">
-                                <div class="bg-brandGreen text-slate-900 p-2 rounded-xl comic-border">
-                                    <span class="block text-xs font-bold"><span class="js-drop-pct">50</span>% OF FOOD + DELIVERY FEE DUE TODAY</span>
+                                <div id="math-due-box" class="bg-brandGreen text-slate-900 p-2 rounded-xl comic-border">
+                                    <span id="math-due-label" class="block text-xs font-bold"><span class="js-drop-pct">50</span>% OF FOOD + DELIVERY FEE DUE TODAY</span>
                                     <span id="math-deposit-due" class="font-bangers text-xl">$2.50</span>
                                 </div>
-                                <div class="bg-brandYellow text-slate-900 p-2 rounded-xl comic-border">
+                                <div id="math-remaining-box" class="bg-brandYellow text-slate-900 p-2 rounded-xl comic-border">
                                     <span class="block text-xs font-bold">REMAINING AT DELIVERY</span>
                                     <span id="math-remaining-due" class="font-bangers text-xl">$2.50</span>
                                 </div>
@@ -1214,7 +1214,9 @@
                 DROP_CONFIG.capacityOverride = data.drop_capacity_text ? String(data.drop_capacity_text) : '';
                 DROP_CONFIG.soldOut = false; // slots were removed: use drop_status instead
                 // CMS switch: drop_status = AUTO | SOLD_OUT | FORCE_OPEN
-                DELIVERY.owner = data.delivery_mode !== 'RESERVE'; // default: customers send a delivery request
+                // delivery_mode: REQUEST (default) | RESERVE (deposit) | PAY_FULL (food + delivery fee paid up front, no deposit)
+                DELIVERY.full = data.delivery_mode === 'PAY_FULL';
+                DELIVERY.owner = data.delivery_mode !== 'RESERVE' && !DELIVERY.full;
                 if (data.drop_status === 'SOLD_OUT') DROP_CONFIG.soldOut = true;
                 if (data.drop_status === 'FORCE_OPEN') { DROP_CONFIG.soldOut = false; DROP_CONFIG.forceOpen = true; }
                 if (typeof updateStatusBadge === 'function') updateStatusBadge();
@@ -1478,9 +1480,12 @@
             $('drop-math-box').classList.toggle('hidden', req);
             let card = $('drop-third-card');
             if (!card) { const e = document.querySelector('.js-drop-pct'); card = e && e.closest('.comic-border'); if (card) { card.id = 'drop-third-card'; card.dataset.orig = card.innerHTML; } }
-            if (card && card.dataset.mode !== (req ? 'req' : 'res')) {
-                card.dataset.mode = req ? 'req' : 'res';
-                card.innerHTML = req ? '<div class="font-fredoka"><div class="font-bangers text-xl text-brandPurple">📝 FILL OUT THE FORM &amp; REQUEST DELIVERY</div><p class="text-xs font-bold mt-1">Add your food, enter your name, phone and address, then tap REQUEST DELIVERY. We text you the fee and a payment link!</p></div>' : card.dataset.orig;
+            const mode = req ? 'req' : DELIVERY.full ? 'full' : 'res';
+            if (card && card.dataset.mode !== mode) {
+                card.dataset.mode = mode;
+                card.innerHTML = req ? '<div class="font-fredoka"><div class="font-bangers text-xl text-brandPurple">📝 FILL OUT THE FORM &amp; REQUEST DELIVERY</div><p class="text-xs font-bold mt-1">Add your food, enter your name, phone and address, then tap REQUEST DELIVERY. We text you the fee and a payment link!</p></div>'
+                    : DELIVERY.full ? '<div class="font-fredoka"><div class="font-bangers text-xl text-brandPurple">💳 PAY IN FULL - NO DEPOSIT</div><p class="text-xs font-bold mt-1">Your food and delivery fee (set by ZIP code) are paid up front. Nothing due at the door!</p></div>'
+                    : card.dataset.orig;
                 card.querySelectorAll('.js-drop-pct').forEach(e => { e.textContent = DROP_CONFIG.depositPct; });
             }
             $('drop-form-title').textContent = req ? 'DELIVERY REQUEST' : 'ORDER CALCULATOR';
@@ -1537,8 +1542,13 @@
 
             const totalOrder = foodSubtotal + deliveryFee;
             const depositMultiplier = DROP_CONFIG.depositPct / 100;
-            const depositDue = foodSubtotal * depositMultiplier + deliveryFee; // % of food + delivery fee in full
+            // PAY_FULL: everything (food + delivery fee) is due up front; otherwise deposit % of food + delivery fee
+            const depositDue = DELIVERY.full ? totalOrder : foodSubtotal * depositMultiplier + deliveryFee;
             const remainingDue = totalOrder - depositDue;
+            const dueLabel = document.getElementById('math-due-label'), remBox = document.getElementById('math-remaining-box'), dueBox = document.getElementById('math-due-box');
+            if (dueLabel) dueLabel.innerHTML = DELIVERY.full ? 'PAID IN FULL TODAY (FOOD + DELIVERY)' : `<span class="js-drop-pct">${DROP_CONFIG.depositPct}</span>% OF FOOD + DELIVERY FEE DUE TODAY`;
+            if (remBox) remBox.classList.toggle('hidden', !!DELIVERY.full);
+            if (dueBox) dueBox.classList.toggle('col-span-2', !!DELIVERY.full);
 
             document.getElementById('math-food-subtotal').innerText = `$${foodSubtotal.toFixed(2)}`;
             document.getElementById('math-delivery-fee').innerText = DELIVERY.owner ? 'added at delivery' : needsQuote() ? 'enter address' : `$${deliveryFee.toFixed(2)}`;
@@ -1581,12 +1591,12 @@
             } else if (foodSubtotal >= DROP_CONFIG.minOrderAmount) {
                 if (statusMsg) {
                     statusMsg.className = "font-fredoka text-xs font-bold text-brandGreen mt-2 text-center";
-                    statusMsg.innerText = (DELIVERY.owner ? "🎉 Minimum reached! Add your name, phone and address, then send your request." : "🎉 Minimum reached! Ready to reserve your delivery!");
+                    statusMsg.innerText = (DELIVERY.owner ? "🎉 Minimum reached! Add your name, phone and address, then send your request." : DELIVERY.full ? "🎉 Minimum reached! Ready to place your delivery order." : "🎉 Minimum reached! Ready to reserve your delivery!");
                 }
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.className = "w-full bg-brandRed hover:bg-red-600 text-white font-bangers text-2xl py-3 rounded-xl comic-border shadow-comic transition cursor-pointer active:translate-y-0.5";
-                    submitBtn.innerText = (DELIVERY.owner ? "🚚 REQUEST DELIVERY" : `🚀 RESERVE MY DELIVERY (${DROP_CONFIG.depositPct}% DEPOSIT)`);
+                    submitBtn.innerText = (DELIVERY.owner ? "🚚 REQUEST DELIVERY" : DELIVERY.full ? `💳 PLACE DELIVERY ORDER ($${totalOrder.toFixed(2)})` : `🚀 RESERVE MY DELIVERY (${DROP_CONFIG.depositPct}% DEPOSIT)`);
                 }
             } else {
                 const needed = (DROP_CONFIG.minOrderAmount - foodSubtotal).toFixed(2);
@@ -1620,7 +1630,7 @@
             }
             const address = document.getElementById('drop-address').value;
             const fee = getDeliveryFee(), total = foodSubtotal + fee;
-            const due = foodSubtotal * DROP_CONFIG.depositPct / 100 + fee;
+            const due = DELIVERY.full ? total : foodSubtotal * DROP_CONFIG.depositPct / 100 + fee;
             const btn = document.getElementById('drop-submit-btn'), label = btn.innerHTML;
             btn.disabled = true; btn.textContent = '⏳ SENDING...';
             const ok = await sendToWeb3Forms({
@@ -1634,6 +1644,7 @@
                 'Food Subtotal': `$${foodSubtotal.toFixed(2)}`,
                 'Delivery Fee': DELIVERY.owner ? 'TO BE SET BY OWNER - add to the balance due at delivery' : `$${fee.toFixed(2)}`,
                 'Total (before tax)': `$${total.toFixed(2)}`,
+                'Payment Plan': DELIVERY.owner ? 'Owner to quote' : DELIVERY.full ? 'PAY IN FULL (no deposit) - send payment link for the full total' : `${DROP_CONFIG.depositPct}% of food + delivery fee now, rest at delivery`,
                 'Due Online Now': DELIVERY.owner ? 'Owner to quote (deposit % of food + delivery fee)' : `$${due.toFixed(2)}`,
                 'Due At Delivery': DELIVERY.owner ? 'Owner to confirm' : `$${(total - due).toFixed(2)}`,
                 botcheck: ''
@@ -1641,7 +1652,7 @@
             btn.innerHTML = label; btn.disabled = false;
             if (!ok) return;
             playSound('laser');
-            showToast(DELIVERY.owner ? "📦 Delivery request sent! We'll text you the delivery fee and a payment link." : "📦 Delivery order received! We'll confirm and send your payment details shortly.", 7000);
+            showToast(DELIVERY.owner ? "📦 Delivery request sent! We'll text you the delivery fee and a payment link." : DELIVERY.full ? "📦 Delivery order received! We'll text you a payment link for the full total." : "📦 Delivery order received! We'll confirm and send your payment details shortly.", 7000);
             cart.length = 0; updateCartUI(); recalculateDropTotals();
         }
 
@@ -2203,6 +2214,7 @@
 
         DELIVERY.zones = [];
         DELIVERY.owner = false;   // true when delivery_pricing.json has fee_mode = OWNER_SETS
+        DELIVERY.full = false;    // true when drop-settings.json delivery_mode = PAY_FULL
         function zoneLookup() {
             const zip = (document.getElementById('drop-address').value.match(/\b\d{5}\b/g) || []).pop();
             return zip ? DELIVERY.zones.find(z => z.zips.includes(zip)) || null : null;
