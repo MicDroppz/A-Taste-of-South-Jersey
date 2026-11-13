@@ -25,7 +25,8 @@
       "show": false
     }
   },
-  "allergen_note_show": false,
+  "allergen_note_show": true,
+  "allergen_note": "crocodile skin ",
   "weekly_schedule": [
     {
       "off": false,
