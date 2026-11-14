@@ -1257,8 +1257,8 @@
             const P = 'inline-block mt-3 font-fredoka font-bold text-xs px-4 py-1 rounded-full comic-border shadow-comic-sm ';
             let bc, bt, pc, pt;
             if (pickup) {
-                bc = B + 'bg-brandGreen text-slate-900 animate-pulse'; bt = '🟢 OPEN NOW';
-                pc = P + 'bg-brandGreen text-slate-900'; pt = '🔥 FRYER IS HOT & SERVING NOW!';
+                bc = B + 'bg-brandGreen text-slate-900 animate-pulse'; bt = delivery ? '🟢 OPEN: PICKUP & DELIVERY' : '🟢 OPEN NOW';
+                pc = P + 'bg-brandGreen text-slate-900'; pt = delivery ? '🔥 SERVING NOW • DELIVERY ALSO AVAILABLE' : '🔥 FRYER IS HOT & SERVING NOW!';
             } else if (delivery) {
                 bc = B + 'bg-brandOrange text-slate-900 animate-pulse'; bt = '🚚 OPEN FOR DELIVERY ONLY';
                 pc = P + 'bg-brandOrange text-slate-900'; pt = '🚚 DELIVERY ORDERS OPEN (NO TRUCK PICKUP)';
@@ -1274,7 +1274,7 @@
             const head = document.getElementById('radar-header-pill');
             if (head) {
                 const H = 'font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm inline-block mb-2 ';
-                if (pickup) { head.className = H + 'bg-brandGreen text-slate-900 animate-pulse'; head.textContent = '🟢 OPEN NOW'; }
+                if (pickup) { head.className = H + 'bg-brandGreen text-slate-900 animate-pulse'; head.textContent = delivery ? '🟢 OPEN: PICKUP & DELIVERY' : '🟢 OPEN NOW'; }
                 else if (delivery) { head.className = H + 'bg-brandOrange text-slate-900 animate-pulse'; head.textContent = '🚚 OPEN FOR DELIVERY ONLY'; }
                 else { head.className = H + 'bg-brandRed text-white'; head.textContent = '🔴 CLOSED NOW'; }
             }
