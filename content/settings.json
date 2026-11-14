@@ -77,7 +77,7 @@
       "card_color": "purple"
     },
     {
-      "off": true,
+      "off": false,
       "days": "FRIDAY 5 (Card Title) Pickup Order or Delivery",
       "kind": "both",
       "open_days": [
