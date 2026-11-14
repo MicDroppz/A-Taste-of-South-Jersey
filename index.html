@@ -1466,13 +1466,20 @@
             }
             if (bar) {
                 bar.classList.toggle('hidden', !(d && p));
-                ['pickup', 'delivery'].forEach(k => { document.getElementById('ot-' + k).className = 'px-5 py-2 rounded-xl comic-border ' + (ORDER.type === k ? 'bg-brandGreen shadow-comic-sm' : 'bg-white'); });
+                // Pickup = orange, Delivery = red (same colors as the Order Pickup / Order Delivery buttons)
+                const SEL = { pickup: 'bg-brandOrange text-slate-900 shadow-comic-sm', delivery: 'bg-brandRed text-white shadow-comic-sm' };
+                ['pickup', 'delivery'].forEach(k => { document.getElementById('ot-' + k).className = 'px-5 py-2 rounded-xl comic-border ' + (ORDER.type === k ? SEL[k] : 'bg-white'); });
             }
             updateOrderButtons();
             const closed = !d && !p;
+            const ADD_COLORS = ['bg-brandGreen', 'hover:bg-green-400', 'bg-brandOrange', 'hover:bg-orange-300', 'bg-brandRed', 'hover:bg-red-600', 'bg-slate-200', 'text-slate-500', 'text-white', 'cursor-not-allowed'];
+            const addColor = closed ? ['bg-slate-200', 'text-slate-500', 'cursor-not-allowed']
+                : ORDER.type === 'delivery' ? ['bg-brandRed', 'hover:bg-red-600', 'text-white']
+                : ['bg-brandOrange', 'hover:bg-orange-300'];
             document.querySelectorAll('.js-add-label').forEach(el => {
                 el.textContent = closed ? 'Ordering Closed' : (ORDER.type === 'delivery' ? 'Add to Delivery' : 'Add to Pickup');
-                const b = el.closest('button'); if (b) { b.disabled = closed; b.classList.toggle('opacity-50', closed); }
+                const b = el.closest('button');
+                if (b) { b.disabled = closed; b.classList.remove(...ADD_COLORS); b.classList.add(...addColor); }
             });
         }
         function refreshDeliveryModeUI() {
