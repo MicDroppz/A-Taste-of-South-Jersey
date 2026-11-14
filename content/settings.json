@@ -3,7 +3,7 @@
   "web3forms_access_key": "8f07a1d9-b50d-400f-9c61-1d8c749447ae",
   "logo": "/images/Logoft.jpg",
   "primary_address": "1398 E Vine St, Kissimmee, FL 34744",
-  "status_override": "AUTO",
+  "status_override": "MANUAL_OPEN",
   "vip_signup_enabled": true,
   "social": {
     "instagram": {
