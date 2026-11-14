@@ -82,6 +82,21 @@
       ]
     },
     {
+      "id": "COMBOS",
+      "title": "Combo Deals",
+      "icon": "💕",
+      "badge_color": "bg-brandPurple",
+      "items": [
+        {
+          "name": "philly + fries + drink (item name)",
+          "price": 20,
+          "description": "description philly fries drink",
+          "sold_out": false,
+          "image": "/images/20200729175135.jpg"
+        }
+      ]
+    },
+    {
       "id": "sides",
       "title": "SIDES & REFRESHING DRINKS",
       "icon": "🍟",
@@ -114,21 +129,6 @@
           "description": "Pure purified drinking water bottle.",
           "sold_out": false,
           "image": "/images/barberchairtray3.jpg"
-        }
-      ]
-    },
-    {
-      "id": "COMBOS",
-      "title": "Combo Deals",
-      "icon": "💕",
-      "badge_color": "bg-brandPurple",
-      "items": [
-        {
-          "name": "philly + fries + drink (item name)",
-          "price": 20,
-          "description": "description philly fries drink",
-          "sold_out": false,
-          "image": "/images/20200729175135.jpg"
         }
       ]
     }
