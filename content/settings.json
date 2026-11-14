@@ -29,7 +29,7 @@
   "allergen_note": "crocodile skin ",
   "weekly_schedule": [
     {
-      "off": false,
+      "off": true,
       "days": "MONDAY 1 (Card Title)",
       "kind": "truck",
       "open_days": [
@@ -41,7 +41,7 @@
       "card_color": "yellow"
     },
     {
-      "off": false,
+      "off": true,
       "days": "TUESDAY 2 (Card Title)",
       "kind": "truck",
       "open_days": [
@@ -53,7 +53,7 @@
       "card_color": "teal"
     },
     {
-      "off": false,
+      "off": true,
       "days": "WEDNESDAY 3 (Card Title)",
       "kind": "delivery",
       "open_days": [
@@ -65,7 +65,7 @@
       "card_color": "pink"
     },
     {
-      "off": false,
+      "off": true,
       "days": "THURSDAY 4 (Card Title)",
       "kind": "delivery",
       "open_days": [
@@ -77,7 +77,7 @@
       "card_color": "purple"
     },
     {
-      "off": false,
+      "off": true,
       "days": "FRIDAY 5 (Card Title) Pickup Order or Delivery",
       "kind": "both",
       "open_days": [
@@ -89,7 +89,7 @@
       "card_color": "purple"
     },
     {
-      "off": false,
+      "off": true,
       "days": "SATURDAY 6 (Card Title)",
       "kind": "both",
       "open_days": [
@@ -101,7 +101,7 @@
       "card_color": "yellow"
     },
     {
-      "off": false,
+      "off": true,
       "days": "SUNDAY 7 (Card Title)",
       "kind": "delivery",
       "open_days": [
