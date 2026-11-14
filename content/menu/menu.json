@@ -1,7 +1,7 @@
 {
   "categories": [
     {
-      "id": "panzarottis",
+      "id": "PANZAROTTIS",
       "title": "SIGNATURE PANZAROTTIS",
       "subtitle": "Deep-Fried Pastry Turnovers Filled with Tomato Sauce & Mozzarella",
       "icon": "🥟",
@@ -50,7 +50,7 @@
       ]
     },
     {
-      "id": "cheesesteaks",
+      "id": "CHEESE STEAKS",
       "title": "CHEESESTEAKS & MINI PLATTERS",
       "icon": "🥩",
       "badge_color": "bg-brandOrange",
@@ -97,7 +97,7 @@
       ]
     },
     {
-      "id": "sides",
+      "id": "SIDES",
       "title": "SIDES & REFRESHING DRINKS",
       "icon": "🍟",
       "badge_color": "bg-brandGreen",
