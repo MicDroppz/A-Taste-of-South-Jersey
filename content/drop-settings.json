@@ -1,5 +1,5 @@
 {
-  "drop_status": "AUTO",
+  "drop_status": "FORCE_OPEN",
   "delivery_mode": "PAY_FULL",
   "drop_min_amount": 30,
   "drop_deposit_pct": 55,
