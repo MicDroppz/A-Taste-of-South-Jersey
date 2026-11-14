@@ -55,7 +55,7 @@
     {
       "off": true,
       "days": "WEDNESDAY 3 (Card Title)",
-      "kind": "delivery",
+      "kind": "truck",
       "open_days": [
         "Wed"
       ],
@@ -79,7 +79,7 @@
     {
       "off": false,
       "days": "FRIDAY 5 (Card Title) Pickup Order or Delivery",
-      "kind": "both",
+      "kind": "delivery",
       "open_days": [
         "Fri"
       ],
