@@ -640,81 +640,10 @@
                     </div>
                 </div>
 
-                <div class="bg-white comic-border rounded-3xl p-6 shadow-comic max-w-3xl mx-auto">
-                    <h3 class="font-bangers text-3xl text-slate-900 mb-4 text-center">
-                        📋 <span id="drop-form-title">ORDER CALCULATOR</span>
-                    </h3>
-
-                    <div class="bg-yellow-50 comic-border p-4 rounded-2xl mb-6">
-                        <div class="flex justify-between font-fredoka font-bold text-sm mb-1">
-                            <span>Your Cart Subtotal: <strong id="drop-subtotal-text" class="text-brandPurple">$0.00</strong></span>
-                            <span>Min Required: <strong id="drop-min-label-val" class="text-slate-900">$30.00</strong></span>
-                        </div>
-                        <div class="w-full bg-slate-200 rounded-full h-4 comic-border overflow-hidden">
-                            <div id="drop-min-progress-bar" class="bg-brandGreen h-full transition-all duration-300" style="width: 0%;"></div>
-                        </div>
-                        <p id="drop-min-status-msg" class="font-fredoka text-xs font-bold text-brandRed mt-2 text-center">
-                            ⚠️ Add items from the menu above to reach the minimum!
-                        </p>
-                    </div>
-
-                    <button type="button" onclick="startDeliveryOrder()" class="w-full mb-4 bg-brandOrange hover:bg-orange-400 text-slate-900 font-bangers text-xl py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5">🛒 ADD TO DELIVERY CART (PICK YOUR FOOD)</button>
-                    <form id="drop-form" onsubmit="handleDeliveryDropSubmit(event)" class="space-y-4">
-                    <div class="grid sm:grid-cols-2 gap-3">
-                        <input type="text" id="drop-name" required placeholder="Your name" class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900">
-                        <input type="tel" id="drop-phone" required placeholder="Phone number" class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900">
-                    </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">DELIVERY ADDRESS *</label>
-                                <input type="text" id="drop-address" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="123 Main St, Kissimmee, FL">
-                            </div>
-
-                            <div>
-                                <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1" id="delivery-label">DISTANCE FROM VINE ST *</label>
-                                <select id="drop-distance" onchange="recalculateDropTotals()" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple">
-                                    <option value="5">Under 5 Miles (+$5.00 Delivery)</option>
-                                    <option value="10">5 – 10 Miles (+$10.00 Delivery)</option>
-                                    <option value="15">10 – 15 Miles (+$15.00 Delivery)</option>
-                                </select>
-                                <div id="quote-wrap" class="hidden">
-                                    <button type="button" id="quote-btn" onclick="getDeliveryQuote()" class="js-quote-btn w-full bg-brandTeal hover:bg-teal-300 font-fredoka font-bold px-4 py-2.5 rounded-xl comic-border shadow-comic-sm transition active:translate-y-0.5 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
-                                        📍 GET DELIVERY FEE
-                                    </button>
-                                    <p id="quote-msg" aria-live="polite" class="font-fredoka text-xs font-bold text-slate-600 mt-2">Enter your full address (street, city, ZIP), then tap the button.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="drop-math-box" class="bg-purple-50 comic-border p-4 rounded-2xl space-y-2 font-fredoka">
-                            <div class="flex justify-between text-sm">
-                                <span>Food Subtotal:</span>
-                                <span id="math-food-subtotal" class="font-bold">$0.00</span>
-                            </div>
-                            <div class="flex justify-between text-sm">
-                                <span>Delivery Fee:</span>
-                                <span id="math-delivery-fee" class="font-bold">$5.00</span>
-                            </div>
-                            <div class="flex justify-between text-lg font-bangers text-slate-900 border-t border-slate-300 pt-2">
-                                <span>Total Order Amount:</span>
-                                <span id="math-total-order">$5.00</span>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2 pt-2 text-center">
-                                <div id="math-due-box" class="bg-brandGreen text-slate-900 p-2 rounded-xl comic-border">
-                                    <span id="math-due-label" class="block text-xs font-bold"><span class="js-drop-pct">50</span>% OF FOOD + DELIVERY FEE DUE TODAY</span>
-                                    <span id="math-deposit-due" class="font-bangers text-xl">$2.50</span>
-                                </div>
-                                <div id="math-remaining-box" class="bg-brandYellow text-slate-900 p-2 rounded-xl comic-border">
-                                    <span class="block text-xs font-bold">REMAINING AT DELIVERY</span>
-                                    <span id="math-remaining-due" class="font-bangers text-xl">$2.50</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" id="drop-submit-btn" disabled class="w-full bg-slate-300 text-slate-500 font-bangers text-2xl py-3 rounded-xl comic-border cursor-not-allowed transition">
-                            🔒 MINIMUM ORDER NOT MET
-                        </button>
-                    </form>
+                <div id="drop-start-card" class="bg-white comic-border rounded-3xl p-6 shadow-comic max-w-3xl mx-auto text-center">
+                    <h3 class="font-bangers text-3xl text-slate-900 mb-2">📋 HOW TO ORDER DELIVERY</h3>
+                    <p class="font-fredoka text-sm font-bold text-slate-700 mb-4">Pick your food from the menu, then finish your delivery order in your cart (name, phone and address).</p>
+                    <button type="button" id="drop-start-btn" onclick="orderButtonClick('delivery')" class="w-full sm:w-auto bg-brandRed hover:bg-red-600 text-white font-bangers text-xl px-8 py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5">🚚 START MY DELIVERY ORDER</button>
                 </div>
 
             </div>
@@ -936,6 +865,17 @@
                     </button>
                 </div>
 
+                <div id="cart-mode-bar" class="hidden mb-4 text-center font-fredoka">
+                    <div id="cart-mode-switch" class="hidden">
+                        <div class="font-bangers text-lg text-slate-900 mb-2">HOW DO YOU WANT YOUR ORDER?</div>
+                        <div class="flex gap-2 font-bangers text-lg">
+                            <button type="button" id="cm-pickup" onclick="setOrderType('pickup')" class="flex-1 px-3 py-2 rounded-xl comic-border">🥡 PICKUP</button>
+                            <button type="button" id="cm-delivery" onclick="setOrderType('delivery')" class="flex-1 px-3 py-2 rounded-xl comic-border">🚚 DELIVERY</button>
+                        </div>
+                    </div>
+                    <p id="cart-mode-note" class="text-sm font-bold text-slate-700"></p>
+                </div>
+
                 <div id="cart-items-list" class="space-y-3 mb-4">
                     <p class="text-center font-fredoka text-slate-400 py-8">Your order is empty! Add some delicious Panzarottis or Cheesesteaks! 🥟</p>
                 </div>
@@ -947,6 +887,83 @@
                     <span id="cart-total" class="font-bangers text-2xl text-brandPurple">$0.00</span>
                 </div>
                 <div id="cart-badge-container" class="mb-4"></div>
+                <div id="cart-delivery-slot" class="hidden mb-3">
+                <div>
+                    <h3 class="font-bangers text-2xl text-slate-900 mb-3 text-center">
+                        📋 <span id="drop-form-title">ORDER CALCULATOR</span>
+                    </h3>
+
+                    <div class="bg-yellow-50 comic-border p-4 rounded-2xl mb-6">
+                        <div class="flex justify-between font-fredoka font-bold text-sm mb-1">
+                            <span>Your Cart Subtotal: <strong id="drop-subtotal-text" class="text-brandPurple">$0.00</strong></span>
+                            <span>Min Required: <strong id="drop-min-label-val" class="text-slate-900">$30.00</strong></span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-4 comic-border overflow-hidden">
+                            <div id="drop-min-progress-bar" class="bg-brandGreen h-full transition-all duration-300" style="width: 0%;"></div>
+                        </div>
+                        <p id="drop-min-status-msg" class="font-fredoka text-xs font-bold text-brandRed mt-2 text-center">
+                            ⚠️ Add items from the menu above to reach the minimum!
+                        </p>
+                    </div>
+
+                    <form id="drop-form" onsubmit="handleDeliveryDropSubmit(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 gap-3">
+                        <input type="text" id="drop-name" required placeholder="Your name" class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900">
+                        <input type="tel" id="drop-phone" required placeholder="Phone number" class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900">
+                    </div>
+                        <div class="grid grid-cols-1 gap-3">
+                            <div>
+                                <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1">DELIVERY ADDRESS *</label>
+                                <input type="text" id="drop-address" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple" placeholder="123 Main St, Kissimmee, FL">
+                            </div>
+
+                            <div>
+                                <label class="font-fredoka font-bold text-xs text-slate-700 block mb-1" id="delivery-label">DISTANCE FROM VINE ST *</label>
+                                <select id="drop-distance" onchange="recalculateDropTotals()" required class="w-full font-fredoka p-2.5 rounded-xl comic-border text-slate-900 focus:outline-none focus:ring-2 focus:ring-brandPurple">
+                                    <option value="5">Under 5 Miles (+$5.00 Delivery)</option>
+                                    <option value="10">5 – 10 Miles (+$10.00 Delivery)</option>
+                                    <option value="15">10 – 15 Miles (+$15.00 Delivery)</option>
+                                </select>
+                                <div id="quote-wrap" class="hidden">
+                                    <button type="button" id="quote-btn" onclick="getDeliveryQuote()" class="js-quote-btn w-full bg-brandTeal hover:bg-teal-300 font-fredoka font-bold px-4 py-2.5 rounded-xl comic-border shadow-comic-sm transition active:translate-y-0.5 text-sm disabled:opacity-50 disabled:cursor-not-allowed">
+                                        📍 GET DELIVERY FEE
+                                    </button>
+                                    <p id="quote-msg" aria-live="polite" class="font-fredoka text-xs font-bold text-slate-600 mt-2">Enter your full address (street, city, ZIP), then tap the button.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="drop-math-box" class="bg-purple-50 comic-border p-4 rounded-2xl space-y-2 font-fredoka">
+                            <div class="flex justify-between text-sm">
+                                <span>Food Subtotal:</span>
+                                <span id="math-food-subtotal" class="font-bold">$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Delivery Fee:</span>
+                                <span id="math-delivery-fee" class="font-bold">$5.00</span>
+                            </div>
+                            <div class="flex justify-between text-lg font-bangers text-slate-900 border-t border-slate-300 pt-2">
+                                <span>Total Order Amount:</span>
+                                <span id="math-total-order">$5.00</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 pt-2 text-center">
+                                <div id="math-due-box" class="bg-brandGreen text-slate-900 p-2 rounded-xl comic-border">
+                                    <span id="math-due-label" class="block text-xs font-bold"><span class="js-drop-pct">50</span>% OF FOOD + DELIVERY FEE DUE TODAY</span>
+                                    <span id="math-deposit-due" class="font-bangers text-xl">$2.50</span>
+                                </div>
+                                <div id="math-remaining-box" class="bg-brandYellow text-slate-900 p-2 rounded-xl comic-border">
+                                    <span class="block text-xs font-bold">REMAINING AT DELIVERY</span>
+                                    <span id="math-remaining-due" class="font-bangers text-xl">$2.50</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="drop-submit-btn" disabled class="w-full bg-slate-300 text-slate-500 font-bangers text-2xl py-3 rounded-xl comic-border cursor-not-allowed transition">
+                            🔒 MINIMUM ORDER NOT MET
+                        </button>
+                    </form>
+                </div>
+                </div>
                 <div id="pickup-fields" class="space-y-2 mb-3 font-fredoka text-sm">
                     <input type="text" id="pickup-name" placeholder="Your name" class="w-full p-2 rounded-xl comic-border text-slate-900">
                     <input type="tel" id="pickup-phone" placeholder="Phone number (we text you a payment link)" class="w-full p-2 rounded-xl comic-border text-slate-900">
@@ -1433,7 +1450,7 @@
                 nav: { base: 'font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold', hint: 'js-order-hint block text-[10px] sm:text-xs font-semibold leading-tight' },
                 hero: { base: 'font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition', hint: 'js-order-hint block font-fredoka text-sm font-bold leading-tight tracking-normal' }
             };
-            const OPEN = { pickup: 'bg-brandOrange hover:bg-orange-300 text-slate-900', delivery: 'bg-brandRed hover:bg-red-600 text-white' };
+            const OPEN = { pickup: 'bg-brandYellow hover:bg-yellow-300 text-slate-900', delivery: 'bg-brandRed hover:bg-red-600 text-white' };
             const CLOSED = 'bg-slate-200 hover:bg-slate-300 text-slate-500';
             document.querySelectorAll('.js-order-btn').forEach(btn => {
                 const kind = btn.dataset.order, v = V[btn.dataset.variant] || V.nav;
@@ -1450,11 +1467,13 @@
             if (!ok) { scrollToSection('radar'); return; }   // closed: show the schedule instead
             ORDER.type = kind; updateOrderTypeUI();
             scrollToSection('menu');
-            showToast(kind === 'delivery' ? 'Delivery selected! Add your food, then come back to send your request. 🚚' : 'Pickup selected! Add your food and check out. 🥡', 4500);
+            showToast(kind === 'delivery' ? 'Delivery selected! Add your food, then open your cart to finish your delivery order. 🚚' : 'Pickup selected! Add your food, then open your cart to check out. 🥡', 4500);
         }
         function updateOrderTypeUI() {
             const d = deliveryAvail(), p = pickupAvail();
             if (!d) ORDER.type = 'pickup'; else if (!p) ORDER.type = 'delivery';
+            // Pickup = yellow, Delivery = red (same colors as the Order Pickup / Order Delivery buttons)
+            const SEL = { pickup: 'bg-brandYellow text-slate-900 shadow-comic-sm', delivery: 'bg-brandRed text-white shadow-comic-sm' };
             let bar = document.getElementById('order-type-bar');
             const menu = document.getElementById('menu');
             if (!bar && menu) {
@@ -1466,21 +1485,39 @@
             }
             if (bar) {
                 bar.classList.toggle('hidden', !(d && p));
-                // Pickup = orange, Delivery = red (same colors as the Order Pickup / Order Delivery buttons)
-                const SEL = { pickup: 'bg-brandOrange text-slate-900 shadow-comic-sm', delivery: 'bg-brandRed text-white shadow-comic-sm' };
                 ['pickup', 'delivery'].forEach(k => { document.getElementById('ot-' + k).className = 'px-5 py-2 rounded-xl comic-border ' + (ORDER.type === k ? SEL[k] : 'bg-white'); });
             }
             updateOrderButtons();
             const closed = !d && !p;
-            const ADD_COLORS = ['bg-brandGreen', 'hover:bg-green-400', 'bg-brandOrange', 'hover:bg-orange-300', 'bg-brandRed', 'hover:bg-red-600', 'bg-slate-200', 'text-slate-500', 'text-white', 'cursor-not-allowed'];
+            const ADD_COLORS = ['bg-brandGreen', 'hover:bg-green-400', 'bg-brandOrange', 'hover:bg-orange-300', 'bg-brandYellow', 'hover:bg-yellow-300', 'bg-brandRed', 'hover:bg-red-600', 'bg-slate-200', 'text-slate-500', 'text-white', 'cursor-not-allowed'];
             const addColor = closed ? ['bg-slate-200', 'text-slate-500', 'cursor-not-allowed']
                 : ORDER.type === 'delivery' ? ['bg-brandRed', 'hover:bg-red-600', 'text-white']
-                : ['bg-brandOrange', 'hover:bg-orange-300'];
+                : ['bg-brandYellow', 'hover:bg-yellow-300'];
             document.querySelectorAll('.js-add-label').forEach(el => {
                 el.textContent = closed ? 'Ordering Closed' : (ORDER.type === 'delivery' ? 'Add to Delivery' : 'Add to Pickup');
                 const b = el.closest('button');
                 if (b) { b.disabled = closed; b.classList.remove(...ADD_COLORS); b.classList.add(...addColor); }
             });
+            // Cart drawer: Pickup / Delivery switch (only when both are open), or a one-line note when only one is
+            const cbar = document.getElementById('cart-mode-bar');
+            if (cbar) {
+                cbar.classList.toggle('hidden', closed);
+                const sw = document.getElementById('cart-mode-switch'); if (sw) sw.classList.toggle('hidden', !(d && p));
+                const note = document.getElementById('cart-mode-note'); if (note) note.textContent = (d && p) || closed ? '' : (p ? '🥡 Pickup only right now' : '🚚 Delivery only right now');
+                ['pickup', 'delivery'].forEach(k => { const e = document.getElementById('cm-' + k); if (e) e.className = 'flex-1 px-3 py-2 rounded-xl comic-border ' + (ORDER.type === k ? SEL[k] : 'bg-white'); });
+            }
+            syncCartMode();
+        }
+        // Show the pickup fields + button, or the delivery form, depending on the chosen mode (never resets what the customer typed)
+        function syncCartMode() {
+            const del = ORDER.type === 'delivery';
+            const pf = document.getElementById('pickup-fields'), cb = document.getElementById('checkout-btn'), slot = document.getElementById('cart-delivery-slot');
+            if (!pf || !cb || !slot) return;
+            pf.classList.toggle('hidden', del);
+            cb.classList.toggle('hidden', del);
+            slot.classList.toggle('hidden', !del);
+            cb.textContent = '🎉 PLACE PICKUP ORDER!';
+            cb.className = 'w-full bg-brandYellow hover:bg-yellow-300 text-slate-900 font-bangers text-2xl py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5' + (del ? ' hidden' : '');
         }
         function refreshDeliveryModeUI() {
             const req = !!DELIVERY.owner, $ = id => document.getElementById(id);
@@ -1512,6 +1549,8 @@
             const slotText = document.getElementById('drop-slot-text');
             // When delivery is closed, hide the whole order box (not just grey it out)
             if (form && form.parentElement) form.parentElement.classList.toggle('hidden', !isActive);
+            const startCard = document.getElementById('drop-start-card');
+            if (startCard) startCard.classList.toggle('hidden', !isActive);
 
             if (isActive) {
                 if (statusBadge) {
@@ -1661,6 +1700,8 @@
             playSound('laser');
             showToast(DELIVERY.owner ? "📦 Delivery request sent! We'll text you the delivery fee and a payment link." : DELIVERY.full ? "📦 Delivery order received! We'll text you a payment link for the full total." : "📦 Delivery order received! We'll confirm and send your payment details shortly.", 7000);
             cart.length = 0; updateCartUI(); recalculateDropTotals();
+            const cm = document.getElementById('cart-modal');
+            if (cm && !cm.classList.contains('opacity-0')) toggleCartModal();   // close the cart after a delivery order
         }
 
         // Modifier & Customization Modal Logic
@@ -1907,9 +1948,7 @@
         }
 
         function buildPickupSlots() {
-            const del = ORDER.type === 'delivery';
-            document.getElementById('pickup-fields').classList.toggle('hidden', del);
-            document.getElementById('checkout-btn').textContent = del ? '🚚 CONTINUE TO DELIVERY' : '🎉 PLACE PICKUP ORDER!';
+            syncCartMode();
             const sel = document.getElementById('pickup-time');
             if (!sel) return;
             const now = getTruckTime();
@@ -1945,9 +1984,7 @@
         async function checkoutCart() {
             if (cart.length === 0) { showToast("Your cart is empty! 🥟"); return; }
             if (ORDER.type === 'delivery') {
-                toggleCartModal();
-                document.getElementById('drop-container').scrollIntoView({ behavior: 'smooth' });
-                showToast('Add your name, phone and address to finish your delivery request 🚚', 5000);
+                showToast('Fill in your name, phone and address in your cart to finish your delivery order 🚚', 5000);
                 return;
             }
             if (!pickupAvail()) { showToast('Pickup ordering is closed right now. Please check the schedule! 🔒', 5000); return; }
