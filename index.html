@@ -102,6 +102,9 @@
             <button onclick="scrollToSection('menu')" class="bg-brandTeal hover:bg-teal-300 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
                 😋 Menu
             </button>
+            <button onclick="scrollToSection('radar')" class="bg-brandGreen hover:bg-green-300 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
+                🕒 Hours &amp; Location
+            </button>
             <button type="button" data-order="pickup" data-variant="nav" onclick="orderButtonClick('pickup')" class="js-order-btn bg-slate-200 text-slate-500 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition text-xs sm:text-base font-bold">
                 <span class="block leading-tight">🥡 Order Pickup</span>
                 <span class="js-order-hint block text-[10px] sm:text-xs font-semibold leading-tight">Checking…</span>
@@ -109,9 +112,6 @@
             <button type="button" data-order="delivery" data-variant="nav" onclick="orderButtonClick('delivery')" class="js-order-btn bg-slate-200 text-slate-500 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition text-xs sm:text-base font-bold">
                 <span class="block leading-tight">🚚 Order Delivery</span>
                 <span class="js-order-hint block text-[10px] sm:text-xs font-semibold leading-tight">Checking…</span>
-            </button>
-            <button onclick="scrollToSection('radar')" class="bg-brandGreen hover:bg-green-300 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
-                🕒 Hours &amp; Location
             </button>
             <button onclick="openCateringModal()" class="bg-brandPurple text-white hover:bg-purple-600 font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold">
                 🎪 Catering
@@ -1484,7 +1484,7 @@
             if (card && card.dataset.mode !== mode) {
                 card.dataset.mode = mode;
                 card.innerHTML = req ? '<div class="font-fredoka"><div class="font-bangers text-xl text-brandPurple">📝 FILL OUT THE FORM &amp; REQUEST DELIVERY</div><p class="text-xs font-bold mt-1">Add your food, enter your name, phone and address, then tap REQUEST DELIVERY. We text you the fee and a payment link!</p></div>'
-                    : DELIVERY.full ? '<div class="font-fredoka"><div class="font-bangers text-xl text-brandPurple">💳 PAY IN FULL - NO DEPOSIT</div><p class="text-xs font-bold mt-1">Your food and delivery fee (set by ZIP code) are paid up front. Nothing due at the door!</p></div>'
+                    : DELIVERY.full ? '<div class="font-fredoka"><div class="font-bangers text-xl text-brandPurple">💳 FULL PAYMENT</div><p class="text-xs font-bold mt-1">Place your order and we\'ll text you a payment link for the total (food + delivery fee). Nothing due at the door!</p></div>'
                     : card.dataset.orig;
                 card.querySelectorAll('.js-drop-pct').forEach(e => { e.textContent = DROP_CONFIG.depositPct; });
             }
@@ -1546,7 +1546,7 @@
             const depositDue = DELIVERY.full ? totalOrder : foodSubtotal * depositMultiplier + deliveryFee;
             const remainingDue = totalOrder - depositDue;
             const dueLabel = document.getElementById('math-due-label'), remBox = document.getElementById('math-remaining-box'), dueBox = document.getElementById('math-due-box');
-            if (dueLabel) dueLabel.innerHTML = DELIVERY.full ? 'PAID IN FULL TODAY (FOOD + DELIVERY)' : `<span class="js-drop-pct">${DROP_CONFIG.depositPct}</span>% OF FOOD + DELIVERY FEE DUE TODAY`;
+            if (dueLabel) dueLabel.innerHTML = DELIVERY.full ? 'TOTAL DUE (FOOD + DELIVERY)<span class="block font-normal text-[10px] leading-tight">We\'ll text you a payment link</span>' :`<span class="js-drop-pct">${DROP_CONFIG.depositPct}</span>% OF FOOD + DELIVERY FEE DUE TODAY`;
             if (remBox) remBox.classList.toggle('hidden', !!DELIVERY.full);
             if (dueBox) dueBox.classList.toggle('col-span-2', !!DELIVERY.full);
 
@@ -1644,8 +1644,8 @@
                 'Food Subtotal': `$${foodSubtotal.toFixed(2)}`,
                 'Delivery Fee': DELIVERY.owner ? 'TO BE SET BY OWNER - add to the balance due at delivery' : `$${fee.toFixed(2)}`,
                 'Total (before tax)': `$${total.toFixed(2)}`,
-                'Payment Plan': DELIVERY.owner ? 'Owner to quote' : DELIVERY.full ? 'PAY IN FULL (no deposit) - send payment link for the full total' : `${DROP_CONFIG.depositPct}% of food + delivery fee now, rest at delivery`,
-                'Due Online Now': DELIVERY.owner ? 'Owner to quote (deposit % of food + delivery fee)' : `$${due.toFixed(2)}`,
+                'Payment Plan': DELIVERY.owner ? 'Owner to quote' : DELIVERY.full ? 'FULL PAYMENT - send the customer a payment link for the full total' :`${DROP_CONFIG.depositPct}% of food + delivery fee now, rest at delivery`,
+                [DELIVERY.full ? 'Total To Charge (send payment link)' : 'Due Online Now']: DELIVERY.owner ? 'Owner to quote (deposit % of food + delivery fee)' : `$${due.toFixed(2)}`,
                 'Due At Delivery': DELIVERY.owner ? 'Owner to confirm' : `$${(total - due).toFixed(2)}`,
                 botcheck: ''
             });
