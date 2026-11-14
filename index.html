@@ -879,6 +879,7 @@
                 <div id="cart-items-list" class="space-y-3 mb-4">
                     <p class="text-center font-fredoka text-slate-400 py-8">Your order is empty! Add some delicious Panzarottis or Cheesesteaks! 🥟</p>
                 </div>
+                <button type="button" onclick="addMoreFood()" class="w-full mb-4 bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-xl py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-y-0.5">➕ ADD MORE FOOD</button>
             </div>
 
             <div class="border-t-4 border-slate-900 pt-4 bg-yellow-50 p-4 rounded-2xl comic-border">
@@ -902,7 +903,7 @@
                             <div id="drop-min-progress-bar" class="bg-brandGreen h-full transition-all duration-300" style="width: 0%;"></div>
                         </div>
                         <p id="drop-min-status-msg" class="font-fredoka text-xs font-bold text-brandRed mt-2 text-center">
-                            ⚠️ Add items from the menu above to reach the minimum!
+                            ⚠️ Tap ADD MORE FOOD above to reach the minimum!
                         </p>
                     </div>
 
@@ -1648,7 +1649,7 @@
                 const needed = (DROP_CONFIG.minOrderAmount - foodSubtotal).toFixed(2);
                 if (statusMsg) {
                     statusMsg.className = "font-fredoka text-xs font-bold text-brandRed mt-2 text-center";
-                    statusMsg.innerText = `⚠️ Add $${needed} more food from the menu above to unlock Delivery Drop checkout!`;
+                    statusMsg.innerText = `⚠️ Add $${needed} more food to unlock delivery. Tap ADD MORE FOOD above!`;
                 }
                 if (submitBtn) {
                     submitBtn.disabled = true;
@@ -1967,6 +1968,11 @@
             sel.innerHTML = opts.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join('');
         }
 
+        function addMoreFood() {
+            const cm = document.getElementById('cart-modal');
+            if (cm && !cm.classList.contains('opacity-0')) toggleCartModal();   // close the cart
+            setTimeout(() => scrollToSection('menu'), 320);                    // then jump to the menu
+        }
         function toggleCartModal() {
             buildPickupSlots();
             const modal = document.getElementById('cart-modal');
@@ -2173,11 +2179,11 @@
                                 <h4 class="font-bangers text-2xl text-brandPurple mb-1 tracking-wide">${esc(item.name)}</h4>
                                 <p class="font-sans text-sm text-slate-600 mb-4 font-bold">${esc(item.description)}</p>
                             </div>
-                            <div class="flex items-center justify-between border-t-2 border-dashed border-slate-300 pt-3">
+                            <div class="flex items-center justify-between gap-3 border-t-2 border-dashed border-slate-300 pt-3">
                                 <span class="font-fredoka text-2xl text-slate-900">$${parseFloat(item.price).toFixed(2)}</span>
-                                ${item.sold_out === true ? `<button disabled class="bg-slate-300 text-slate-500 font-fredoka px-4 py-2 rounded-xl comic-border cursor-not-allowed">SOLD OUT</button>` : isSimpleAdd 
-                                    ? `<button data-name="${esc(item.name)}" data-price="${parseFloat(item.price) || 0}" onclick="addToCart(this.dataset.name, parseFloat(this.dataset.price))" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ <span class="js-add-label">Add</span></button>`
-                                    : `<button data-name="${esc(item.name)}" data-price="${parseFloat(item.price) || 0}" onclick="openModifierModal(this.dataset.name, parseFloat(this.dataset.price))" class="bg-brandGreen hover:bg-green-400 font-fredoka px-4 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-sm font-bold">+ <span class="js-add-label">Add</span></button>`
+                                ${item.sold_out === true ? `<button disabled class="bg-slate-300 text-slate-500 font-fredoka w-32 shrink-0 whitespace-nowrap text-center px-2 py-2 rounded-xl comic-border cursor-not-allowed text-[13px] font-bold">SOLD OUT</button>` : isSimpleAdd 
+                                    ? `<button data-name="${esc(item.name)}" data-price="${parseFloat(item.price) || 0}" onclick="addToCart(this.dataset.name, parseFloat(this.dataset.price))" class="bg-brandGreen hover:bg-green-400 font-fredoka w-32 shrink-0 whitespace-nowrap text-center px-2 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-[13px] font-bold">+ <span class="js-add-label">Add</span></button>`
+                                    : `<button data-name="${esc(item.name)}" data-price="${parseFloat(item.price) || 0}" onclick="openModifierModal(this.dataset.name, parseFloat(this.dataset.price))" class="bg-brandGreen hover:bg-green-400 font-fredoka w-32 shrink-0 whitespace-nowrap text-center px-2 py-2 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-[13px] font-bold">+ <span class="js-add-label">Add</span></button>`
                                 }
                             </div>
                         </div>
