@@ -89,7 +89,7 @@
       "card_color": "purple"
     },
     {
-      "off": false,
+      "off": true,
       "days": "SATURDAY 6 (Card Title)",
       "kind": "both",
       "open_days": [
