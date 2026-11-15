@@ -1,8 +1,8 @@
 {
   "categories": [
     {
-      "id": "PANZAROTTIS",
-      "title": "SIGNATURE PANZAROTTIS",
+      "id": "PANZAROTTIS ?",
+      "title": "?? SIGNATURE PANZAROTTIS",
       "subtitle": "Deep-Fried Pastry Turnovers Filled with Tomato Sauce & Mozzarella",
       "icon": "🥟",
       "badge_color": "bg-brandPurple",
@@ -44,8 +44,7 @@
           "price": 18,
           "badge": "BEST VALUE!",
           "description": "Any signature Panzarotti served alongside a huge basket of golden crispy french fries!",
-          "sold_out": false,
-          "image": "https://s3-media0.fl.yelpcdn.com/bphoto/I70t6mXHelGgGp1Fhtg7sA/348s.jpg"
+          "sold_out": false
         }
       ]
     },
@@ -61,7 +60,7 @@
           "badge": "AUTHENTIC PHILLY",
           "description": "Sliced sirloin steak grilled to perfection with melted cheese on an authentic soft Italian roll.",
           "sold_out": false,
-          "image": "https://thumbs.dreamstime.com/b/photo-can-see-enchanting-philly-cheesesteak-plump-golden-slices-fresh-ground-beef-layered-top-soft-275968019.jpg"
+          "image": "/images/img78833.jpg"
         },
         {
           "name": "Philly Cheesesteak & Fries Combo",
