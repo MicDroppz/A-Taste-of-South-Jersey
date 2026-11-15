@@ -155,22 +155,27 @@
                     Deep-Fried Golden Panzarottis, Authentic Philly Cheesesteaks & Crispy Fries Served Fresh on Wheels! 🚚🔥
                 </p>
 
-                <div class="flex flex-wrap justify-center gap-4">
-                    <button onclick="scrollToSection('menu')" class="bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-2xl px-8 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
-                        🥟 SEE FULL MENU
-                    </button>
-                    <button type="button" data-order="pickup" data-variant="hero" onclick="orderButtonClick('pickup')" class="js-order-btn bg-slate-200 text-slate-500 font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
+                <!-- Main actions: the two ordering buttons (follow the schedule) -->
+                <div class="flex flex-col sm:flex-row justify-center items-stretch gap-4 max-w-xl mx-auto">
+                    <button type="button" data-order="pickup" data-variant="hero" onclick="orderButtonClick('pickup')" class="js-order-btn bg-slate-200 text-slate-500 font-bangers text-3xl px-8 py-4 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition w-full sm:flex-1">
                         <span class="block leading-tight">🥡 ORDER PICKUP</span>
                         <span class="js-order-hint block font-fredoka text-sm font-bold leading-tight tracking-normal">Checking…</span>
                     </button>
-                    <button type="button" data-order="delivery" data-variant="hero" onclick="orderButtonClick('delivery')" class="js-order-btn bg-slate-200 text-slate-500 font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
+                    <button type="button" data-order="delivery" data-variant="hero" onclick="orderButtonClick('delivery')" class="js-order-btn bg-slate-200 text-slate-500 font-bangers text-3xl px-8 py-4 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition w-full sm:flex-1">
                         <span class="block leading-tight">🚚 ORDER DELIVERY</span>
                         <span class="js-order-hint block font-fredoka text-sm font-bold leading-tight tracking-normal">Checking…</span>
                     </button>
-                    <button onclick="scrollToSection('radar')" class="bg-brandTeal hover:bg-teal-300 text-slate-900 font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
+                </div>
+
+                <!-- Smaller links underneath -->
+                <div class="flex flex-wrap justify-center gap-2 mt-5">
+                    <button onclick="scrollToSection('menu')" class="bg-brandGreen hover:bg-green-400 text-slate-900 font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm transition hover:-translate-y-0.5 active:translate-y-0">
+                        🥟 SEE FULL MENU
+                    </button>
+                    <button onclick="scrollToSection('radar')" class="bg-brandTeal hover:bg-teal-300 text-slate-900 font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm transition hover:-translate-y-0.5 active:translate-y-0">
                         📦 DELIVERY DAYS
                     </button>
-                    <button onclick="scrollToSection('funzone')" class="bg-brandPink hover:bg-pink-400 text-white font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition">
+                    <button onclick="scrollToSection('funzone')" class="bg-brandPink hover:bg-pink-400 text-white font-bangers text-lg px-4 py-1 rounded-full comic-border shadow-comic-sm transition hover:-translate-y-0.5 active:translate-y-0">
                         🤪 FUN ZONE
                     </button>
                 </div>
@@ -1449,7 +1454,7 @@
         function updateOrderButtons() {
             const V = {
                 nav: { base: 'font-fredoka px-3 sm:px-4 py-1.5 rounded-xl comic-border shadow-comic-sm transition active:translate-x-0.5 active:translate-y-0.5 text-xs sm:text-base font-bold', hint: 'js-order-hint block text-[10px] sm:text-xs font-semibold leading-tight' },
-                hero: { base: 'font-bangers text-2xl px-6 py-3 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition', hint: 'js-order-hint block font-fredoka text-sm font-bold leading-tight tracking-normal' }
+                hero: { base: 'font-bangers text-3xl px-8 py-4 rounded-2xl comic-border shadow-comic transform hover:-translate-y-1 active:translate-y-0 transition w-full sm:flex-1', hint: 'js-order-hint block font-fredoka text-sm font-bold leading-tight tracking-normal' }
             };
             const OPEN = { pickup: 'bg-brandYellow hover:bg-yellow-300 text-slate-900', delivery: 'bg-brandRed hover:bg-red-600 text-white' };
             const CLOSED = 'bg-slate-200 hover:bg-slate-300 text-slate-500';
