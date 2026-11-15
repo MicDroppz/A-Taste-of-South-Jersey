@@ -5,7 +5,7 @@
   "primary_address": "1398 E Vine St, Kissimmee, FL 34744",
   "status_override": "AUTO",
   "vip_signup_enabled": true,
-  "square_enabled": false,
+  "square_enabled": true,
   "tax_rate_percent": 7,
   "square_checkout_url": "https://square-checkout.jaialternatestudios.workers.dev/",
   "social": {
