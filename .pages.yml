@@ -122,6 +122,18 @@ content:
         label: Show the "Fryer Alert" VIP signup section on the website
         type: boolean
 
+      - name: square_enabled
+        label: Take payment online with Square (turn ON only after the Square checkout helper is set up and tested)
+        type: boolean
+
+      - name: tax_rate_percent
+        label: Sales tax rate (%) added to online Square orders (example 7 for 7%)
+        type: number
+
+      - name: square_checkout_url
+        label: Square checkout helper address (the Cloudflare Worker web address - do not change unless the web developer tells you to)
+        type: string
+
       - name: social
         label: Social Media Links (turn ON only the ones you want to show on the website)
         type: object
