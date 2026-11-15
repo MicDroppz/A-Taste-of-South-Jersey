@@ -44,7 +44,8 @@
           "price": 18,
           "badge": "BEST VALUE!",
           "description": "Any signature Panzarotti served alongside a huge basket of golden crispy french fries!",
-          "sold_out": false
+          "sold_out": false,
+          "image": "/images/20240812222133.jpg"
         }
       ]
     },
