@@ -889,8 +889,13 @@
 
             <div class="border-t-4 border-slate-900 pt-4 bg-yellow-50 p-4 rounded-2xl comic-border">
                 <div class="flex justify-between font-fredoka text-xl mb-2">
-                    <span>Total Price:</span>
+                    <span id="cart-total-label">Total Price:</span>
                     <span id="cart-total" class="font-bangers text-2xl text-brandPurple">$0.00</span>
+                </div>
+                <div id="cart-tax-rows" class="hidden font-fredoka mb-3 border-t border-slate-300 pt-2">
+                    <div class="flex justify-between text-sm font-bold"><span>Sales tax (<span id="cart-tax-pct">7</span>%):</span><span id="cart-tax-amt">$0.00</span></div>
+                    <div class="flex justify-between text-lg font-bangers"><span>Total with tax:</span><span id="cart-grand-total" class="text-brandPurple">$0.00</span></div>
+                    <p class="text-[10px] text-slate-500 font-bold leading-tight">Final total is shown on the secure Square payment page.</p>
                 </div>
                 <div id="cart-badge-container" class="mb-4"></div>
                 <div id="cart-delivery-slot" class="hidden mb-3">
@@ -947,6 +952,12 @@
                             <div class="flex justify-between text-sm">
                                 <span>Delivery Fee:</span>
                                 <span id="math-delivery-fee" class="font-bold">$5.00</span>
+                            </div>
+                            <div id="math-tax-row" class="hidden">
+                                <div class="flex justify-between text-sm">
+                                    <span>Sales tax (<span id="math-tax-pct">7</span>%):</span>
+                                    <span id="math-tax-amt" class="font-bold">$0.00</span>
+                                </div>
                             </div>
                             <div class="flex justify-between text-lg font-bangers text-slate-900 border-t border-slate-300 pt-2">
                                 <span>Total Order Amount:</span>
@@ -1037,6 +1048,13 @@
         const DAY_CODES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const DAY_NAMES = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
         let scheduleCards = [];   // filled from settings.json (weekly_schedule)
+
+        // ---------- Square online payment (all three come from content/settings.json, editable in the CMS) ----------
+        // square_enabled = ON/OFF, square_checkout_url = the Cloudflare Worker address, tax_rate_percent = e.g. 7
+        const SQUARE = { enabled: false, url: '', taxRate: 0 };
+        function squareOn() { return SQUARE.enabled && !!SQUARE.url; }
+        // Estimated sales tax in dollars (Square makes the final calculation on its payment page)
+        function taxFor(foodSubtotal) { return squareOn() && SQUARE.taxRate > 0 ? Math.round(foodSubtotal * SQUARE.taxRate) / 100 : 0; }
 
         function getTruckTime() {
             const parts = new Intl.DateTimeFormat('en-US', {
@@ -1162,9 +1180,15 @@
 
                 // 4. Handle Status Override if provided
                 window.statusOverride = data.status_override || "AUTO";
+                // Square online payment settings
+                SQUARE.enabled = data.square_enabled === true;
+                SQUARE.url = String(data.square_checkout_url || '').trim().replace(/\/+$/, '');
+                const taxPct = parseFloat(data.tax_rate_percent);
+                SQUARE.taxRate = Number.isFinite(taxPct) && taxPct > 0 ? taxPct : 0;
                 if (data.web3forms_access_key && String(data.web3forms_access_key).trim()) WEB3FORMS.accessKey = String(data.web3forms_access_key).trim();
                 renderSocialLinks(data.social);
                 renderAllergenNote(data);
+                if (squareOn()) { updateCartUI(); refreshDeliveryModeUI(); }   // show tax lines / "pay online" wording
                 if (data.status_override && data.status_override !== "AUTO") {
                     applyStatusOverride(data.status_override);
                 } else {
@@ -1514,6 +1538,20 @@
             }
             syncCartMode();
         }
+        // Subtotal / sales tax / total lines in the cart (only when Square online payment is ON, and only for pickup;
+        // the delivery form has its own totals box)
+        function renderCartTax() {
+            const rows = document.getElementById('cart-tax-rows'), lab = document.getElementById('cart-total-label');
+            if (!rows) return;
+            const sub = cart.reduce((sum, i) => sum + i.price * i.qty, 0), tax = taxFor(sub);
+            const show = squareOn() && SQUARE.taxRate > 0 && ORDER.type !== 'delivery';
+            rows.classList.toggle('hidden', !show);
+            if (lab) lab.textContent = show ? 'Subtotal:' : 'Total Price:';
+            const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+            set('cart-tax-pct', SQUARE.taxRate); set('cart-tax-amt', `$${tax.toFixed(2)}`); set('cart-grand-total', `$${(sub + tax).toFixed(2)}`);
+            const ph = document.getElementById('pickup-phone');
+            if (ph) ph.placeholder = squareOn() ? "Phone number (we text you when it's ready)" : 'Phone number (we text you a payment link)';
+        }
         // Show the pickup fields + button, or the delivery form, depending on the chosen mode (never resets what the customer typed)
         function syncCartMode() {
             const del = ORDER.type === 'delivery';
@@ -1522,7 +1560,8 @@
             pf.classList.toggle('hidden', del);
             cb.classList.toggle('hidden', del);
             slot.classList.toggle('hidden', !del);
-            cb.textContent = '🎉 PLACE PICKUP ORDER!';
+            cb.textContent = squareOn() ? '💳 PAY & PLACE PICKUP ORDER' : '🎉 PLACE PICKUP ORDER!';
+            renderCartTax();
             cb.className = 'w-full bg-brandYellow hover:bg-yellow-300 text-slate-900 font-bangers text-2xl py-3 rounded-xl comic-border shadow-comic transition active:translate-y-0.5' + (del ? ' hidden' : '');
         }
         function refreshDeliveryModeUI() {
@@ -1530,11 +1569,12 @@
             $('drop-math-box').classList.toggle('hidden', req);
             let card = $('drop-third-card');
             if (!card) { const e = document.querySelector('.js-drop-pct'); card = e && e.closest('.comic-border'); if (card) { card.id = 'drop-third-card'; card.dataset.orig = card.innerHTML; } }
-            const mode = req ? 'req' : DELIVERY.full ? 'full' : 'res';
+            const mode = req ? 'req' : DELIVERY.full ? (squareOn() ? 'full-sq' : 'full') : 'res';
             if (card && card.dataset.mode !== mode) {
                 card.dataset.mode = mode;
                 card.innerHTML = req ? '<div class="font-fredoka"><div class="font-bangers text-xl text-brandPurple">📝 FILL OUT THE FORM &amp; REQUEST DELIVERY</div><p class="text-xs font-bold mt-1">Add your food, enter your name, phone and address, then tap REQUEST DELIVERY. We text you the fee and a payment link!</p></div>'
-                    : DELIVERY.full ? '<div class="font-fredoka"><div class="font-bangers text-xl text-brandPurple">💳 FULL PAYMENT</div><p class="text-xs font-bold mt-1">Place your order and we\'ll text you a payment link for the total (food + delivery fee). Nothing due at the door!</p></div>'
+                    : mode === 'full-sq' ? '<div class="font-fredoka"><div class="font-bangers text-xl text-brandPurple">💳 PAY SECURELY ONLINE</div><p class="text-xs font-bold mt-1">Place your order and pay with Square: card, Apple Pay, Google Pay or Cash App. Nothing due at the door!</p></div>'
+                    : mode === 'full' ? '<div class="font-fredoka"><div class="font-bangers text-xl text-brandPurple">💳 FULL PAYMENT</div><p class="text-xs font-bold mt-1">Place your order and we\'ll text you a payment link for the total (food + delivery fee). Nothing due at the door!</p></div>'
                     : card.dataset.orig;
                 card.querySelectorAll('.js-drop-pct').forEach(e => { e.textContent = DROP_CONFIG.depositPct; });
             }
@@ -1592,13 +1632,23 @@
             const foodSubtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             const deliveryFee = getDeliveryFee();
 
-            const totalOrder = foodSubtotal + deliveryFee;
+            const taxAmt = DELIVERY.full ? taxFor(foodSubtotal) : 0;   // sales tax is only added for "pay online" (Square) orders
+            const totalOrder = foodSubtotal + deliveryFee + taxAmt;
             const depositMultiplier = DROP_CONFIG.depositPct / 100;
             // PAY_FULL: everything (food + delivery fee) is due up front; otherwise deposit % of food + delivery fee
             const depositDue = DELIVERY.full ? totalOrder : foodSubtotal * depositMultiplier + deliveryFee;
             const remainingDue = totalOrder - depositDue;
             const dueLabel = document.getElementById('math-due-label'), remBox = document.getElementById('math-remaining-box'), dueBox = document.getElementById('math-due-box');
-            if (dueLabel) dueLabel.innerHTML = DELIVERY.full ? 'TOTAL DUE (FOOD + DELIVERY)<span class="block font-normal text-[10px] leading-tight">We\'ll text you a payment link</span>' :`<span class="js-drop-pct">${DROP_CONFIG.depositPct}</span>% OF FOOD + DELIVERY FEE DUE TODAY`;
+            if (dueLabel) dueLabel.innerHTML = DELIVERY.full
+                ? (squareOn() ? `TOTAL DUE NOW (FOOD${taxAmt > 0 ? ' + TAX' : ''} + DELIVERY)<span class="block font-normal text-[10px] leading-tight">You pay securely online with Square</span>`
+                              : 'TOTAL DUE (FOOD + DELIVERY)<span class="block font-normal text-[10px] leading-tight">We\'ll text you a payment link</span>')
+                : `<span class="js-drop-pct">${DROP_CONFIG.depositPct}</span>% OF FOOD + DELIVERY FEE DUE TODAY`;
+            const taxRow = document.getElementById('math-tax-row');
+            if (taxRow) {
+                taxRow.classList.toggle('hidden', !(taxAmt > 0));
+                const tp = document.getElementById('math-tax-pct'), ta = document.getElementById('math-tax-amt');
+                if (tp) tp.textContent = SQUARE.taxRate; if (ta) ta.textContent = `$${taxAmt.toFixed(2)}`;
+            }
             if (remBox) remBox.classList.toggle('hidden', !!DELIVERY.full);
             if (dueBox) dueBox.classList.toggle('col-span-2', !!DELIVERY.full);
 
@@ -1648,7 +1698,7 @@
                 if (submitBtn) {
                     submitBtn.disabled = false;
                     submitBtn.className = "w-full bg-brandRed hover:bg-red-600 text-white font-bangers text-2xl py-3 rounded-xl comic-border shadow-comic transition cursor-pointer active:translate-y-0.5";
-                    submitBtn.innerText = (DELIVERY.owner ? "🚚 REQUEST DELIVERY" : DELIVERY.full ? `💳 PLACE DELIVERY ORDER ($${totalOrder.toFixed(2)})` : `🚀 RESERVE MY DELIVERY (${DROP_CONFIG.depositPct}% DEPOSIT)`);
+                    submitBtn.innerText = (DELIVERY.owner ? "🚚 REQUEST DELIVERY" : DELIVERY.full ? (squareOn() ? `💳 PAY NOW ($${totalOrder.toFixed(2)})` : `💳 PLACE DELIVERY ORDER ($${totalOrder.toFixed(2)})`) :`🚀 RESERVE MY DELIVERY (${DROP_CONFIG.depositPct}% DEPOSIT)`);
                 }
             } else {
                 const needed = (DROP_CONFIG.minOrderAmount - foodSubtotal).toFixed(2);
@@ -1685,6 +1735,31 @@
             const due = DELIVERY.full ? total : foodSubtotal * DROP_CONFIG.depositPct / 100 + fee;
             const btn = document.getElementById('drop-submit-btn'), label = btn.innerHTML;
             btn.disabled = true; btn.textContent = '⏳ SENDING...';
+            if (squareOn() && DELIVERY.full) {
+                btn.textContent = '⏳ OPENING SECURE PAYMENT...';
+                const dName = document.getElementById('drop-name').value.trim(), dPhone = document.getElementById('drop-phone').value.trim();
+                const sq = await startSquareCheckout({ type: 'delivery', customer: { name: dName, phone: dPhone, address } });
+                if (!sq) { btn.innerHTML = label; btn.disabled = false; return; }
+                await sendToWeb3Forms({
+                    subject: 'New DELIVERY Order (sent to Square payment) - A Touch of South Jersey',
+                    from_name: 'South Jersey Website',
+                    'Order Type': 'Delivery - paying online with Square',
+                    'Name': dName,
+                    'Phone': dPhone,
+                    'Delivery Address': address,
+                    'Items': cart.map(i => `${i.qty} x ${i.name} ($${(i.price * i.qty).toFixed(2)})`).join('\n'),
+                    'Food Subtotal (before tax)': `$${foodSubtotal.toFixed(2)}`,
+                    'Delivery Fee': `$${fee.toFixed(2)}`,
+                    'Total With Tax (Square)': money(sq.totals && sq.totals.total),
+                    'Square Order ID': sq.orderId || 'n/a',
+                    'Order Reference': sq.reference || 'n/a',
+                    'Payment Status': 'Sent to the Square payment page - confirm it shows PAID in your Square Dashboard before preparing this order',
+                    botcheck: ''
+                });
+                saveCartForReturn();
+                window.location.href = sq.url;
+                return;
+            }
             const ok = await sendToWeb3Forms({
                 subject: 'New DELIVERY Drop Order - A Touch of South Jersey',
                 from_name: 'South Jersey Website',
@@ -1738,6 +1813,7 @@
 
         function confirmModifierAdd() {
             const mods = [];
+            const modLabels = [];   // plain extra names, used by the Square checkout to re-price the order
             let price = activeModItem.basePrice;
 
             getModCheckboxes().forEach(cb => {
@@ -1745,6 +1821,7 @@
                     const modPrice = parseFloat(cb.dataset.price) || 0;
                     price += modPrice;
                     mods.push(`${cb.dataset.label} (+$${modPrice.toFixed(2)})`);
+                    modLabels.push(cb.dataset.label);
                 }
             });
 
@@ -1754,7 +1831,7 @@
             }
 
             const fullName = mods.length > 0 ? `${activeModItem.name} (${mods.join(', ')})` : activeModItem.name;
-            addToCart(fullName, price);
+            addToCart(fullName, price, { base: activeModItem.name, mods: modLabels, note: notes });
             closeModifierModal();
         }
 
@@ -1885,12 +1962,12 @@
         }
 
         // Cart Actions
-        function addToCart(itemName, price) {
+        function addToCart(itemName, price, meta) {
             const existing = cart.find(item => item.name === itemName);
             if (existing) {
                 existing.qty += 1;
             } else {
-                cart.push({ name: itemName, price: price, qty: 1 });
+                cart.push({ name: itemName, price: price, qty: 1, meta: meta || { base: itemName, mods: [], note: '' } });
             }
             updateCartUI();
             showToast(`Added ${itemName} to your order! 😋`);
@@ -1941,6 +2018,7 @@
 
             totalEl.innerText = `$${total.toFixed(2)}`;
             badgeCountEl.innerText = count;
+            renderCartTax();
 
             recalculateDropTotals();
 
@@ -1992,6 +2070,49 @@
             }
         }
 
+        // ---------- Square checkout: ask the helper (Cloudflare Worker) for a secure payment page ----------
+        // The browser only says WHAT was ordered; the helper looks up the real prices, adds tax, and returns the Square link.
+        async function startSquareCheckout(payload) {
+            try {
+                const res = await fetch(SQUARE.url + '/checkout', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ...payload,
+                        items: cart.map(i => ({ base: (i.meta && i.meta.base) || i.name, mods: (i.meta && i.meta.mods) || [], note: (i.meta && i.meta.note) || '', qty: i.qty }))
+                    })
+                });
+                const data = await res.json().catch(() => ({}));
+                if (res.ok && data.url) return data;
+                console.warn('Square checkout helper said:', data);
+                showToast('😕 ' + (data.message || "We couldn't start the payment. Please try again."), 6000);
+            } catch (err) {
+                console.warn('Could not reach the Square checkout helper:', err);
+                showToast("😕 Couldn't reach the payment service. Please try again.", 5000);
+            }
+            return null;
+        }
+        const money = v => (v === null || v === undefined || !Number.isFinite(Number(v))) ? 'n/a' : '$' + Number(v).toFixed(2);
+        // Keep the cart while the customer is on Square's page, so "Back" doesn't lose it; clear it after a successful payment
+        function saveCartForReturn() { try { sessionStorage.setItem('ats_cart', JSON.stringify(cart)); } catch (e) {} }
+        function restoreCartAfterReturn() {
+            try {
+                const params = new URLSearchParams(location.search);
+                if (params.has('paid')) {
+                    sessionStorage.removeItem('ats_cart');
+                    history.replaceState(null, '', location.pathname);
+                    showToast("🎉 Thank you! Your payment went through. We'll text you when your order is ready.", 9000);
+                    return;
+                }
+                const saved = sessionStorage.getItem('ats_cart');
+                if (saved) {
+                    sessionStorage.removeItem('ats_cart');
+                    const arr = JSON.parse(saved);
+                    if (Array.isArray(arr) && arr.length && cart.length === 0) { cart.push(...arr); updateCartUI(); }
+                }
+            } catch (e) {}
+        }
+
         async function checkoutCart() {
             if (cart.length === 0) { showToast("Your cart is empty! 🥟"); return; }
             if (ORDER.type === 'delivery') {
@@ -2009,6 +2130,29 @@
             const label = btn.innerHTML;
             btn.disabled = true; btn.textContent = '⏳ SENDING...';
             const subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+            if (squareOn()) {
+                btn.textContent = '⏳ OPENING SECURE PAYMENT...';
+                const sq = await startSquareCheckout({ type: 'pickup', customer: { name, phone, pickupTime: document.getElementById('pickup-time').value } });
+                if (!sq) { btn.disabled = false; btn.innerHTML = label; return; }
+                await sendToWeb3Forms({
+                    subject: 'New PICKUP Order (sent to Square payment) - A Touch of South Jersey',
+                    from_name: 'South Jersey Website',
+                    'Order Type': 'Pickup - paying online with Square',
+                    'Name': name,
+                    'Phone': phone,
+                    'Pickup Time': document.getElementById('pickup-time').value,
+                    'Items': cart.map(i => `${i.qty} x ${i.name} ($${(i.price * i.qty).toFixed(2)})`).join('\n'),
+                    'Food Subtotal (before tax)': `$${subtotal.toFixed(2)}`,
+                    'Total With Tax (Square)': money(sq.totals && sq.totals.total),
+                    'Square Order ID': sq.orderId || 'n/a',
+                    'Order Reference': sq.reference || 'n/a',
+                    'Payment Status': 'Sent to the Square payment page - confirm it shows PAID in your Square Dashboard before preparing this order',
+                    botcheck: ''
+                });
+                saveCartForReturn();
+                window.location.href = sq.url;
+                return;
+            }
             const ok = await sendToWeb3Forms({
                 subject: 'New PICKUP Order - A Touch of South Jersey',
                 from_name: 'South Jersey Website',
@@ -2403,6 +2547,7 @@
             await loadDeliveryPricing();
             await loadMenuSettings();
             checkDropWindowSchedule();
+            restoreCartAfterReturn();   // after a Square payment: thank-you message; if they pressed Back: put their cart back
         };
     </script>
 </body>
