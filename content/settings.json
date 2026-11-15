@@ -104,9 +104,9 @@
       "card_color": "yellow"
     },
     {
-      "off": true,
+      "off": false,
       "days": "SUNDAY 7 (Card Title)",
-      "kind": "delivery",
+      "kind": "both",
       "open_days": [
         "Sun"
       ],
