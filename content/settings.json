@@ -44,9 +44,9 @@
       "card_color": "yellow"
     },
     {
-      "off": true,
+      "off": false,
       "days": "TUESDAY 2 (Card Title)",
-      "kind": "truck",
+      "kind": "both",
       "open_days": [
         "Tue"
       ],
