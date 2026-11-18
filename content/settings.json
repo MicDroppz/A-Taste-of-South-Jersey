@@ -56,9 +56,9 @@
       "card_color": "teal"
     },
     {
-      "off": true,
+      "off": false,
       "days": "WEDNESDAY 3 (Card Title)",
-      "kind": "truck",
+      "kind": "both",
       "open_days": [
         "Wed"
       ],
