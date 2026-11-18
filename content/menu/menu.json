@@ -131,6 +131,21 @@
           "image": "/images/barberchairtray3.jpg"
         }
       ]
+    },
+    {
+      "id": "test category id 5",
+      "title": "test cat 5",
+      "subtitle": "just testing will be deleted",
+      "badge_color": "bg-brandPurple",
+      "items": [
+        {
+          "name": "jurastic 5",
+          "price": 300,
+          "description": "dino 5",
+          "sold_out": false,
+          "image": "/images/barberchairtray.jpg"
+        }
+      ]
     }
   ],
   "modifiers": [
