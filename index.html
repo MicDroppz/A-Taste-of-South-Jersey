@@ -999,6 +999,16 @@
     <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-brandPurple text-white font-fredoka px-6 py-3 rounded-2xl comic-border shadow-comic opacity-0 pointer-events-none transition-all duration-300 z-50 text-center">
         Notification message
     </div>
+    <div id="paid-banner" class="hidden fixed top-0 inset-x-0 z-[70] p-3" role="status">
+        <div class="max-w-2xl mx-auto bg-brandGreen text-slate-900 font-fredoka rounded-2xl comic-border shadow-comic px-5 py-4 flex items-start gap-3">
+            <div class="text-3xl leading-none">🎉</div>
+            <div class="flex-1">
+                <div class="font-bangers text-2xl tracking-wide">THANK YOU! YOUR PAYMENT WENT THROUGH.</div>
+                <div class="text-sm font-bold mt-1">We got your order and we'll text you when it's ready. Square also emailed you a receipt.</div>
+            </div>
+            <button type="button" onclick="document.getElementById('paid-banner').classList.add('hidden')" aria-label="Close" class="font-bangers text-2xl leading-none px-2">✕</button>
+        </div>
+    </div>
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
@@ -2101,7 +2111,8 @@
                 if (params.has('paid')) {
                     sessionStorage.removeItem('ats_cart');
                     history.replaceState(null, '', location.pathname);
-                    showToast("🎉 Thank you! Your payment went through. We'll text you when your order is ready.", 9000);
+                    const pb = document.getElementById('paid-banner');
+                    if (pb) { pb.classList.remove('hidden'); window.scrollTo(0, 0); }
                     return;
                 }
                 const saved = sessionStorage.getItem('ats_cart');
@@ -2542,12 +2553,12 @@
             document.getElementById('modifier-modal').addEventListener('change', e => {
                 if (e.target.classList.contains('dynamic-mod-checkbox')) updateModifierTotal();
             });
+            restoreCartAfterReturn();   // first, so a returning customer always sees the thank-you (or gets their cart back after Back)
             await loadSiteSettings();
             await loadDropSettings();
             await loadDeliveryPricing();
             await loadMenuSettings();
             checkDropWindowSchedule();
-            restoreCartAfterReturn();   // after a Square payment: thank-you message; if they pressed Back: put their cart back
         };
     </script>
 </body>
