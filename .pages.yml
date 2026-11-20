@@ -134,6 +134,28 @@ content:
         label: Square checkout helper address (the Cloudflare Worker web address - do not change unless the web developer tells you to)
         type: string
 
+      - name: pickup_prep_minutes
+        label: Pickup prep time in minutes (how soon the earliest pickup time can be - also shown as "As soon as possible (about X min)". Example 20)
+        type: number
+
+      - name: pickup_slot_minutes
+        label: Pickup time choices - gap between times
+        type: select
+        options:
+          values:
+            - name: "10"
+              label: Every 10 minutes
+            - name: "15"
+              label: Every 15 minutes
+            - name: "20"
+              label: Every 20 minutes
+            - name: "30"
+              label: Every 30 minutes
+
+      - name: pickup_show_asap
+        label: Show the "As soon as possible" pickup option (turn OFF on busy nights so customers must pick a specific time)
+        type: boolean
+
       - name: social
         label: Social Media Links (turn ON only the ones you want to show on the website)
         type: object
