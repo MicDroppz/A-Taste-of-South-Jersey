@@ -152,17 +152,17 @@
     {
       "id": "mod-marinara",
       "label": "Side of Warm Marinara Sauce",
-      "price": 1
+      "price": 0.01
     },
     {
       "id": "mod-garlic",
       "label": "Garlic Herb Dip",
-      "price": 1
+      "price": 0.01
     },
     {
       "id": "mod-cheese",
       "label": "Extra Mozzarella Cheese Stuffed",
-      "price": 1.5
+      "price": 0.01
     }
   ]
 }
