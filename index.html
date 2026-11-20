@@ -1062,6 +1062,8 @@
         // ---------- Square online payment (all three come from content/settings.json, editable in the CMS) ----------
         // square_enabled = ON/OFF, square_checkout_url = the Cloudflare Worker address, tax_rate_percent = e.g. 7
         const SQUARE = { enabled: false, url: '', taxRate: 0 };
+        // Pickup time choices (CMS: pickup_prep_minutes, pickup_slot_minutes, pickup_show_asap). Defaults match the original behavior.
+        const PICKUP = { prep: 20, step: 15, asap: true };
         function squareOn() { return SQUARE.enabled && !!SQUARE.url; }
         // Estimated sales tax in dollars (Square makes the final calculation on its payment page)
         function taxFor(foodSubtotal) { return squareOn() && SQUARE.taxRate > 0 ? Math.round(foodSubtotal * SQUARE.taxRate) / 100 : 0; }
@@ -1195,6 +1197,11 @@
                 SQUARE.url = String(data.square_checkout_url || '').trim().replace(/\/+$/, '');
                 const taxPct = parseFloat(data.tax_rate_percent);
                 SQUARE.taxRate = Number.isFinite(taxPct) && taxPct > 0 ? taxPct : 0;
+                // Pickup time settings
+                const prepMin = parseInt(data.pickup_prep_minutes, 10), stepMin = parseInt(data.pickup_slot_minutes, 10);
+                PICKUP.prep = Number.isFinite(prepMin) && prepMin >= 0 && prepMin <= 240 ? prepMin : 20;
+                PICKUP.step = [10, 15, 20, 30].includes(stepMin) ? stepMin : 15;
+                PICKUP.asap = data.pickup_show_asap !== false;
                 if (data.web3forms_access_key && String(data.web3forms_access_key).trim()) WEB3FORMS.accessKey = String(data.web3forms_access_key).trim();
                 renderSocialLinks(data.social);
                 renderAllergenNote(data);
@@ -2053,8 +2060,10 @@
                 const o = parseTime(open.opens), c = parseTime(open.closes);
                 const end = c > o ? c : c + 1440;
                 const cur = now.minutes < o ? now.minutes + 1440 : now.minutes;
-                opts.push(['ASAP', 'As soon as possible (about 20 min)']);
-                for (let t = Math.ceil((cur + 20) / 15) * 15; t <= end - 15 && opts.length < 11; t += 15) opts.push([fmt(t), fmt(t)]);
+                if (PICKUP.asap) opts.push(['ASAP', PICKUP.prep > 0 ? `As soon as possible (about ${PICKUP.prep} min)` : 'As soon as possible']);
+                let slots = 0;
+                for (let t = Math.ceil((cur + PICKUP.prep) / PICKUP.step) * PICKUP.step; t <= end - PICKUP.step && slots < 10; t += PICKUP.step) { opts.push([fmt(t), fmt(t)]); slots++; }
+                if (!opts.length) opts.push(['CLOSING_SOON', "We're about to close - we'll confirm your pickup time"]);
             } else {
                 opts.push(['NEXT_OPEN', "We're closed now - we'll confirm your pickup time"]);
             }
