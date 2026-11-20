@@ -1757,7 +1757,7 @@
                     'Name': dName,
                     'Phone': dPhone,
                     'Delivery Address': address,
-                    'Items': cart.map(i => `${i.qty} x ${i.name} ($${(i.price * i.qty).toFixed(2)})`).join('\n'),
+                    'Items': orderItemsText(),
                     'Food Subtotal (before tax)': `$${foodSubtotal.toFixed(2)}`,
                     'Delivery Fee': `$${fee.toFixed(2)}`,
                     'Total With Tax (Square)': money(sq.totals && sq.totals.total),
@@ -1777,7 +1777,7 @@
                 'Name': document.getElementById('drop-name').value.trim(),
                 'Phone': document.getElementById('drop-phone').value.trim(),
                 'Delivery Address': address,
-                'Items': cart.map(i => `${i.qty} x ${i.name} ($${(i.price * i.qty).toFixed(2)})`).join('\n'),
+                'Items': orderItemsText(),
                 'Food Subtotal': `$${foodSubtotal.toFixed(2)}`,
                 'Delivery Fee': DELIVERY.owner ? 'TO BE SET BY OWNER - add to the balance due at delivery' : `$${fee.toFixed(2)}`,
                 'Total (before tax)': `$${total.toFixed(2)}`,
@@ -2104,6 +2104,17 @@
         }
         const money = v => (v === null || v === undefined || !Number.isFinite(Number(v))) ? 'n/a' : '$' + Number(v).toFixed(2);
         // Keep the cart while the customer is on Square's page, so "Back" doesn't lose it; clear it after a successful payment
+        // One tidy block per item for the owner emails: item and price, then each extra and note on its own line
+        function orderItemsText() {
+            return cart.map(i => {
+                const m = i.meta || {};
+                const lines = [`• ${i.qty} x ${m.base || i.name}  -  $${(i.price * i.qty).toFixed(2)}`];
+                (m.mods || []).forEach(x => lines.push(`      + ${x}`));
+                if (m.note) lines.push(`      Note: ${m.note}`);
+                return lines.join('\n');
+            }).join('\n\n');
+        }
+
         function saveCartForReturn() { try { sessionStorage.setItem('ats_cart', JSON.stringify(cart)); } catch (e) {} }
         function restoreCartAfterReturn() {
             try {
@@ -2152,7 +2163,7 @@
                     'Name': name,
                     'Phone': phone,
                     'Pickup Time': document.getElementById('pickup-time').value,
-                    'Items': cart.map(i => `${i.qty} x ${i.name} ($${(i.price * i.qty).toFixed(2)})`).join('\n'),
+                    'Items': orderItemsText(),
                     'Food Subtotal (before tax)': `$${subtotal.toFixed(2)}`,
                     'Total With Tax (Square)': money(sq.totals && sq.totals.total),
                     'Square Order ID': sq.orderId || 'n/a',
@@ -2171,7 +2182,7 @@
                 'Name': name,
                 'Phone': phone,
                 'Pickup Time': document.getElementById('pickup-time').value,
-                'Items': cart.map(i => `${i.qty} x ${i.name} ($${(i.price * i.qty).toFixed(2)})`).join('\n'),
+                'Items': orderItemsText(),
                 'Subtotal (before tax)': `$${subtotal.toFixed(2)}`,
                 botcheck: ''
             });
