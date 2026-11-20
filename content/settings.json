@@ -9,7 +9,7 @@
   "tax_rate_percent": 7,
   "square_checkout_url": "https://square-checkout.jaialternatestudios.workers.dev/",
   "pickup_slot_minutes": "10",
-  "pickup_show_asap": false,
+  "pickup_show_asap": true,
   "social": {
     "instagram": {
       "show": true,
