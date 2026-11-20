@@ -9,7 +9,7 @@
       "items": [
         {
           "name": "Cheese Panzarotti",
-          "price": 10,
+          "price": 0.01,
           "badge": "CLASSIC ORIGINAL",
           "description": "Deep-fried golden pastry dough pocket packed with rich tomato sauce and oozing melted mozzarella cheese.",
           "sold_out": false,
@@ -17,7 +17,7 @@
         },
         {
           "name": "Pepperoni Panzarotti",
-          "price": 11.5,
+          "price": 0.01,
           "badge": "FAN FAVORITE",
           "description": "Stuffed with savory cut pepperoni slices, melted mozzarella, and signature tomato sauce inside a crispy shell.",
           "sold_out": false,
@@ -25,7 +25,7 @@
         },
         {
           "name": "Sausage Panzarotti",
-          "price": 11.5,
+          "price": 0.01,
           "badge": "SAVORY!",
           "description": "Seasoned Italian sausage crumbles blended with gooey cheese and rich marinara in a deep-fried dough pocket.",
           "sold_out": false,
@@ -33,7 +33,7 @@
         },
         {
           "name": "Philly Cheesesteak Panzarotti",
-          "price": 15,
+          "price": 0.01,
           "badge": "HOUSE SPECIAL",
           "description": "Tender sliced steak and melted cheese folded right inside our famous deep-fried Panzarotti crust!",
           "sold_out": false,
@@ -41,7 +41,7 @@
         },
         {
           "name": "Philly Panzarotti & Fries Combo",
-          "price": 18,
+          "price": 0.01,
           "badge": "BEST VALUE!",
           "description": "Any signature Panzarotti served alongside a huge basket of golden crispy french fries!",
           "sold_out": false,
@@ -57,7 +57,7 @@
       "items": [
         {
           "name": "Philly Cheesesteak",
-          "price": 14.5,
+          "price": 0.01,
           "badge": "AUTHENTIC PHILLY",
           "description": "Sliced sirloin steak grilled to perfection with melted cheese on an authentic soft Italian roll.",
           "sold_out": false,
@@ -65,7 +65,7 @@
         },
         {
           "name": "Philly Cheesesteak & Fries Combo",
-          "price": 18,
+          "price": 0.01,
           "badge": "COMBO DEAL",
           "description": "Classic Philly Cheesesteak sandwich paired with a hot side basket of seasoned french fries.",
           "sold_out": false,
@@ -73,7 +73,7 @@
         },
         {
           "name": "Dozen Mini Panzarottini",
-          "price": 24.99,
+          "price": 0.01,
           "badge": "GREAT FOR SHARING",
           "description": "12 bite-sized mini Panzarottis deep-fried until golden brown, stuffed with cheese & sauce!",
           "sold_out": false,
@@ -89,7 +89,7 @@
       "items": [
         {
           "name": "philly + fries + drink (item name)",
-          "price": 20,
+          "price": 0.01,
           "description": "description philly fries drink",
           "sold_out": false,
           "image": "/images/20200729175135.jpg"
@@ -111,21 +111,21 @@
         },
         {
           "name": "Gooey Cheese Fries",
-          "price": 6,
+          "price": 0.01,
           "description": "Golden fries smothered in warm cheese sauce.",
           "sold_out": false,
           "image": "/images/2987.jpeg"
         },
         {
           "name": "Ice Cold Soda",
-          "price": 2,
+          "price": 0.01,
           "description": "Assorted canned sodas to quench your thirst.",
           "sold_out": false,
           "image": "/images/geminigeneratedimager4b7bkr4b7bkr4b7.jpg"
         },
         {
           "name": "Bottled Water",
-          "price": 1.5,
+          "price": 0.01,
           "description": "Pure purified drinking water bottle.",
           "sold_out": false,
           "image": "/images/barberchairtray3.jpg"
