@@ -68,14 +68,14 @@
       "card_color": "pink"
     },
     {
-      "off": true,
+      "off": false,
       "days": "THURSDAY 4 (Card Title)",
-      "kind": "delivery",
+      "kind": "both",
       "open_days": [
         "Thu"
       ],
       "opens": "10:00",
-      "closes": "18:00",
+      "closes": "24:00",
       "location": "Delivery Drops",
       "card_color": "purple"
     },
